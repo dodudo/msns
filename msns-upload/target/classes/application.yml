@@ -20,3 +20,11 @@ eureka:
     lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
 #配置本地资源路径，必须以/结尾
 filePath: d:/msns/
+fdfs:
+  so-timeout: 1501 # 超时时间
+  connect-timeout: 601 # 连接超时时间
+  thumb-image: # 缩略图
+    width: 60
+    height: 60
+  tracker-list: # tracker地址：你的虚拟机服务器地址+端口（默认是22122）
+    - 192.168.12.18:22122

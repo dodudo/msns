@@ -20,11 +20,20 @@
                     required
                   ></v-text-field>
 
-                  <v-text-field v-model="password" :rules="passwordRules" label="密码" required></v-text-field>
+                  <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="密码"
+                    required
+                  ></v-text-field>
 
                   <div class="mx-auto">
-                    <v-btn :disabled="!valid" color="#fb864c" @click="validate">登录</v-btn>
-                    <v-btn class="ma-2" color="#fb864c" @click="toRegister">没有账号？去注册</v-btn>
+                    <v-btn :disabled="!valid" color="#fb864c" @click="validate"
+                      >登录</v-btn
+                    >
+                    <v-btn class="ma-2" color="#fb864c" @click="toRegister"
+                      >没有账号？去注册</v-btn
+                    >
                   </div>
                 </v-form>
               </v-card-text>

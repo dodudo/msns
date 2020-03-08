@@ -36,4 +36,18 @@ public interface MusicService {
      * @param music
      */
     void saveMusic(Music music);
+
+
+    /**
+     * 查找是否有相同音乐
+     * @param music
+     * @return
+     */
+    boolean findMusicByInfo(Music music);
+
+    /**
+     * 删除音乐
+     * @param music
+     */
+    void deleteMusic(Music music);
 }

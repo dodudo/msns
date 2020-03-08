@@ -5,7 +5,13 @@
     </v-row>
     <v-divider></v-divider>
     <v-row class="pb-4">
-      <v-list v-for="(n,index) in 6" :key="index" class="mx-6" width="900" two-line>
+      <v-list
+        v-for="(n, index) in 6"
+        :key="index"
+        class="mx-6"
+        width="900"
+        two-line
+      >
         <v-list-item>
           <v-list-item-avatar>
             <v-avatar>
@@ -21,7 +27,8 @@
                 flat
                 class="subtitle caption BLACK"
               >
-                <a>评论了哈哈哈：</a>d士大夫撒旦噶sjfklasjdglksjdsdaggggggggggggggggggggggggg
+                <a>评论了哈哈哈：</a
+                >d士大夫撒旦噶sjfklasjdglksjdsdaggggggggggggggggggggggggg
                 gdsaaaaaaaaaaaaaaaaaaaaaaaaaagsdaaaaaaaaa
                 gsaddddddddddddddddddgsjadl
               </v-card>
@@ -31,9 +38,12 @@
                 flat
                 class="caption"
                 style="color:#BDBDBD"
-              >2020年2月12日</v-card>
+                >2020年2月12日</v-card
+              >
             </v-list-item-title>
-            <v-list-item-subtitle class="mx-4">我的评论我的评论我的评论我的评论我的评论我的评论我的评论我的评论我的评论</v-list-item-subtitle>
+            <v-list-item-subtitle class="mx-4"
+              >我的评论我的评论我的评论我的评论我的评论我的评论我的评论我的评论我的评论</v-list-item-subtitle
+            >
           </v-list-item-content>
         </v-list-item>
       </v-list>

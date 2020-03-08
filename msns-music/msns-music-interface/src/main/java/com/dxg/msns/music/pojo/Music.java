@@ -17,7 +17,7 @@ public class Music {
     private String musicName;
     private String musicAuthor;
     private String musicAlbum;
-    private Date musicPublisDate;
+    private String musicPublisDate;
     private Date musicPushDate;
     private String musicLength;
     private Integer musicTypeId;
@@ -72,11 +72,11 @@ public class Music {
         this.musicAlbum = musicAlbum;
     }
 
-    public Date getMusicPublisDate() {
+    public String getMusicPublisDate() {
         return musicPublisDate;
     }
 
-    public void setMusicPublisDate(Date musicPublisDate) {
+    public void setMusicPublisDate(String musicPublisDate) {
         this.musicPublisDate = musicPublisDate;
     }
 

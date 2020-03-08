@@ -2,7 +2,7 @@
   <v-card flat style="position:relative;">
     <v-card flat>
       <v-card
-        v-for="(card_text,index) in card_texts"
+        v-for="(card_text, index) in card_texts"
         :key="index"
         :max-width="card_width"
         flat
@@ -13,7 +13,9 @@
           <v-list-item-avatar color="grey"></v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="body-1">哈哈哈</v-list-item-title>
-            <v-list-item-subtitle class="body-2">2019-12-10</v-list-item-subtitle>
+            <v-list-item-subtitle class="body-2"
+              >2019-12-10</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-spacer></v-spacer>
           <v-menu offset-y>
@@ -36,7 +38,7 @@
                       <v-col cols="3" sm="6" md="4">
                         <v-radio-group v-model="radioGroup">
                           <v-radio
-                            v-for="(radioItem,index) in radioItems"
+                            v-for="(radioItem, index) in radioItems"
                             :key="index"
                             :label="`${radioItem.name}`"
                             :value="`${radioItem.value}`"
@@ -47,8 +49,12 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialog = false">提交</v-btn>
-                    <v-btn color="blue darken-1" text @click="dialog = false">取消</v-btn>
+                    <v-btn color="blue darken-1" text @click="dialog = false"
+                      >提交</v-btn
+                    >
+                    <v-btn color="blue darken-1" text @click="dialog = false"
+                      >取消</v-btn
+                    >
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -59,9 +65,11 @@
           <div
             ref="card_text"
             class="text-content mb-2"
-            :class="{fold:card_text.fold}"
+            :class="{ fold: card_text.fold }"
             :id="`text_${index}`"
-          >{{card_text.text}}</div>
+          >
+            {{ card_text.text }}
+          </div>
           <v-row>
             <v-spacer></v-spacer>
             <v-btn
@@ -72,16 +80,22 @@
               color="blue"
               v-show="card_text.btnShow"
               @click="card_text.fold = !card_text.fold"
-            >{{card_text.fold ? "展开" : "收起"}}</v-btn>
+              >{{ card_text.fold ? "展开" : "收起" }}</v-btn
+            >
           </v-row>
-          <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+            height="194"
+          ></v-img>
         </v-content>
         <v-card v-show="true" style outlined flat class="px-0 my-2 mx-4">
           <v-list class="pa-0">
             <v-list-item style="background-color:#FAFAFA">
               <v-card tile height="40" width="40">
                 <v-list-item-avatar class="ma-0" tile>
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"></v-img>
+                  <v-img
+                    src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+                  ></v-img>
                 </v-list-item-avatar>
 
                 <v-overlay z-index="1" opacity="0.3" absolute value="true">
@@ -131,7 +145,9 @@
             rows="1"
           ></v-textarea>
           <v-card class="d-flex justify-end my-2" flat>
-            <v-btn small width="100" dark color="#BA68C8" class="mr-4 caption">发表评论</v-btn>
+            <v-btn small width="100" dark color="#BA68C8" class="mr-4 caption"
+              >发表评论</v-btn
+            >
           </v-card>
         </v-card>
       </v-card>

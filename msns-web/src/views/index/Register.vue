@@ -19,8 +19,18 @@
                     label="用户名"
                     required
                   ></v-text-field>
-                  <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-                  <v-text-field v-model="password" :rules="passwordRules" label="密码" required></v-text-field>
+                  <v-text-field
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="密码"
+                    required
+                  ></v-text-field>
                   <v-text-field
                     @keydown.native="testPassword()"
                     @keyup.native="testPassword()"
@@ -43,11 +53,16 @@
                       color="#b73f0d"
                       :disabled="isClick"
                       @click="sendMsg"
-                    >{{getCodeText}}</v-btn>
+                      >{{ getCodeText }}</v-btn
+                    >
                   </div>
                   <div class="mx-auto">
-                    <v-btn :disabled="!valid" color="#b73f0d" @click="validate">注册</v-btn>
-                    <v-btn class="ma-2" color="#b73f0d" @click="toLogin">已账号？去登录</v-btn>
+                    <v-btn :disabled="!valid" color="#b73f0d" @click="validate"
+                      >注册</v-btn
+                    >
+                    <v-btn class="ma-2" color="#b73f0d" @click="toLogin"
+                      >已账号？去登录</v-btn
+                    >
                   </div>
                 </v-form>
               </v-card-text>

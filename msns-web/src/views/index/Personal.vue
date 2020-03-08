@@ -10,7 +10,10 @@
           <v-row align="center" class="px-4">
             <v-col cols="1">
               <v-avatar size="80">
-                <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+                <img
+                  src="https://cdn.vuetifyjs.com/images/john.jpg"
+                  alt="John"
+                />
               </v-avatar>
             </v-col>
             <v-col cols="9" class="ml-4">
@@ -22,8 +25,8 @@
                   dense
                   flat
                   :outlined="outlined"
-                  @mouseenter="outlined=true"
-                  @mouseleave="outlined=false"
+                  @mouseenter="outlined = true"
+                  @mouseleave="outlined = false"
                   dark
                   hide-details
                   background-color="rgba(255,255,255,0)"

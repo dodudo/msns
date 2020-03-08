@@ -28,13 +28,19 @@
     </v-row>
     <v-row class="ma-0" align="center">
       <v-col cols="1" class="py-0 px-1">
-        <v-btn @click="showEmoji()" small fab text style="font-size:20px;">😀</v-btn>
+        <v-btn @click="showEmoji()" small fab text style="font-size:20px;"
+          >😀</v-btn
+        >
       </v-col>
       <v-col cols="1" class="py-0 px-1">
-        <v-btn @click="showImg()" small fab text style="font-size:20px;">🖼️</v-btn>
+        <v-btn @click="showImg()" small fab text style="font-size:20px;"
+          >🖼️</v-btn
+        >
       </v-col>
       <v-col cols="1" class="py-0 px-1">
-        <v-btn @click="showMusic()" small fab text style="font-size:20px;">🎵</v-btn>
+        <v-btn @click="showMusic()" small fab text style="font-size:20px;"
+          >🎵</v-btn
+        >
       </v-col>
       <v-col cols="9" class="d-flex justify-end py-0 pr-4">
         <v-btn small color="red" dark style="font-size:14px;">发布</v-btn>
@@ -42,16 +48,23 @@
     </v-row>
     <v-row id="inputPanel" class="ma-0 mt-1">
       <!-- 表情输入框 -->
-      <v-card id="emoji_card " v-if="show_emoji" height="100" style="overflow-y:auto" class="mx-1">
+      <v-card
+        id="emoji_card "
+        v-if="show_emoji"
+        height="100"
+        style="overflow-y:auto"
+        class="mx-1"
+      >
         <v-btn
-          v-for="(emoji,index) in emojis"
+          v-for="(emoji, index) in emojis"
           :key="index"
           small
           fab
           text
           @click="addEmoji(index)"
           style="font-size:20px;"
-        >{{emoji}}</v-btn>
+          >{{ emoji }}</v-btn
+        >
       </v-card>
       <!-- 图片上传框 -->
       <v-card
@@ -60,9 +73,18 @@
         width="700"
         height="100"
       >
-        <v-hover v-slot:default="{ hover }" v-for="(imgUrl,index) in imgUrls" :key="index">
+        <v-hover
+          v-slot:default="{ hover }"
+          v-for="(imgUrl, index) in imgUrls"
+          :key="index"
+        >
           <v-card class="mr-1" height="80" width="80px">
-            <v-img aspect-ratio="1" max-width="80" max-height="80" :src="imgUrl"></v-img>
+            <v-img
+              aspect-ratio="1"
+              max-width="80"
+              max-height="80"
+              :src="imgUrl"
+            ></v-img>
 
             <v-overlay
               v-if="hover"
@@ -72,7 +94,13 @@
               absolute
               value="true"
             >
-              <v-btn height="24" @click="delImg(index)" width="24" class="del-img" icon>
+              <v-btn
+                height="24"
+                @click="delImg(index)"
+                width="24"
+                class="del-img"
+                icon
+              >
                 <v-icon color="#000">mdi-close-box</v-icon>
               </v-btn>
             </v-overlay>
@@ -104,7 +132,11 @@
         height="100"
         class="d-flex justify-center align-center mx-1"
       >
-        <v-file-input accept="audio/*" class="mx-12 pa-0" label="请选择音乐"></v-file-input>
+        <v-file-input
+          accept="audio/*"
+          class="mx-12 pa-0"
+          label="请选择音乐"
+        ></v-file-input>
       </v-card>
     </v-row>
   </v-card>

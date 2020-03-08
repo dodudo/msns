@@ -18,10 +18,10 @@ export default new Vuex.Store({
   },
   actions: {
     changeDrawer(context, drawer) {
-      context.commit("changeDrawer", drawer)
+      context.commit("changeDrawer", drawer);
     },
     changePalyBtnStatus(context, playStatus) {
-      context.commit("changePalyBtnStatus", playStatus)
+      context.commit("changePalyBtnStatus", playStatus);
     }
   },
   modules: {}

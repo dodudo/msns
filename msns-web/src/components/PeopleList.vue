@@ -8,11 +8,13 @@
             <v-img :src="item.avatar"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{item.title}}</v-list-item-title>
-            <v-list-item-subtitle>{{item.subtitle}}</v-list-item-subtitle>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-subtitle>{{ item.subtitle }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn @click.stop="favor(index)">{{item.favor? "已关注" : "关注"}}</v-btn>
+            <v-btn @click.stop="favor(index)">{{
+              item.favor ? "已关注" : "关注"
+            }}</v-btn>
           </v-list-item-action>
         </v-list-item>
       </template>

@@ -11,8 +11,7 @@ var menus = [{
     action: "mdi-star-face",
     title: "动态",
     path: "/dynamic",
-    items: [
-      {
+    items: [{
         title: "动态列表",
         path: "/list"
       },
@@ -44,6 +43,10 @@ var menus = [{
       {
         title: "音乐管理",
         path: "/list"
+      },
+      {
+        title: "音乐删除",
+        path: "/delete"
       }
     ]
   },

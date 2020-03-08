@@ -42,7 +42,11 @@
           </template>
           <!-- 二级菜单 -->
           <v-list-item
-            :to="item.path=='/admin' ? item.path+subItem.path :'/admin'+item.path+subItem.path"
+            :to="
+              item.path == '/admin'
+                ? item.path + subItem.path
+                : '/admin' + item.path + subItem.path
+            "
             link
             v-for="subItem in item.items"
             :key="subItem.title"
@@ -60,7 +64,9 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <!-- 收起左侧菜单的按钮-->
         <v-btn class="ml-2" icon @click.stop="miniVariant = !miniVariant">
-          <v-icon v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'" />
+          <v-icon
+            v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'"
+          />
         </v-btn>
         <!-- 顶部导航标题 -->
         <v-flex xs3></v-flex>

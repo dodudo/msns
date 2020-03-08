@@ -33,7 +33,13 @@
                   ></v-text-field>
 
                   <div class="d-flex justify-center">
-                    <v-btn class="mx-autos" :disabled="!valid" color="#fb864c" @click="validate">登录</v-btn>
+                    <v-btn
+                      class="mx-autos"
+                      :disabled="!valid"
+                      color="#fb864c"
+                      @click="validate"
+                      >登录</v-btn
+                    >
                   </div>
                 </v-form>
               </v-card-text>

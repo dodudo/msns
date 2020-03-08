@@ -9,13 +9,13 @@ function route(path, file, name, children) {
     path,
     name,
     children,
-    component: () => import('../views' + file)
-  }
+    component: () => import("../views" + file)
+  };
 }
 const routes = [
   route("/login", "/index/Login", "Login"),
   route("/test", "/index/test", "test"),
-  route("/register", '/index/Register', "Register"),
+  route("/register", "/index/Register", "Register"),
   route("/admin/login", "/admin/AdminLogin", "AdminLogin"),
   {
     path: "/",
@@ -43,11 +43,27 @@ const routes = [
         redirect: "/index/personal/info",
         component: () => import("../views/index/Personal.vue"),
         children: [
-          route("/index/personal/info", "/index/personal/PersonalInfo", "PersonalInfo"),
-          route("/index/personal/dynamic", "/index/personal/PersonalDynamic", "PersonalDynamic"),
+          route(
+            "/index/personal/info",
+            "/index/personal/PersonalInfo",
+            "PersonalInfo"
+          ),
+          route(
+            "/index/personal/dynamic",
+            "/index/personal/PersonalDynamic",
+            "PersonalDynamic"
+          ),
           route("/index/personal/favor", "/index/personal/Favor", "Favor"),
-          route("/index/Personal/music", "/index/personal/PersonalMusic", "PersonalMusic"),
-          route("/index/Personal/attention", "/index/personal/Attention", "Attention"),
+          route(
+            "/index/Personal/music",
+            "/index/personal/PersonalMusic",
+            "PersonalMusic"
+          ),
+          route(
+            "/index/Personal/attention",
+            "/index/personal/Attention",
+            "Attention"
+          ),
           route("/index/Personal/fan", "/index/personal/Fan", "Fan")
         ]
       }
@@ -60,29 +76,62 @@ const routes = [
     component: () => import("../views/admin/AdminLayout.vue"),
     children: [
       route("/admin/main", "/admin/AdminMain", "AdminMain"),
-      route("/admin/dynamic", "/admin/dynamic/DynamicCategory", "DynamicCategory"),
-      route("/admin/dynamic/category", "/admin/dynamic/DynamicCategory", "DynamicCategory"),
-      route("/admin/dynamic/CategoryDelete", "/admin/dynamic/DynamicCategoryDelete", "DynamicCategoryDelete"),
+      route(
+        "/admin/dynamic",
+        "/admin/dynamic/DynamicCategory",
+        "DynamicCategory"
+      ),
+      route(
+        "/admin/dynamic/category",
+        "/admin/dynamic/DynamicCategory",
+        "DynamicCategory"
+      ),
+      route(
+        "/admin/dynamic/CategoryDelete",
+        "/admin/dynamic/DynamicCategoryDelete",
+        "DynamicCategoryDelete"
+      ),
       route("/admin/dynamic/list", "/admin/dynamic/DynamicList", "DynamicList"),
-      route("/admin/dynamic/delete", "/admin/dynamic/DynamicDelete", "DynamicDelete"),
-      route("/admin/dynamic/ReportList", "/admin/dynamic/DynamicReportList", "DynamicReportList"),
+      route(
+        "/admin/dynamic/delete",
+        "/admin/dynamic/DynamicDelete",
+        "DynamicDelete"
+      ),
+      route(
+        "/admin/dynamic/ReportList",
+        "/admin/dynamic/DynamicReportList",
+        "DynamicReportList"
+      ),
       route("/admin/music", "/admin/music/MusicList", "MusicList"),
       route("/admin/music/list", "/admin/music/MusicList", "MusicList"),
-      route("/admin/music/statistics", "/admin/music/MusicStatistics", "MusicStatistics"),
+      route("/admin/music/delete", "/admin/music/MusicDelete", "MusicDelete"),
+      route(
+        "/admin/music/statistics",
+        "/admin/music/MusicStatistics",
+        "MusicStatistics"
+      ),
       route("/admin/setting", "/admin/setting/AdminList", "Admin"),
       route("/admin/setting/list", "/admin/setting/AdminList", "AdminList"),
-      route("/admin/setting/member", "/admin/setting/AdminMember", "AdminMember"),
+      route(
+        "/admin/setting/member",
+        "/admin/setting/AdminMember",
+        "AdminMember"
+      ),
       route("/admin/setting/role", "/admin/setting/AdminRole", "AdminRole"),
       route("/admin/user", "/admin/user/UserList", "User"),
       route("/admin/user/list", "/admin/user/UserList", "UserList"),
-      route("/admin/user/statistics", "/admin/user/UserStatistics", "UserStatistics"),
+      route(
+        "/admin/user/statistics",
+        "/admin/user/UserStatistics",
+        "UserStatistics"
+      )
     ]
   }
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes
 });
 
-export default router
+export default router;

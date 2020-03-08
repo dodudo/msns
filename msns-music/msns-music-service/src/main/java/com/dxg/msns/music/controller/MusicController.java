@@ -44,10 +44,22 @@ public class MusicController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 新增音乐
+     * @param music
+     * @return
+     */
     @PostMapping
-    public ResponseEntity<Void> saveMusic(@RequestBody Music music){
-        this.musicService.saveMusic(music);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<String> saveMusic(@RequestBody Music music){
+        //在插入前查询是否存在该音乐
+        boolean hadMusic = this.musicService.findMusicByInfo(music);
+        if (!hadMusic){
+            return new ResponseEntity("已存在该音乐！",HttpStatus.BAD_REQUEST);
+        }else {
+            this.musicService.saveMusic(music);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+
     }
 
     /**
@@ -68,6 +80,16 @@ public class MusicController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Void> updateMusic(@RequestBody Music music){
         this.musicService.updateMusic(music);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    /**
+     * 修改音乐信息
+     * @param music
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteMusic(@RequestBody Music music){
+        this.musicService.deleteMusic(music);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

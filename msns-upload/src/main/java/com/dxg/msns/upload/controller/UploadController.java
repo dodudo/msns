@@ -1,5 +1,6 @@
 package com.dxg.msns.upload.controller;
 
+import com.dxg.msns.music.pojo.Music;
 import com.dxg.msns.upload.service.UploadService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,11 @@ public class UploadController {
         return ResponseEntity.status(HttpStatus.CREATED).body(url);
     }
     @PostMapping("music")
-    public ResponseEntity<String> uploadMusic(@RequestParam("file") MultipartFile file){
-        String url = this.uploadService.uploadMusic(file);
-        if (StringUtils.isBlank(url)) {
+    public ResponseEntity<Music> uploadMusic(@RequestParam("file") MultipartFile file){
+        Music music = this.uploadService.uploadMusic(file);
+        if (music==null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(url);
+        return ResponseEntity.ok(music);
     }
 }

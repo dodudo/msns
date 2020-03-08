@@ -1,6 +1,11 @@
 <template>
   <v-card class="ml-2" style="margin-top:78px" flat width="1114">
-    <v-carousel cycle height="200" hide-delimiter-background show-arrows-on-hover>
+    <v-carousel
+      cycle
+      height="200"
+      hide-delimiter-background
+      show-arrows-on-hover
+    >
       <v-carousel-item
         :src="require(`../../assets/${slide.img}`)"
         v-for="(slide, i) in sliders"
@@ -38,9 +43,19 @@
         <v-card flat max-height="380" style="overflow-y:auto">
           <v-list class="pa-0 ma-0" dense two-line>
             <template v-for="(item, index) in musicItems">
-              <v-divider v-if="item.divider" :key="index" :inset="item.inset"></v-divider>
+              <v-divider
+                v-if="item.divider"
+                :key="index"
+                :inset="item.inset"
+              ></v-divider>
 
-              <v-list-item @click="playMusic()" dense v-else :key="item.title" link>
+              <v-list-item
+                @click="playMusic()"
+                dense
+                v-else
+                :key="item.title"
+                link
+              >
                 <v-list-item-avatar style="border-radius:4px" tile class="my-0">
                   <v-img :src="item.avatar"></v-img>
                 </v-list-item-avatar>
@@ -58,7 +73,9 @@
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn @click.stop="favor(index)" icon>
-                    <v-icon :color="item.favor ? 'red' : 'gray'">mdi-heart</v-icon>
+                    <v-icon :color="item.favor ? 'red' : 'gray'"
+                      >mdi-heart</v-icon
+                    >
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>

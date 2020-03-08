@@ -49,7 +49,12 @@
               <div class="overline mt-2">00:00</div>
             </v-col>
             <v-col cols="8">
-              <v-slider dense hide-details class="ma-0 pa-0" color="orange darken-3"></v-slider>
+              <v-slider
+                dense
+                hide-details
+                class="ma-0 pa-0"
+                color="orange darken-3"
+              ></v-slider>
             </v-col>
             <v-col cols="2">
               <div class="overline mt-2">04:10</div>
@@ -64,7 +69,7 @@
             </v-col>
             <v-col class="pa-0" style="text-align:center" cols="2">
               <v-btn icon @click="play()">
-                <v-icon>{{this.$store.state.playStatus}}</v-icon>
+                <v-icon>{{ this.$store.state.playStatus }}</v-icon>
               </v-btn>
             </v-col>
             <v-col class="pa-0" style="text-align:center" cols="2">
@@ -83,15 +88,27 @@
             <v-card flat style="overflow-y:auto" width="360" height="186">
               <v-list class="pa-0 ma-0" dense two-line>
                 <template v-for="(item, index) in musicItems">
-                  <v-divider v-if="item.divider" :key="index" :inset="item.inset"></v-divider>
+                  <v-divider
+                    v-if="item.divider"
+                    :key="index"
+                    :inset="item.inset"
+                  ></v-divider>
 
                   <v-list-item dense v-else :key="item.title">
-                    <v-list-item-avatar style="border-radius:4px" tile class="my-0">
+                    <v-list-item-avatar
+                      style="border-radius:4px"
+                      tile
+                      class="my-0"
+                    >
                       <v-img :src="item.avatar"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content style="height:40px" class="pa-0">
-                      <v-list-item-title v-html="item.title"></v-list-item-title>
-                      <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+                      <v-list-item-title
+                        v-html="item.title"
+                      ></v-list-item-title>
+                      <v-list-item-subtitle
+                        v-html="item.subtitle"
+                      ></v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                 </template>

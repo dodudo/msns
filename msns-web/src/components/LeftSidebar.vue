@@ -15,9 +15,9 @@
       <v-card class="title" flat>哈哈哈</v-card>
       <v-row justify="center">
         <v-col
-          :style="{'color': color1,'cursor':pointer1}"
-          @mouseover="color1='red', pointer1='pointer'"
-          @mouseleave="color1=''"
+          :style="{ color: color1, cursor: pointer1 }"
+          @mouseover="(color1 = 'red'), (pointer1 = 'pointer')"
+          @mouseleave="color1 = ''"
           class="btn"
           style="text-align:center"
           cols="4"
@@ -27,9 +27,9 @@
           <div>15</div>
         </v-col>
         <v-col
-          :style="{'color': color2,'cursor':pointer2}"
-          @mouseover="color2='red',pointer2='pointer'"
-          @mouseleave="color2=''"
+          :style="{ color: color2, cursor: pointer2 }"
+          @mouseover="(color2 = 'red'), (pointer2 = 'pointer')"
+          @mouseleave="color2 = ''"
           cols="4"
           style="text-align:center"
           @click="toFan()"
@@ -38,9 +38,9 @@
           <div>25</div>
         </v-col>
         <v-col
-          :style="{'color': color3,'cursor':pointer3}"
-          @mouseover="color3='red',pointer3='pointer'"
-          @mouseleave="color3=''"
+          :style="{ color: color3, cursor: pointer3 }"
+          @mouseover="(color3 = 'red'), (pointer3 = 'pointer')"
+          @mouseleave="color3 = ''"
           cols="4"
           style="text-align:center"
           @click="toDynamic()"

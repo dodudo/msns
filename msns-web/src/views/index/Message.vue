@@ -22,13 +22,19 @@
         <v-list nav two-line light>
           <v-list-item-group>
             <v-list-item color="red" to="/index/message/reply" link>
-              <v-list-item-title style="text-align:center">回复我的</v-list-item-title>
+              <v-list-item-title style="text-align:center"
+                >回复我的</v-list-item-title
+              >
             </v-list-item>
             <v-list-item color="red" to="/index/message/love" link>
-              <v-list-item-title style="text-align:center">收到的赞</v-list-item-title>
+              <v-list-item-title style="text-align:center"
+                >收到的赞</v-list-item-title
+              >
             </v-list-item>
             <v-list-item color="red" to="/index/message/comment" link>
-              <v-list-item-title style="text-align:center">我的评论</v-list-item-title>
+              <v-list-item-title style="text-align:center"
+                >我的评论</v-list-item-title
+              >
             </v-list-item>
           </v-list-item-group>
         </v-list>
