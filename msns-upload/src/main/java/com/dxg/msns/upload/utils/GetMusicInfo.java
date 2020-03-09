@@ -26,8 +26,7 @@ import java.util.UUID;
 
 @Component
 public class GetMusicInfo {
-    private static final List<String> MUSIC_TYPES = Arrays.asList("audio/mp3", "audio/flac", "audio/wav", "image/ogg");
-    public Music getMusicTags(File file,String contentType){
+    private static final List<String> MUSIC_TYPES = Arrays.asList("audio/mp3", "audio/flac", "audio/wav", "audio/ogg","audio/x-mp3", "audio/x-flac", "audio/x-wav", "audio/x-ogg");    public Music getMusicTags(File file,String contentType){
         Music music = new Music();
         MP3FileReader mp3FileReader = new MP3FileReader();
         FlacFileReader flacFileReader = new FlacFileReader();
@@ -37,13 +36,13 @@ public class GetMusicInfo {
         AudioFile audioFile = null;
         try {
             //获取音乐信息
-            if (contentType.contains(MUSIC_TYPES.get(0))) { //是music类型
+            if (contentType.contains(MUSIC_TYPES.get(0))||contentType.contains(MUSIC_TYPES.get(4))) { //是music类型
                 audioFile = mp3FileReader.read(file);
-            } else if (contentType.contains(MUSIC_TYPES.get(1))) { //是flac类型
+            } else if (contentType.contains(MUSIC_TYPES.get(1))||contentType.contains(MUSIC_TYPES.get(5))) { //是flac类型
                 audioFile = flacFileReader.read(file);
-            } else if (contentType.contains(MUSIC_TYPES.get(2))) { //是wav类型
+            } else if (contentType.contains(MUSIC_TYPES.get(2))||contentType.contains(MUSIC_TYPES.get(6))) { //是wav类型
                 audioFile = wavFileReader.read(file);
-            } else if (contentType.contains(MUSIC_TYPES.get(3))) { //是ogg类型
+            } else if (contentType.contains(MUSIC_TYPES.get(3))||contentType.contains(MUSIC_TYPES.get(7))) { //是ogg类型
                 audioFile = oggFileReader.read(file);
             }
 

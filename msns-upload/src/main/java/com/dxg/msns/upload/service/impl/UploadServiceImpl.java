@@ -41,7 +41,7 @@ public class UploadServiceImpl implements UploadService {
     private GetMusicInfo getMusicInfo;
 
     private static final List<String> IMAGE_TYPES = Arrays.asList("image/jpeg", "image/png", "image/jpg", "image/gif");
-    private static final List<String> MUSIC_TYPES = Arrays.asList("audio/mp3", "audio/flac", "audio/wav", "image/ogg");
+    private static final List<String> MUSIC_TYPES = Arrays.asList("audio/mp3", "audio/flac", "audio/wav", "audio/ogg","audio/x-mp3", "audio/x-flac", "audio/x-wav", "audio/x-ogg");
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadService.class);
 
     @Override
@@ -91,7 +91,7 @@ public class UploadServiceImpl implements UploadService {
             multipartFile.transferTo(tempFile);  //转换为File类型
             //获取上传文件类型
             String contentType = multipartFile.getContentType();
-
+            System.out.println(contentType);
             if (!MUSIC_TYPES.contains(contentType)){
                 LOGGER.info("文件类型不合法：{}", originalFilename);
                 return null;

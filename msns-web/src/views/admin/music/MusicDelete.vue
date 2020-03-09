@@ -24,9 +24,7 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on }">
-              <v-btn color="primary" dark class="mb-2" v-on="on"
-                >新增音乐</v-btn
-              >
+              <v-btn color="primary" dark class="mb-2" v-on="on">新增音乐</v-btn>
             </template>
             <v-card>
               <v-card-title>
@@ -35,11 +33,7 @@
 
               <v-card-text>
                 <v-container>
-                  <v-form
-                    v-if="formTitle == '新增'"
-                    v-model="valid"
-                    ref="musicFileForm"
-                  >
+                  <v-form v-if="formTitle == '新增'" v-model="valid" ref="musicFileForm">
                     <v-row>
                       <v-col class="pa-0" cols="12" sm="12" md="12">
                         <v-file-input
@@ -55,11 +49,7 @@
                   <v-form v-model="valid" ref="imageFileForm">
                     <v-row align="center">
                       <v-col class="pa-0" cols="10" sm="10" md="10">
-                        <v-file-input
-                          @change="fileChange"
-                          accept="image/*"
-                          label="请选择音乐封面文件"
-                        ></v-file-input>
+                        <v-file-input @change="fileChange" accept="image/*" label="请选择音乐封面文件"></v-file-input>
                       </v-col>
                       <v-col cols="2">
                         <v-img
@@ -83,26 +73,17 @@
                     </v-row>
                     <v-row>
                       <v-col class="pa-0" cols="12" sm="12" md="12">
-                        <v-text-field
-                          v-model="editedItem.musicAuthor"
-                          label="歌手"
-                        ></v-text-field>
+                        <v-text-field v-model="editedItem.musicAuthor" label="歌手"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col class="pa-0" cols="12" sm="12" md="12">
-                        <v-text-field
-                          v-model="editedItem.musicAlbum"
-                          label="专辑"
-                        ></v-text-field>
+                        <v-text-field v-model="editedItem.musicAlbum" label="专辑"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col class="pa-0" cols="12" sm="12" md="12">
-                        <v-text-field
-                          v-model="editedItem.musicPublisDate"
-                          label="发行时间"
-                        ></v-text-field>
+                        <v-text-field v-model="editedItem.musicPublisDate" label="发行时间"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -147,46 +128,54 @@
       </template>
       <!-- 音乐id -->
       <template v-slot:item.musicId="{ item }">
-        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>{{
+        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>
+          {{
           item.musicId
-        }}</v-card>
+          }}
+        </v-card>
       </template>
       <!-- 歌曲名 -->
       <template v-slot:item.musicName="{ item }">
-        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>{{
+        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>
+          {{
           item.musicName
-        }}</v-card>
+          }}
+        </v-card>
       </template>
       <!-- 歌手 -->
       <template v-slot:item.musicAuthor="{ item }">
-        <v-card class="content" color="rgba(0,0,0,0)" flat>{{
+        <v-card class="content" color="rgba(0,0,0,0)" flat>
+          {{
           item.musicAuthor
-        }}</v-card>
+          }}
+        </v-card>
       </template>
       <!-- 专辑名 -->
       <template v-slot:item.musicAlbum="{ item }">
-        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>{{
+        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>
+          {{
           item.musicAlbum
-        }}</v-card>
+          }}
+        </v-card>
       </template>
       <template v-slot:item.musicType="{ item }">
-        <v-card color="rgba(0,0,0,0)" flat>{{
+        <v-card color="rgba(0,0,0,0)" flat>
+          {{
           musicTypes.find(function(i) {
-            return i.id == item.musicTypeId;
+          return i.id == item.musicTypeId;
           }) != null
-            ? musicTypes.find(function(i) {
-                return i.id == item.musicTypeId;
-              }).typeName
-            : "null"
-        }}</v-card>
+          ? musicTypes.find(function(i) {
+          return i.id == item.musicTypeId;
+          }).typeName
+          : "null"
+          }}
+        </v-card>
       </template>
       <template v-slot:item.musicPublisDate="{ item }">
         <v-card color="rgba(0,0,0,0)" flat>{{ item.musicPublisDate }}</v-card>
       </template>
       <template v-slot:item.musicPushDate="{ item }">
-        <v-card color="rgba(0,0,0,0)" flat>
-          {{ formatDate(new Date(item.musicPushDate)) }}
-        </v-card>
+        <v-card color="rgba(0,0,0,0)" flat>{{ formatDate(new Date(item.musicPushDate)) }}</v-card>
       </template>
       <template v-slot:item.action="{ item }">
         <v-icon class="mr-2" @click="recover(item)">mdi-autorenew</v-icon>
@@ -345,6 +334,7 @@ export default {
       // console.log(this.editedItem)
       let formData = new FormData();
       formData.append("file", e);
+      alert("dshjkhgfkljadhjlk");
       this.$http({
         method: "post",
         url: "http://localhost:10000/upload/music",
@@ -355,6 +345,13 @@ export default {
       })
         .then(resp => {
           this.editedItem = resp.data;
+          console.log(this.editedItem);
+          if (
+            this.editedItem.musicTypeId == null ||
+            this.editedItem.musicTypeId == ""
+          ) {
+            this.editedItem.musicTypeId = 1;
+          }
           this.musicFileErr = null;
         })
         .catch(() => {
