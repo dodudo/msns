@@ -324,7 +324,7 @@ export default {
         }
       }).then(resp => {
         this.editedItem.musicCoverUrl = resp.data;
-        console.log(resp.data);
+        console.log(this.editedItem);
       });
       // console.log(this.coverUrl)
     },
