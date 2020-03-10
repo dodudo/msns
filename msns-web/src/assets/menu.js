@@ -55,12 +55,12 @@ var menus = [{
     title: "用户管理",
     path: "/user",
     items: [{
-        title: "用户统计",
-        path: "/statistics"
-      },
-      {
         title: "用户管理",
         path: "/list"
+      },
+      {
+        title: "用户删除",
+        path: "/delete"
       }
     ]
   },
@@ -69,16 +69,12 @@ var menus = [{
     title: "管理员管理",
     path: "/setting",
     items: [{
-        title: "权限管理",
+        title: "管理员管理",
         path: "/list"
       },
       {
-        title: "角色管理",
-        path: "/role"
-      },
-      {
-        title: "人员管理",
-        path: "/member"
+        title: "管理员删除",
+        path: "/delete"
       }
     ]
   }

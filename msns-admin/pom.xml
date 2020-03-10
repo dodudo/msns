@@ -9,12 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dxg.msns.user</groupId>
-    <artifactId>msns-user</artifactId>
+    <groupId>com.dxg.msns.admin</groupId>
+    <artifactId>msns-admin</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>msns-user-interface</module>
-        <module>msns-user-service</module>
+        <module>msns-admin-interface</module>
+        <module>msns-admin-service</module>
     </modules>
 
 

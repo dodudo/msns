@@ -56,7 +56,7 @@
                           aspect-ratio="1"
                           max-width="80"
                           max-height="80"
-                          :src="editedItem.musicCoverUrl"
+                          :src="editedItem.musicCoverUrl == null ? coverUrl : editedItem.musicCoverUrl == null"
                         ></v-img>
                       </v-col>
                     </v-row>
@@ -128,35 +128,19 @@
       </template>
       <!-- 音乐id -->
       <template v-slot:item.musicId="{ item }">
-        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>
-          {{
-          item.musicId
-          }}
-        </v-card>
+        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>{{ item.musicId }}</v-card>
       </template>
       <!-- 歌曲名 -->
       <template v-slot:item.musicName="{ item }">
-        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>
-          {{
-          item.musicName
-          }}
-        </v-card>
+        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>{{ item.musicName }}</v-card>
       </template>
       <!-- 歌手 -->
       <template v-slot:item.musicAuthor="{ item }">
-        <v-card class="content" color="rgba(0,0,0,0)" flat>
-          {{
-          item.musicAuthor
-          }}
-        </v-card>
+        <v-card class="content" color="rgba(0,0,0,0)" flat>{{ item.musicAuthor }}</v-card>
       </template>
       <!-- 专辑名 -->
       <template v-slot:item.musicAlbum="{ item }">
-        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>
-          {{
-          item.musicAlbum
-          }}
-        </v-card>
+        <v-card width="100" class="content" color="rgba(0,0,0,0)" flat>{{ item.musicAlbum }}</v-card>
       </template>
       <template v-slot:item.musicType="{ item }">
         <v-card color="rgba(0,0,0,0)" flat>
@@ -175,7 +159,11 @@
         <v-card color="rgba(0,0,0,0)" flat>{{ item.musicPublisDate }}</v-card>
       </template>
       <template v-slot:item.musicPushDate="{ item }">
-        <v-card color="rgba(0,0,0,0)" flat>{{ formatDate(new Date(item.musicPushDate)) }}</v-card>
+        <v-card color="rgba(0,0,0,0)" flat>
+          {{
+          formatDate(new Date(item.musicPushDate))
+          }}
+        </v-card>
       </template>
       <template v-slot:item.action="{ item }">
         <v-icon class="mr-2" @click="recover(item)">mdi-autorenew</v-icon>
@@ -324,7 +312,7 @@ export default {
         }
       }).then(resp => {
         this.editedItem.musicCoverUrl = resp.data;
-        console.log(this.editedItem);
+        this.coverUrl = resp.data;
       });
       // console.log(this.coverUrl)
     },
@@ -334,7 +322,6 @@ export default {
       // console.log(this.editedItem)
       let formData = new FormData();
       formData.append("file", e);
-      alert("dshjkhgfkljadhjlk");
       this.$http({
         method: "post",
         url: "http://localhost:10000/upload/music",
@@ -345,7 +332,6 @@ export default {
       })
         .then(resp => {
           this.editedItem = resp.data;
-          console.log(this.editedItem);
           if (
             this.editedItem.musicTypeId == null ||
             this.editedItem.musicTypeId == ""
@@ -412,7 +398,6 @@ export default {
     close() {
       this.dialog = false;
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       }, 300);
     },

@@ -12,6 +12,8 @@ zuul:
   routes:
     dynamic-service: /dynamic/**
     music-service: /music/**
+    user-service: /user/**
+    admin-service: /admin/**
   ignored-patterns: /upload/**
   ignored-services:
     - upload-service

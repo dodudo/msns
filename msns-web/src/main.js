@@ -9,7 +9,6 @@ import fs from "fs";
 import vuetify from "./plugins/vuetify";
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
 
-Vue.config.productionTip = false;
 Vue.use(vuetify);
 Vue.prototype.$qs = qs; //全局引用qs
 Vue.prototype.$fs = fs;

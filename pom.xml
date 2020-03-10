@@ -15,6 +15,7 @@
         <module>msns-music</module>
         <module>msns-upload</module>
         <module>msns-user</module>
+        <module>msns-admin</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

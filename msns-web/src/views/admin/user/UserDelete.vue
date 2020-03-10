@@ -29,7 +29,7 @@
         <v-card class="content" color="rgba(0,0,0,0)" flat>{{ formatDate(new Date(item.birthday)) }}</v-card>
       </template>
       <template v-slot:item.avatarUrl="{ item }">
-        <v-avatar>
+        <v-avatar width="40" height="40">
           <img
             :src="
             item.avatarUrl == null
@@ -41,7 +41,7 @@
         </v-avatar>
       </template>
       <template v-slot:item.action="{ item }">
-        <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon class="mr-2" @click="recover(item)">mdi-autorenew</v-icon>
       </template>
     </v-data-table>
   </v-card>
@@ -72,8 +72,7 @@ export default {
       { text: "生日", value: "birthday", sortable: false },
       { text: "手机", value: "phone", sortable: false },
       { text: "邮箱", value: "email", sortable: false },
-      { text: "状态", value: "status", sortable: false },
-      { text: "操作", value: "action", sortable: false }
+      { text: "恢复", value: "action", sortable: false }
     ],
     desserts: [],
     editedIndex: -1,
@@ -125,7 +124,7 @@ export default {
             rows: this.pagination.itemsPerPage, //每页大小
             sortBy: this.pagination.sortBy, //排序字段
             desc: this.pagination.sortDesc, //是否降序
-            isAll: true //是否查询所有未删除的
+            isAll: false //是否查询所有未删除的
           },
           paramsSerializer: params => {
             return this.$qs.stringify(params, { indices: false });
@@ -145,50 +144,23 @@ export default {
           console.log(err);
         });
     },
-
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    changeStatus(item) {
-      if (item.statusBoolean) {
-        item.status = "0";
-      } else {
-        item.status = "1";
-      }
-      this.$http({
-        method: "put",
-        url: `/user`,
-        data: item
-      })
-        .then(() => {
-          this.initialize();
-        })
-        .catch(() => {});
-    },
-    deleteItem(item) {
+    recover(item) {
+      // console.log(item);
       const index = this.desserts.indexOf(item);
-      const dessert = this.desserts[index];
-      dessert.status = -1;
-      console.log(dessert);
-      if (confirm("您确定要删除吗?")) {
+      if (confirm("您确定恢复此条记录吗？")) {
+        item.status = 0;
         this.$http({
           method: "put",
           url: `/user`,
-          data: dessert
+          data: item
         })
           .then(() => {
             this.initialize();
-            alert("删除成功!");
             this.desserts.splice(index, 1);
           })
-          .catch(() => {
-            alert("删除失败");
-          });
+          .catch(() => {});
       }
     },
-
     close() {
       this.dialog = false;
       setTimeout(() => {

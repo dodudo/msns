@@ -113,17 +113,16 @@ const routes = [
       route("/admin/setting", "/admin/setting/AdminList", "Admin"),
       route("/admin/setting/list", "/admin/setting/AdminList", "AdminList"),
       route(
-        "/admin/setting/member",
-        "/admin/setting/AdminMember",
-        "AdminMember"
+        "/admin/setting/delete",
+        "/admin/setting/AdminDelete",
+        "AdminDelete"
       ),
-      route("/admin/setting/role", "/admin/setting/AdminRole", "AdminRole"),
       route("/admin/user", "/admin/user/UserList", "User"),
       route("/admin/user/list", "/admin/user/UserList", "UserList"),
       route(
-        "/admin/user/statistics",
-        "/admin/user/UserStatistics",
-        "UserStatistics"
+        "/admin/user/delete",
+        "/admin/user/UserDelete",
+        "UserDelete"
       )
     ]
   }
