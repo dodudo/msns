@@ -40,4 +40,12 @@ public interface UserService {
      * @param user
      */
     void deleteUser(User user);
+
+    /**
+     * 查询用户数据是否可用
+     * @param data
+     * @param type
+     * @return
+     */
+    Boolean checkUserData(String data, Integer type);
 }

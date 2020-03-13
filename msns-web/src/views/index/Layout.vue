@@ -1,12 +1,7 @@
 <template>
   <v-app>
     <TopBar></TopBar>
-
-    <div
-      id="content"
-      style="max-width:1520px;min-width:880px"
-      class="overflow-y-auto"
-    >
+    <div id="content" style="max-width:1520px;min-width:880px" class="overflow-y-auto">
       <router-view />
       <RightSidebar class="right-sidebar my-0"></RightSidebar>
     </div>

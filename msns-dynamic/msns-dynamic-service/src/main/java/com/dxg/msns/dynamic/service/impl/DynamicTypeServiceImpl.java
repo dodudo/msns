@@ -100,4 +100,16 @@ public class DynamicTypeServiceImpl implements DynamicTypeService {
         this.typeMapper.deleteByExample(example);
     }
 
+    /**
+     * 查询所有分类名
+     *
+     * @return
+     */
+    @Override
+    public List<String> queryAllDynamiTypeNames() {
+
+        List<String> names = this.typeMapper.queryAllDynamiTypeNames();
+        return names;
+    }
+
 }

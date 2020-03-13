@@ -114,4 +114,30 @@ public class UserServiceImpl implements UserService {
         criteria.andEqualTo("id",user.getId());
         this.userMapper.deleteByExample(example);
     }
+
+    /**
+     * 查询用户数据是否可用
+     *
+     * @param data
+     * @param type
+     * @return
+     */
+    @Override
+    public Boolean checkUserData(String data, Integer type) {
+        User user = new User();
+        switch (type){
+            case 1:
+                user.setUname(data);
+                break;
+            case 2:
+                user.setPhone(data);
+                break;
+            case 3:
+                user.setEmail(data);
+                break;
+            default:
+                return null;
+        }
+        return this.userMapper.selectCount(user) == 0;
+    }
 }

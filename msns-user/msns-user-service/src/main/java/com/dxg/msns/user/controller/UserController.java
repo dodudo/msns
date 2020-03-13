@@ -81,4 +81,13 @@ public class UserController {
         this.userService.deleteUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @GetMapping("check/{data}/{type}")
+    public ResponseEntity<Boolean> checkUserData(@PathVariable("data") String data,@PathVariable("type") Integer type){
+        Boolean check = this.userService.checkUserData(data,type);
+        if (check == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(check);
+    }
 }

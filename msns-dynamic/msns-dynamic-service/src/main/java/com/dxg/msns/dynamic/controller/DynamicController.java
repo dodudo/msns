@@ -24,7 +24,7 @@ public class DynamicController {
      * @param desc
      * @return
      */
-    @GetMapping("page")
+    @RequestMapping("page")
     public ResponseEntity<PageResult<Dynamic>> queryDynamicsByPage(
             @RequestParam(value = "key",required = false)String key,
             @RequestParam(value = "page",defaultValue = "1")Integer page,

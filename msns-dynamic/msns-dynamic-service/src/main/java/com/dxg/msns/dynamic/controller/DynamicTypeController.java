@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("category")
@@ -18,7 +19,7 @@ public class DynamicTypeController {
     private DynamicTypeService dynamicTypeService;
 
     /**
-     * 查询所有分类
+     * 分页查询所有分类
      * @param key
      * @param page
      * @param rows
@@ -26,7 +27,7 @@ public class DynamicTypeController {
      * @param desc
      * @return
      */
-    @GetMapping("page")
+    @RequestMapping("page")
     public ResponseEntity<PageResult<DynamicType>> queryDynamicTypesByPage(
             @RequestParam(value = "key",required = false)String key,
             @RequestParam(value = "page",defaultValue = "1")Integer page,
@@ -43,6 +44,19 @@ public class DynamicTypeController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 查询所有分类名
+     * @return
+     */
+    @RequestMapping("names")
+    public ResponseEntity<List<String>> queryAllDynamiTypeNames(){
+        List<String> names = this.dynamicTypeService.queryAllDynamiTypeNames();
+        if (CollectionUtils.isEmpty(names)){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(names);
+    }
+    @RequestMapping
     /**
      * 新增分类
      * @param dynamicType

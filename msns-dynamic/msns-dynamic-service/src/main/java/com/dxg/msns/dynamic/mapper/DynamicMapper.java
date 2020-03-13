@@ -28,6 +28,9 @@ public interface DynamicMapper extends Mapper<Dynamic> {
             @Result(column = "report_count",property = "reportCount"),
             @Result(column = "dynamic_id",property = "reports",many = @Many(
                     select = "com.dxg.msns.dynamic.mapper.ReportMapper.findById"
+            )),
+            @Result(column = "dynamic_id",property = "commentCount",one = @One(
+                    select = "com.dxg.msns.dynamic.mapper.dynamicMapper.findCommentCountByDynamicId"
             ))
     })
     List<Dynamic> selectAllReports(String key, String sortBy, String isDesc);
@@ -38,4 +41,6 @@ public interface DynamicMapper extends Mapper<Dynamic> {
     @Update("update dynamic set report_count = #{reportCount} where dynamic_id = #{dynamicId}")
     @ResultMap(value = "dynamicMap")
     void insertReportCount(String dynamicId,Integer reportCount);
+
+
 }

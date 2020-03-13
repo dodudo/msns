@@ -1,13 +1,7 @@
 <template>
   <div>
     <!-- 小号左侧边栏，当页面缩小时可展开 -->
-    <v-navigation-drawer
-      v-model="min_leftbar"
-      height="630px"
-      style="top:60px"
-      fixed
-      temporary
-    >
+    <v-navigation-drawer v-model="min_leftbar" height="630px" style="top:60px" fixed temporary>
       <v-list-item>
         <v-list-item-avatar>
           <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
@@ -59,36 +53,18 @@
       scroll-target
     >
       <template v-slot:img="{ props }">
-        <v-img
-          v-bind="props"
-          gradient="to top right, rgba(255,0,0,1), rgba(255,0,0,0)"
-        ></v-img>
+        <v-img v-bind="props" gradient="to top right, rgba(255,0,0,1), rgba(255,0,0,0)"></v-img>
       </template>
 
-      <a
-        class="title"
-        style="text-decoration: none;color:#fff"
-        href="/index/main"
-      >
+      <a class="title" style="text-decoration: none;color:#fff" href="/index/main">
         <v-toolbar-title>Music Social Sites</v-toolbar-title>
       </a>
 
-      <v-app-bar-nav-icon
-        v-show="!drawer"
-        @click="min_leftbar = !min_leftbar"
-        icon
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-show="!drawer" @click="min_leftbar = !min_leftbar" icon></v-app-bar-nav-icon>
 
       <v-row justify="center" align="center" class="mx-auto">
         <v-col align="center" class="pa-0" cols="6">
-          <v-text-field
-            label="您想搜什么"
-            clearable
-            class="mt-6"
-            dense
-            outlined
-            v-model="select"
-          ></v-text-field>
+          <v-text-field label="您想搜什么" clearable class="mt-6" dense outlined v-model="select"></v-text-field>
         </v-col>
         <v-col class="pa-0" cols="1">
           <v-btn @click="toSearch()" link icon>
@@ -117,11 +93,7 @@
       </v-btn>
       <span>
         <v-btn @click="toPersonal()" class="mx-3" text icon>
-          <v-avatar
-            style="position:relative"
-            @mouseover="showCard()"
-            @mouseleave="hideCard()"
-          >
+          <v-avatar style="position:relative" @mouseover="showCard()" @mouseleave="hideCard()">
             <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
           </v-avatar>
         </v-btn>
@@ -226,13 +198,9 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
 
-                      <v-btn color="green darken-1" text @click="dialog = false"
-                        >抱歉，我点错了</v-btn
-                      >
+                      <v-btn color="green darken-1" text @click="dialog = false">抱歉，我点错了</v-btn>
 
-                      <v-btn color="green darken-1" text @click="dialog = false"
-                        >是的，我要退出</v-btn
-                      >
+                      <v-btn color="green darken-1" text @click="dialog = false">是的，我要退出</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>

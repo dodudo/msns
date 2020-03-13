@@ -23,39 +23,16 @@ public class Dynamic implements Serializable {
     private String avatarUrl;
     private String dynamicContent;
     private String imgUrls;
-    private Integer likeCount;
-    private Integer favor;
     private Integer dynamicTypeId;
     private Date publishDate;
     private String musicId;
-    private Integer view;
     private String status;
     private List<Report> reports;
     private Long reportCount;
-
-    public Long getReportCount() {
-        return reportCount;
-    }
-
-    public void setReportCount(Long reportCount) {
-        this.reportCount = reportCount;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
+    private Long viewCount; //浏览次数
+    private Long likeCount; //点赞次数
+    private Long favorCount; //收藏次数
+    private Long commentCount; //评论次数
 
     public Integer getId() {
         return id;
@@ -81,6 +58,22 @@ public class Dynamic implements Serializable {
         this.uid = uid;
     }
 
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
     public String getDynamicContent() {
         return dynamicContent;
     }
@@ -95,16 +88,6 @@ public class Dynamic implements Serializable {
 
     public void setImgUrls(String imgUrls) {
         this.imgUrls = imgUrls;
-    }
-
-
-
-    public Integer getFavor() {
-        return favor;
-    }
-
-    public void setFavor(Integer favor) {
-        this.favor = favor;
     }
 
     public Integer getDynamicTypeId() {
@@ -131,14 +114,6 @@ public class Dynamic implements Serializable {
         this.musicId = musicId;
     }
 
-    public Integer getView() {
-        return view;
-    }
-
-    public void setView(Integer view) {
-        this.view = view;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -147,20 +122,52 @@ public class Dynamic implements Serializable {
         this.status = status;
     }
 
-    public Integer getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(Integer likeCount) {
-        this.likeCount = likeCount;
-    }
-
     public List<Report> getReports() {
         return reports;
     }
 
     public void setReports(List<Report> reports) {
         this.reports = reports;
+    }
+
+    public Long getReportCount() {
+        return reportCount;
+    }
+
+    public void setReportCount(Long reportCount) {
+        this.reportCount = reportCount;
+    }
+
+    public Long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public Long getFavorCount() {
+        return favorCount;
+    }
+
+    public void setFavorCount(Long favorCount) {
+        this.favorCount = favorCount;
+    }
+
+    public Long getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Long commentCount) {
+        this.commentCount = commentCount;
     }
 
     @Override
@@ -173,15 +180,16 @@ public class Dynamic implements Serializable {
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", dynamicContent='" + dynamicContent + '\'' +
                 ", imgUrls='" + imgUrls + '\'' +
-                ", likeCount=" + likeCount +
-                ", favor=" + favor +
                 ", dynamicTypeId=" + dynamicTypeId +
                 ", publishDate=" + publishDate +
                 ", musicId='" + musicId + '\'' +
-                ", view=" + view +
                 ", status='" + status + '\'' +
                 ", reports=" + reports +
                 ", reportCount=" + reportCount +
+                ", viewCount=" + viewCount +
+                ", likeCount=" + likeCount +
+                ", favorCount=" + favorCount +
+                ", commentCount=" + commentCount +
                 '}';
     }
 }

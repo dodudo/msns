@@ -27,4 +27,10 @@ public interface DynamicTypeService {
      * @param dynamicType
      */
     void deleteType(DynamicType dynamicType);
+
+    /**
+     * 查询所有分类名
+     * @return
+     */
+    List<String> queryAllDynamiTypeNames();
 }
