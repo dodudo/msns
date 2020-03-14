@@ -64,7 +64,7 @@
 
       <v-row justify="center" align="center" class="mx-auto">
         <v-col align="center" class="pa-0" cols="6">
-          <v-text-field label="您想搜什么" clearable class="mt-6" dense outlined v-model="select"></v-text-field>
+          <v-text-field label="您想搜什么" clearable class="mt-6" dense outlined v-model="search"></v-text-field>
         </v-col>
         <v-col class="pa-0" cols="1">
           <v-btn @click="toSearch()" link icon>
@@ -246,11 +246,7 @@ export default {
       min_leftbar: false
     };
   },
-  watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-    }
-  },
+  watch: {},
   methods: {
     querySelections(v) {
       this.loading = true;
@@ -264,6 +260,7 @@ export default {
     },
     searchEvent() {
       console.log(`搜索的值为：${this.search}`);
+      this.$$emit("topBarSearchVal", this.search);
     },
     play() {
       this.playBtnStatus = !this.playBtnStatus;
@@ -284,7 +281,9 @@ export default {
       }, 500);
     },
     toSearch() {
-      this.$router.push({ path: "/index/search" });
+      // console.log(`搜索的值为：${this.search}`);
+      this.$emit("topBarSearchVal", this.search);
+      // this.$router.push({ path: "/index/search" });
     },
     toIndex() {
       this.$router.push({ path: "/index/main" });

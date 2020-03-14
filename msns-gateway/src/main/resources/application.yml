@@ -17,6 +17,7 @@ zuul:
     comment-service: /comment/**
     favor-service: /favor/**
     like-service: /like/**
+    search-service: /search/**
   ignored-patterns: /upload/**
   ignored-services:
     - upload-service

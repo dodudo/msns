@@ -1,13 +1,22 @@
 package com.dxg.msns.search.service.impl;
 
+import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.dynamic.pojo.Dynamic;
 import com.dxg.msns.favor.pojo.DynamicFavor;
 import com.dxg.msns.music.pojo.Music;
 import com.dxg.msns.search.client.*;
 import com.dxg.msns.search.pojo.Dynamics;
+import com.dxg.msns.search.pojo.SearchRequst;
+import com.dxg.msns.search.reponsitory.DynamicsRepository;
 import com.dxg.msns.search.service.SearchService;
 import com.dxg.msns.user.pojo.User;
+import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +43,9 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private LikeClient likeClient;
 
+    @Autowired
+    private DynamicsRepository dynamicsRepository;
+
     @Override
     public Dynamics buildDynamics(Dynamic dynamic) {
 
@@ -58,5 +70,31 @@ public class SearchServiceImpl implements SearchService {
             dynamics.setMusic(music);
         }
         return dynamics;
+    }
+
+    /**
+     * 根据条件查找动态
+     *
+     * @return
+     */
+    @Override
+    public PageResult<Dynamics> searchDynamics(SearchRequst request) {
+        String key = request.getKey();
+        //构建查询条件
+        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
+        if (StringUtils.isNotBlank(key)){
+            // 对key进行全文检索查询
+            nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("all",key).operator(Operator.AND));
+        }
+
+        //分页
+        int page = request.getPage();
+        int size = request.getSize();
+        nativeSearchQueryBuilder.withPageable(PageRequest.of(page-1,size));
+
+        //查询，获取结果
+        Page<Dynamics> dynamicsPage = this.dynamicsRepository.search(nativeSearchQueryBuilder.build());
+
+        return new PageResult<>(dynamicsPage.getTotalElements(),dynamicsPage.getTotalPages(),dynamicsPage.getContent());
     }
 }

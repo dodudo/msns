@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <TopBar></TopBar>
+    <TopBar v-on:topBarSearchVal="topBarSearchVal"></TopBar>
     <div id="content" style="max-width:1520px;min-width:880px" class="overflow-y-auto">
       <router-view />
       <RightSidebar class="right-sidebar my-0"></RightSidebar>
@@ -11,8 +11,17 @@
 import TopBar from "../../components/TopBar";
 import RightSidebar from "../../components/RightSidebar";
 export default {
-  data: () => ({}),
-  methods: {},
+  data: () => ({
+    search: ""
+  }),
+  methods: {
+    topBarSearchVal(searchVal) {
+      this.search = searchVal;
+      if (searchVal != null) {
+        this.$router.push({ path: `/index/search/${this.search}` });
+      }
+    }
+  },
   components: {
     TopBar,
     RightSidebar

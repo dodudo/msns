@@ -2,7 +2,7 @@
   <v-card flat style="position:relative;">
     <v-card flat>
       <v-card
-        v-for="(card_text, index) in card_texts"
+        v-for="(dynamic, index) in dynamics"
         :key="index"
         :max-width="card_width"
         flat
@@ -12,10 +12,8 @@
         <v-list-item>
           <v-list-item-avatar color="grey"></v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title class="body-1">哈哈哈</v-list-item-title>
-            <v-list-item-subtitle class="body-2"
-              >2019-12-10</v-list-item-subtitle
-            >
+            <v-list-item-title class="body-1">{{dynamic.author}}</v-list-item-title>
+            <v-list-item-subtitle class="body-2">{{dynamic.publishDate}}</v-list-item-subtitle>
           </v-list-item-content>
           <v-spacer></v-spacer>
           <v-menu offset-y>
@@ -49,12 +47,8 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialog = false"
-                      >提交</v-btn
-                    >
-                    <v-btn color="blue darken-1" text @click="dialog = false"
-                      >取消</v-btn
-                    >
+                    <v-btn color="blue darken-1" text @click="dialog = false">提交</v-btn>
+                    <v-btn color="blue darken-1" text @click="dialog = false">取消</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -63,13 +57,11 @@
         </v-list-item>
         <v-content class="px-4">
           <div
-            ref="card_text"
-            class="text-content mb-2"
-            :class="{ fold: card_text.fold }"
+            ref="dynamicContent"
+            class="text-content mb-2 dynamic-content"
+            :class="{ fold: dynamic.fold }"
             :id="`text_${index}`"
-          >
-            {{ card_text.text }}
-          </div>
+          >{{ dynamic.dynamicContent }}</div>
           <v-row>
             <v-spacer></v-spacer>
             <v-btn
@@ -78,24 +70,18 @@
               tile
               class="mr-2 mt-n4"
               color="blue"
-              v-show="card_text.btnShow"
-              @click="card_text.fold = !card_text.fold"
-              >{{ card_text.fold ? "展开" : "收起" }}</v-btn
-            >
+              v-show="dynamic.btnShow"
+              @click="dynamic.fold = !dynamic.fold"
+            >{{ dynamic.fold ? "展开" : "收起" }}</v-btn>
           </v-row>
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-            height="194"
-          ></v-img>
+          <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
         </v-content>
         <v-card v-show="true" style outlined flat class="px-0 my-2 mx-4">
           <v-list class="pa-0">
             <v-list-item style="background-color:#FAFAFA">
               <v-card tile height="40" width="40">
                 <v-list-item-avatar class="ma-0" tile>
-                  <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-                  ></v-img>
+                  <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"></v-img>
                 </v-list-item-avatar>
 
                 <v-overlay z-index="1" opacity="0.3" absolute value="true">
@@ -127,13 +113,13 @@
             <span class="caption">12</span>
           </v-card>
           <v-card flat>
-            <v-btn @click="card_text.show_input = !card_text.show_input" icon>
+            <v-btn @click="dynamic.show_input = !dynamic.show_input" icon>
               <v-icon>mdi-message-reply</v-icon>
             </v-btn>
             <span class="caption">12</span>
           </v-card>
         </v-card-actions>
-        <v-card v-if="card_text.show_input" flat>
+        <v-card v-if="dynamic.show_input" flat>
           <v-textarea
             clearable
             clear-icon="mdi-close-circle-outline"
@@ -145,9 +131,7 @@
             rows="1"
           ></v-textarea>
           <v-card class="d-flex justify-end my-2" flat>
-            <v-btn small width="100" dark color="#BA68C8" class="mr-4 caption"
-              >发表评论</v-btn
-            >
+            <v-btn small width="100" dark color="#BA68C8" class="mr-4 caption">发表评论</v-btn>
           </v-card>
         </v-card>
       </v-card>
@@ -156,8 +140,15 @@
 </template>
 <script>
 export default {
+  props: {
+    dynamicSearch: {
+      type: Object,
+      required: true
+    }
+  },
   data: () => ({
     dialog: false,
+    dynamics: [],
     radioGroup: 1,
     radioItems: [
       { name: "色情低俗", value: "porn" },
@@ -169,97 +160,62 @@ export default {
     ],
     absolute: true,
     overlay: false,
-    card_texts: [
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `Visit ten places on our planet that are underdsfad
-          sadffffffffffsdfa
-          asdfaaaaaaaaaaaaaaaa
-          dsaffffffffffffffffffffffffffffffffffffffffffff
-          sdfaweqggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          dsaffffffffffffffffffffffffffffffffffffffffffff
-          sdfaweqggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          geeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-          eggggggggggggggggggggggg
-          egggggggggggggggggggggggggggggggggggggg
-          eeeeeeeeeeeeeeeeeeeeeeeeeeeeeegoing the biggest changes today.`
-      },
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `sdagdgsdagasdgasdg`
-      },
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `Visit ten places on our planet that are underdsfad
-          sadffffffffffsdfa
-          asdfaaaaaaaaaaaaaaaa
-          dsaffffffffffffffffffffffffffffffffffffffffffff
-          sdfaweqggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          dsaffffffffffffffffffffffffffffffffffffffffffff
-          sdfaweqggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          geeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-          eggggggggggggggggggggggg
-          egggggggggggggggggggggggggggggggggggggg
-          eeeeeeeeeeeeeeeeeeeeeeeeeeeeeegoing the biggest changes today.`
-      },
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `Visit ten places on our planet that are underdsfad
-          sadffffffffffsdfa
-          asdfaaaaaaaaaaaaaaaa
-          dsaffffffffffffffffffffffffffffffffffffffffffff
-          sdfaweqggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          dsaffffffffffffffffffffffffffffffffffffffffffff
-          sdfaweqggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          geeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-          eggggggggggggggggggggggg
-          egggggggggggggggggggggggggggggggggggggg
-          eeeeeeeeeeeeeeeeeeeeeeeeeeeeeegoing the biggest changes today.`
-      },
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `sdagdgsdagasdgasdg`
-      },
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `sdagdgsdagasdgasdg`
-      },
-      {
-        btnShow: false,
-        fold: false,
-        show_input: false,
-        text: `sdagdgsdagasdgasdg`
-      }
-    ],
     hideText: "",
     isfold: false,
     card_width: 700,
     showFoldBtn: false
   }),
-  methods: {},
-  watch: {},
-  mounted() {
-    for (let i = 0; i < this.$refs.card_text.length; i++) {
-      let textHeight = window
-        .getComputedStyle(this.$refs.card_text[i])
-        .height.replace("px", "");
-      if (textHeight > 120) {
-        this.card_texts[i].fold = true;
-        this.card_texts[i].btnShow = true;
-      }
+  methods: {
+    showComment(e) {
+      // console.log(e);
+      this.dynamics[e].show_input = !this.dynamics[e].show_input;
+    },
+    searAllDynamic() {
+      this.$http({
+        method: "post",
+        url: "/search/dynamicPage",
+        data: this.dynamicSearch
+      }).then(resp => {
+        this.dynamics = resp.data.items;
+        console.log(this.dynamics);
+        for (let i = 0; i < this.dynamics.length; i++) {
+          this.dynamics[i].btnShow = false;
+          this.dynamics[i].fold = false;
+          this.dynamics[i].show_input = false;
+          this.dynamics[i] = Object.assign({}, this.dynamics[i]);
+        }
+        this.dynamics = Object.assign({}, this.dynamics);
+        console.log(this.dynamics);
+      });
     }
+  },
+  watch: {},
+  created() {
+    this.$nextTick(() => {
+      this.searAllDynamic();
+    });
+  },
+  updated() {},
+  mounted() {
+    let that = this;
+    setTimeout(() => {
+      // console.log(that.$refs);
+      var refs = that.$refs;
+      var dynamicContent = refs.dynamicContent;
+      // console.log(dynamicContent);
+      if (dynamicContent != null) {
+        for (let i = 0; i < dynamicContent.length; i++) {
+          let textHeight = window
+            .getComputedStyle(dynamicContent[i])
+            .height.replace("px", "");
+          // console.log(textHeight);
+          if (textHeight > 120) {
+            this.dynamics[i].fold = true;
+            this.dynamics[i].btnShow = true;
+          }
+        }
+      }
+    }, 100);
   }
 };
 </script>

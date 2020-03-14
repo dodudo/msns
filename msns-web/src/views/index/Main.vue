@@ -2,7 +2,7 @@
   <v-app>
     <LeftSidebar></LeftSidebar>
     <Edit></Edit>
-    <News class="news"></News>
+    <News v-bind:dynamicSearch="dynamicSearch" class="news"></News>
   </v-app>
 </template>
 <script>
@@ -11,13 +11,22 @@ import LeftSidebar from "../../components/LeftSidebar";
 import Edit from "../../components/Edit";
 export default {
   data: () => ({
-    screenWidth: ""
+    screenWidth: "",
+    dynamicSearch: {
+      key: "",
+      page: ""
+    },
+    dynamics: []
   }),
   components: {
     News,
     LeftSidebar,
     Edit
-  }
+  },
+  mounted() {
+    // console.log("main-create");
+  },
+  methods: {}
 };
 </script>
 <style scoped></style>

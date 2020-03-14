@@ -24,7 +24,7 @@ const routes = [
     children: [
       route("/index/main", "/index/Main.vue", "Main"),
       route("/index/music", "/index/Music.vue", "Music"),
-      route("/index/search", "/index/Search.vue", "Search"),
+      route("/index/search/:key", "/index/Search.vue", "Search"),
       route("/index/dynamic", "/index/Dynamic", "Dynamic"),
       {
         path: "/index/message",
