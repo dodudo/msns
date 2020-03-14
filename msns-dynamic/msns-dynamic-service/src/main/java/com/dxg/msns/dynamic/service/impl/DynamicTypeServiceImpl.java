@@ -112,4 +112,24 @@ public class DynamicTypeServiceImpl implements DynamicTypeService {
         return names;
     }
 
+    /**
+     * 根据id查询分类名
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public String queryNameById(Integer id) {
+        Example example = new Example(DynamicType.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("id",id).andEqualTo("typeStatus","1");
+        DynamicType dynamicType = this.typeMapper.selectOneByExample(example);
+        if (dynamicType == null){
+            return null;
+        }else {
+            return dynamicType.getTypeName();
+        }
+
+    }
+
 }

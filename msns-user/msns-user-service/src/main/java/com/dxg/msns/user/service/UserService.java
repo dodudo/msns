@@ -48,4 +48,11 @@ public interface UserService {
      * @return
      */
     Boolean checkUserData(String data, Integer type);
+
+    /**
+     * 根据id查找用户
+     * @param uid
+     * @return
+     */
+    User queryNameAvatarById(String uid);
 }

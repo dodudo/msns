@@ -92,4 +92,15 @@ public class MusicController {
         this.musicService.deleteMusic(music);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    /**
+     * 根据id查找音乐
+     * @param musicId
+     * @return
+     */
+    @RequestMapping("queryById/{id}")
+    public ResponseEntity<Music> queryMusicById(@PathVariable("id") String musicId){
+        Music music=this.musicService.queryMusicById(musicId);
+        return ResponseEntity.ok(music);
+    }
 }

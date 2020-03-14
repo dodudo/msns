@@ -33,4 +33,11 @@ public interface DynamicTypeService {
      * @return
      */
     List<String> queryAllDynamiTypeNames();
+
+    /**
+     * 根据id查询分类名
+     * @param id
+     * @return
+     */
+    String queryNameById(Integer id);
 }

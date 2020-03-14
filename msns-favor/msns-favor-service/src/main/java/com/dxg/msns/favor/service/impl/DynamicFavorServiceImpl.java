@@ -22,7 +22,7 @@ public class DynamicFavorServiceImpl implements DynamicFavorService {
     public Integer queryByDynamicId(String dynamicId) {
         Example example = new Example(DynamicFavor.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("dynamic_id",dynamicId);
+        criteria.andEqualTo("dynamicId",dynamicId);
         Integer counts = dynamicFavorMapper.selectCountByExample(example);
         return counts;
     }

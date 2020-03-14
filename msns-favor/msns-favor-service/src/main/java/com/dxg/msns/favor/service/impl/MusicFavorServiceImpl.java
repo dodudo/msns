@@ -21,7 +21,7 @@ public class MusicFavorServiceImpl implements MusicFavorService {
     public Integer queryCountByUid(String uid) {
         Example example = new Example(DynamicFavor.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("dynamic_id",uid);
+        criteria.andEqualTo("dynamicId",uid);
         Integer counts = musicFavorMapper.selectCountByExample(example);
         return counts;
     }

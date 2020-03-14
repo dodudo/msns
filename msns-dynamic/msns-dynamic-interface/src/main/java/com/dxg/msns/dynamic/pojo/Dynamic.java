@@ -30,9 +30,6 @@ public class Dynamic implements Serializable {
     private List<Report> reports;
     private Long reportCount;
     private Long viewCount; //浏览次数
-    private Long likeCount; //点赞次数
-    private Long favorCount; //收藏次数
-    private Long commentCount; //评论次数
 
     public Integer getId() {
         return id;
@@ -146,30 +143,6 @@ public class Dynamic implements Serializable {
         this.viewCount = viewCount;
     }
 
-    public Long getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(Long likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public Long getFavorCount() {
-        return favorCount;
-    }
-
-    public void setFavorCount(Long favorCount) {
-        this.favorCount = favorCount;
-    }
-
-    public Long getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(Long commentCount) {
-        this.commentCount = commentCount;
-    }
-
     @Override
     public String toString() {
         return "Dynamic{" +
@@ -187,9 +160,6 @@ public class Dynamic implements Serializable {
                 ", reports=" + reports +
                 ", reportCount=" + reportCount +
                 ", viewCount=" + viewCount +
-                ", likeCount=" + likeCount +
-                ", favorCount=" + favorCount +
-                ", commentCount=" + commentCount +
                 '}';
     }
 }

@@ -122,4 +122,18 @@ public class MusicServiceImpl implements MusicService {
         criteria.andEqualTo("id",music.getId());
         this.musicMapper.deleteByExample(example);
     }
+
+    /**
+     * 根据id查找音乐
+     *
+     * @param musicId
+     * @return
+     */
+    @Override
+    public Music queryMusicById(String musicId) {
+        Example example = new Example(Music.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("music_id",musicId);
+        return  this.musicMapper.selectByExample(example).get(0);
+    }
 }

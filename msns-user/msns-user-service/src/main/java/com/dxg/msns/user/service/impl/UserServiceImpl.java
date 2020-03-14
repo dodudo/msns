@@ -140,4 +140,15 @@ public class UserServiceImpl implements UserService {
         }
         return this.userMapper.selectCount(user) == 0;
     }
+
+    /**
+     * 根据id查找用户
+     *
+     * @param uid
+     * @return
+     */
+    @Override
+    public User queryNameAvatarById(String uid) {
+        return this.userMapper.queryNameAvatarById(uid);
+    }
 }

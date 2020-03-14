@@ -21,7 +21,7 @@ public class LikeServiceImpl implements LikeService {
     public Integer queryCountsByDynamicId(String dynamicId) {
         Example example = new Example(Like.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("dynamic_id",dynamicId);
+        criteria.andEqualTo("dynamicId",dynamicId);
         Integer counts = likeMapper.selectCountByExample(example);
         return counts;
     }

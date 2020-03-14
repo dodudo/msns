@@ -50,4 +50,11 @@ public interface MusicService {
      * @param music
      */
     void deleteMusic(Music music);
+
+    /**
+     * 根据id查找音乐
+     * @param musicId
+     * @return
+     */
+    Music queryMusicById(String musicId);
 }

@@ -3,12 +3,15 @@ package com.dxg.msns.dynamic.controller;
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.dynamic.pojo.DynamicType;
 import com.dxg.msns.dynamic.service.DynamicTypeService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
@@ -42,6 +45,20 @@ public class DynamicTypeController {
         PageResult<DynamicType> result = this.dynamicTypeService.queryDynamicTypesByPage(key,page,rows,sortBy,desc,isAll);
 
         return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 根据id查询名称
+     * @param id
+     * @return
+     */
+    @RequestMapping("queryNameById/{id}")
+    public ResponseEntity<String> queryNameById(@PathVariable("id") Integer id){
+        String name = this.dynamicTypeService.queryNameById(id);
+        if (StringUtils.isEmpty(name)){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(name);
     }
 
     /**

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-03-13 21:05:21
  */
-@Table(name = "like")
+@Table(name = "dynamic_like")
 public class Like implements Serializable {
     private static final long serialVersionUID = 102615283971963257L;
     /**

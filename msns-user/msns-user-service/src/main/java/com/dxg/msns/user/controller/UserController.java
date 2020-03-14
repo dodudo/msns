@@ -90,4 +90,18 @@ public class UserController {
         }
         return ResponseEntity.ok(check);
     }
+
+    /**
+     * 根据id查找用户头像和昵称
+     * @param uid
+     * @return
+     */
+    @RequestMapping("queryNameAvatarById/{id}")
+    public ResponseEntity<User> queryNameAvatarById(@PathVariable("id") String uid){
+        User user = this.userService.queryNameAvatarById(uid);
+        if (user == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
 }

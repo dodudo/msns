@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,8 +39,20 @@ public class CommentServiceImpl implements CommentService{
     public Integer queryCountsByDynamicId(String dynamicId) {
         Example example = new Example(Comment.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("dynamic_id",dynamicId);
+        criteria.andEqualTo("dynamicId",dynamicId);
         Integer counts = commentMapper.selectCountByExample(example);
         return counts;
+    }
+
+    /**
+     * 根据动态id查询最新发布评论
+     *
+     * @param dynamicId
+     * @return
+     */
+    @Override
+    public Date queryRecentCreateDateByDynamicId(String dynamicId) {
+        Date date = commentMapper.queryRecentCreateDateByDynamicId(dynamicId);
+        return date;
     }
 }
