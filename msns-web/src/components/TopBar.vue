@@ -281,9 +281,7 @@ export default {
       }, 500);
     },
     toSearch() {
-      // console.log(`搜索的值为：${this.search}`);
       this.$emit("topBarSearchVal", this.search);
-      // this.$router.push({ path: "/index/search" });
     },
     toIndex() {
       this.$router.push({ path: "/index/main" });

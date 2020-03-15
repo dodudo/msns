@@ -17,7 +17,8 @@ export default {
   methods: {
     topBarSearchVal(searchVal) {
       this.search = searchVal;
-      if (searchVal != null) {
+      // console.log(this.search);
+      if (searchVal != null || searchVal != "") {
         this.$router.push({ path: `/index/search/${this.search}` });
       }
     }

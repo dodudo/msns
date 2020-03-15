@@ -1,8 +1,8 @@
 <template>
   <v-card flat style="position:relative;">
     <v-card flat>
-      <v-card flat class="mx-auto pa-0" width="700" v-show="dynamics.length==0">
-        <v-card-text style="text-align:center">还没有动态呢</v-card-text>
+      <v-card flat class="mx-auto pa-0" width="700" v-show="dynamics[0]==undefined">
+        <v-card-text style="text-align:center">没有动态呢</v-card-text>
       </v-card>
       <v-card
         v-for="(dynamic, index) in dynamics"
@@ -181,7 +181,8 @@ export default {
     card_width: 700,
     showFoldBtn: false,
     totalPage: 0,
-    currentPage: 1
+    currentPage: 1,
+    newsDynamicSearch: {}
   }),
   methods: {
     showComment(e) {
@@ -198,7 +199,7 @@ export default {
         this.dynamics = resp.data.items;
         this.totalPage = resp.data.totalPage;
 
-        console.log(resp.data);
+        // console.log(resp.data);
         for (let i = 0; i < this.dynamics.length; i++) {
           this.dynamics[i].btnShow = false;
           this.dynamics[i].fold = false;
@@ -209,7 +210,7 @@ export default {
           this.dynamics[i] = Object.assign({}, this.dynamics[i]);
         }
         this.dynamics = Object.assign({}, this.dynamics);
-        console.log(this.dynamics);
+        // console.log(this.dynamics[0]);
       });
     },
     formatDate(time) {
@@ -245,6 +246,15 @@ export default {
     dynamics() {
       var dynamicContent = this.$refs.dynamicContent;
       this.foldControl(dynamicContent);
+    },
+    "dynamicSearch.key"() {
+      this.searAllDynamic();
+    },
+    "dynamicSearch.sortBy"() {
+      this.searAllDynamic();
+    },
+    "dynamicSearch.desc"() {
+      this.searAllDynamic();
     }
   },
 

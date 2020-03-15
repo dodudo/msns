@@ -12,6 +12,11 @@ function route(path, file, name, children) {
     component: () => import("../views" + file)
   };
 }
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   route("/login", "/index/Login", "Login"),
   route("/test", "/index/test", "test"),

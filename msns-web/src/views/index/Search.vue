@@ -1,6 +1,6 @@
 <template>
   <v-card style="margin-top:78px" flat width="1114">
-    <News></News>
+    <News v-bind:dynamicSearch="dynamicSearch"></News>
   </v-card>
 </template>
 <script>
@@ -10,11 +10,22 @@ export default {
     News
   },
   data: () => ({
-    search: ""
+    dynamicSearch: {
+      key: "",
+      page: 1,
+      sortBy: "publishDate",
+      desc: true
+    }
   }),
+  watch: {
+    $route() {
+      this.dynamicSearch.key = this.$route.params.key;
+      // console.log(this.dynamicSearch);
+    }
+  },
   created() {
     if (this.$route.params.key) {
-      this.search = this.$route.params.key;
+      this.dynamicSearch.key = this.$route.params.key;
     }
   }
 };
