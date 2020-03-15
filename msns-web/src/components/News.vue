@@ -1,6 +1,9 @@
 <template>
   <v-card flat style="position:relative;">
     <v-card flat>
+      <v-card flat class="mx-auto pa-0" width="700" v-show="dynamics.length==0">
+        <v-card-text style="text-align:center">还没有动态呢</v-card-text>
+      </v-card>
       <v-card
         v-for="(dynamic, index) in dynamics"
         :key="index"
@@ -13,7 +16,7 @@
           <v-list-item-avatar color="grey"></v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="body-1">{{dynamic.author}}</v-list-item-title>
-            <v-list-item-subtitle class="body-2">{{dynamic.publishDate}}</v-list-item-subtitle>
+            <v-list-item-subtitle class="body-2">{{formatDate(dynamic.publishDate)}}</v-list-item-subtitle>
           </v-list-item-content>
           <v-spacer></v-spacer>
           <v-menu offset-y>
@@ -74,14 +77,23 @@
               @click="dynamic.fold = !dynamic.fold"
             >{{ dynamic.fold ? "展开" : "收起" }}</v-btn>
           </v-row>
-          <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
+          <v-row>
+            <v-col v-show="imgUrl!=''" v-for="(imgUrl,i) in dynamics[index].imgUrls" :key="i">
+              <v-img
+                :width="dynamics[index].imgUrls.length <= 3 ? 322 : 200"
+                v-if="imgUrl!=''"
+                :height="dynamics[index].imgUrls.length <= 3 ? 322 : 200"
+                :src="imgUrl"
+              ></v-img>
+            </v-col>
+          </v-row>
         </v-content>
-        <v-card v-show="true" style outlined flat class="px-0 my-2 mx-4">
+        <v-card v-if="dynamic.music != null" style outlined flat class="px-0 my-2 mx-4">
           <v-list class="pa-0">
             <v-list-item style="background-color:#FAFAFA">
               <v-card tile height="40" width="40">
                 <v-list-item-avatar class="ma-0" tile>
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"></v-img>
+                  <v-img :src="dynamic.music.musicCoverUrl"></v-img>
                 </v-list-item-avatar>
 
                 <v-overlay z-index="1" opacity="0.3" absolute value="true">
@@ -91,32 +103,32 @@
                 </v-overlay>
               </v-card>
               <v-list-item-content class="ml-3">
-                <v-list-item-title>忽然</v-list-item-title>
-                <v-list-item-subtitle>李志</v-list-item-subtitle>
+                <v-list-item-title>{{dynamic.music.musicName}}</v-list-item-title>
+                <v-list-item-subtitle>{{dynamic.music.musicAuthor}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-card>
         <v-card-actions>
-          <span class="caption ml-2">浏览次数</span>
+          <span class="caption ml-2">浏览次数{{dynamic.viewCount}}</span>
           <v-spacer></v-spacer>
           <v-card flat>
             <v-btn icon>
               <v-icon>mdi-thumb-up</v-icon>
             </v-btn>
-            <span class="caption">12</span>
+            <span class="caption">{{dynamic.likeCount}}</span>
           </v-card>
           <v-card flat class="mx-3">
             <v-btn icon>
               <v-icon>mdi-heart</v-icon>
             </v-btn>
-            <span class="caption">12</span>
+            <span class="caption">{{dynamic.favorCount}}</span>
           </v-card>
           <v-card flat>
             <v-btn @click="dynamic.show_input = !dynamic.show_input" icon>
               <v-icon>mdi-message-reply</v-icon>
             </v-btn>
-            <span class="caption">12</span>
+            <span class="caption">{{dynamic.commentCount}}</span>
           </v-card>
         </v-card-actions>
         <v-card v-if="dynamic.show_input" flat>
@@ -135,10 +147,14 @@
           </v-card>
         </v-card>
       </v-card>
+      <div v-if="totalPage != 0" class="text-center">
+        <v-pagination v-model="currentPage" :length="totalPage" :total-visible="7"></v-pagination>
+      </div>
     </v-card>
   </v-card>
 </template>
 <script>
+import { formatDate } from "../assets/formatDate";
 export default {
   props: {
     dynamicSearch: {
@@ -163,7 +179,9 @@ export default {
     hideText: "",
     isfold: false,
     card_width: 700,
-    showFoldBtn: false
+    showFoldBtn: false,
+    totalPage: 0,
+    currentPage: 1
   }),
   methods: {
     showComment(e) {
@@ -171,25 +189,65 @@ export default {
       this.dynamics[e].show_input = !this.dynamics[e].show_input;
     },
     searAllDynamic() {
+      this.dynamicSearch.page = this.currentPage;
       this.$http({
         method: "post",
         url: "/search/dynamicPage",
         data: this.dynamicSearch
       }).then(resp => {
         this.dynamics = resp.data.items;
-        console.log(this.dynamics);
+        this.totalPage = resp.data.totalPage;
+
+        console.log(resp.data);
         for (let i = 0; i < this.dynamics.length; i++) {
           this.dynamics[i].btnShow = false;
           this.dynamics[i].fold = false;
           this.dynamics[i].show_input = false;
+          if (this.dynamics[i].imgUrls != null) {
+            this.dynamics[i].imgUrls = this.dynamics[i].imgUrls.split(",");
+          }
           this.dynamics[i] = Object.assign({}, this.dynamics[i]);
         }
         this.dynamics = Object.assign({}, this.dynamics);
         console.log(this.dynamics);
       });
+    },
+    formatDate(time) {
+      var date = new Date(time);
+      var today = new Date();
+      if (formatDate(today, "yyyy-MM-dd") == formatDate(date, "yyyy-MM-dd")) {
+        return formatDate(date, "hh:mm");
+      } else {
+        return formatDate(date, "yyyy-MM-dd hh:mm");
+      }
+    },
+    foldControl(dynamicContent) {
+      this.$nextTick(() => {
+        if (dynamicContent != null) {
+          for (let i = 0; i < dynamicContent.length; i++) {
+            let textHeight = window
+              .getComputedStyle(dynamicContent[i])
+              .height.replace("px", "");
+            // console.log(textHeight);
+            if (textHeight > 120) {
+              this.dynamics[i].fold = true;
+              this.dynamics[i].btnShow = true;
+            }
+          }
+        }
+      });
     }
   },
-  watch: {},
+  watch: {
+    currentPage() {
+      this.searAllDynamic();
+    },
+    dynamics() {
+      var dynamicContent = this.$refs.dynamicContent;
+      this.foldControl(dynamicContent);
+    }
+  },
+
   created() {
     this.$nextTick(() => {
       this.searAllDynamic();
@@ -202,20 +260,9 @@ export default {
       // console.log(that.$refs);
       var refs = that.$refs;
       var dynamicContent = refs.dynamicContent;
+      this.foldControl(dynamicContent);
       // console.log(dynamicContent);
-      if (dynamicContent != null) {
-        for (let i = 0; i < dynamicContent.length; i++) {
-          let textHeight = window
-            .getComputedStyle(dynamicContent[i])
-            .height.replace("px", "");
-          // console.log(textHeight);
-          if (textHeight > 120) {
-            this.dynamics[i].fold = true;
-            this.dynamics[i].btnShow = true;
-          }
-        }
-      }
-    }, 100);
+    }, 200);
   }
 };
 </script>

@@ -133,7 +133,7 @@ public class MusicServiceImpl implements MusicService {
     public Music queryMusicById(String musicId) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("music_id",musicId);
+        criteria.andEqualTo("musicId",musicId);
         return  this.musicMapper.selectByExample(example).get(0);
     }
 }

@@ -3,7 +3,9 @@ package com.dxg.msns.search.pojo;
 public class SearchRequst {
     private String key;
     private Integer page;
-    private static final Integer DEFAULT_SIZE = 20;
+    private String sortBy;
+    private Boolean desc; //是否降序
+    private static final Integer DEFAULT_SIZE = 1;
     private static final Integer DEFAULT_PAGE = 1;
 
     public String getKey() {
@@ -24,6 +26,22 @@ public class SearchRequst {
 
     public void setPage(Integer page) {
         this.page = page;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public Boolean getDesc() {
+        return desc;
+    }
+
+    public void setDesc(Boolean desc) {
+        this.desc = desc;
     }
 
     public Integer getSize(){

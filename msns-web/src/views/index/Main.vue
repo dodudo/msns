@@ -14,7 +14,9 @@ export default {
     screenWidth: "",
     dynamicSearch: {
       key: "",
-      page: ""
+      page: 1,
+      sortBy: "publishDate",
+      desc: true
     },
     dynamics: []
   }),

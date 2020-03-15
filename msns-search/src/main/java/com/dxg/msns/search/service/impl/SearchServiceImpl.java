@@ -13,6 +13,8 @@ import com.dxg.msns.user.pojo.User;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,7 +55,7 @@ public class SearchServiceImpl implements SearchService {
         String type = dynamicTypeClient.queryNameById(dynamic.getDynamicTypeId());
         Dynamics dynamics = new Dynamics();
         dynamics.setId(dynamic.getId());
-        dynamics.setAll(type+dynamic.getDynamicContent()+user.getUname());
+        dynamics.setAll(type + dynamic.getDynamicContent() + user.getUname());
         dynamics.setTypeId(dynamic.getDynamicTypeId());
         dynamics.setPublishDate(dynamic.getPublishDate());
         dynamics.setRecentCommentDate(commentClient.queryRecentCreateDateByDynamicId(dynamic.getDynamicId()));
@@ -65,7 +67,7 @@ public class SearchServiceImpl implements SearchService {
         dynamics.setImgUrls(dynamic.getImgUrls());
         dynamics.setAuthor(user.getUname());
         dynamics.setAuthorAvatar(user.getAvatarUrl());
-        if (dynamic.getMusicId() != null){
+        if (dynamic.getMusicId() != null) {
             Music music = musicClient.queryMusicById(dynamic.getMusicId());
             dynamics.setMusic(music);
         }
@@ -82,19 +84,24 @@ public class SearchServiceImpl implements SearchService {
         String key = request.getKey();
         //构建查询条件
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
-        if (StringUtils.isNotBlank(key)){
+        if (StringUtils.isNotBlank(key)) {
             // 对key进行全文检索查询
-            nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("all",key).operator(Operator.AND));
+            nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("all", key).operator(Operator.AND));
         }
-
+        //排序
+        String sortBy = request.getSortBy();
+        Boolean desc = request.getDesc();
+        if (StringUtils.isNotBlank(sortBy)) {
+            nativeSearchQueryBuilder.withSort(SortBuilders.fieldSort(sortBy).order(desc ? SortOrder.DESC : SortOrder.ASC));
+        }
         //分页
         int page = request.getPage();
         int size = request.getSize();
-        nativeSearchQueryBuilder.withPageable(PageRequest.of(page-1,size));
+        nativeSearchQueryBuilder.withPageable(PageRequest.of(page - 1, size));
 
         //查询，获取结果
         Page<Dynamics> dynamicsPage = this.dynamicsRepository.search(nativeSearchQueryBuilder.build());
 
-        return new PageResult<>(dynamicsPage.getTotalElements(),dynamicsPage.getTotalPages(),dynamicsPage.getContent());
+        return new PageResult<>(dynamicsPage.getTotalElements(), dynamicsPage.getTotalPages(), dynamicsPage.getContent());
     }
 }
