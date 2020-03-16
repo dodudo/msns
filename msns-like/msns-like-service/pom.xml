@@ -57,7 +57,7 @@
         <dependency>
             <groupId>com.dxg.msns.like</groupId>
             <artifactId>msns-like-interface</artifactId>
-            <version></version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.dxg.msns.common</groupId>

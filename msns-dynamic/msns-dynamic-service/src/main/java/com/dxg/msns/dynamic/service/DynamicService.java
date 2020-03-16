@@ -30,4 +30,11 @@ public interface DynamicService {
      * @param dynamic
      */
     void deleteDynamic(Dynamic dynamic);
+
+    /**
+     * 根据id查找动态
+     * @param id
+     * @return
+     */
+    Dynamic queryById(Integer id);
 }

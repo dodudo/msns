@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.dxg.msns.favor</groupId>
             <artifactId>msns-favor-interface</artifactId>
-            <version></version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

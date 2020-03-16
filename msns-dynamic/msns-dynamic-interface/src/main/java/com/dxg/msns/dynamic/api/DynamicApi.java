@@ -4,6 +4,7 @@ import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.dynamic.pojo.Dynamic;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,4 +30,11 @@ public interface DynamicApi {
             @RequestParam(value = "desc",required = false)Boolean desc[],
             @RequestParam(value = "isAll",required = false)Boolean isAll
     );
+    /**
+     * 根据id查找
+     * @param dynamicId
+     * @return
+     */
+    @RequestMapping("/queryById/{id}")
+    public Dynamic queryById(@PathVariable("id") Integer id);
 }

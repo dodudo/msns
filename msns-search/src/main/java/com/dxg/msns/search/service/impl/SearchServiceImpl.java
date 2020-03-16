@@ -11,6 +11,7 @@ import com.dxg.msns.search.reponsitory.DynamicsRepository;
 import com.dxg.msns.search.service.SearchService;
 import com.dxg.msns.user.pojo.User;
 import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -67,6 +68,7 @@ public class SearchServiceImpl implements SearchService {
         dynamics.setImgUrls(dynamic.getImgUrls());
         dynamics.setAuthor(user.getUname());
         dynamics.setAuthorAvatar(user.getAvatarUrl());
+        dynamics.setStatus(dynamic.getStatus());
         if (dynamic.getMusicId() != null) {
             Music music = musicClient.queryMusicById(dynamic.getMusicId());
             dynamics.setMusic(music);
@@ -84,10 +86,14 @@ public class SearchServiceImpl implements SearchService {
         String key = request.getKey();
         //构建查询条件
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+        boolQueryBuilder.must(QueryBuilders.termQuery("status","1"));
         if (StringUtils.isNotBlank(key)) {
-            // 对key进行全文检索查询
-            nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("all", key).operator(Operator.AND));
+            boolQueryBuilder.must(QueryBuilders.matchQuery("all", key).operator(Operator.AND));
         }
+        // 对key进行全文检索查询
+        nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
         //排序
         String sortBy = request.getSortBy();
         Boolean desc = request.getDesc();
@@ -103,5 +109,24 @@ public class SearchServiceImpl implements SearchService {
         Page<Dynamics> dynamicsPage = this.dynamicsRepository.search(nativeSearchQueryBuilder.build());
 
         return new PageResult<>(dynamicsPage.getTotalElements(), dynamicsPage.getTotalPages(), dynamicsPage.getContent());
+    }
+
+    @Override
+    public void createDynamicIndex(Integer id) {
+        Dynamic dynamic = this.dynamicsClient.queryById(id);
+        Dynamics dynamics = this.buildDynamics(dynamic);
+
+        //保存到索引库
+        this.dynamicsRepository.save(dynamics);
+    }
+
+    /**
+     * 删除索引
+     *
+     * @param id
+     */
+    @Override
+    public void deleteDynamicIndex(Integer id) {
+        this.dynamicsRepository.deleteById(id);
     }
 }

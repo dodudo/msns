@@ -65,6 +65,16 @@ public class DynamicController {
     }
 
     /**
-     * 查询所有被举报的
+     * 根据id查找
+     * @param id
+     * @return
      */
+    @RequestMapping("/queryById/{id}")
+    public ResponseEntity<Dynamic> queryById(@PathVariable("id") Integer id){
+        Dynamic dynamic = this.dynamicService.queryById(id);
+        if (dynamic == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(dynamic);
+    }
 }

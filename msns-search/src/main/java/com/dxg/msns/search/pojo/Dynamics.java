@@ -27,6 +27,7 @@ public class Dynamics {
     private String author; //发布者
     private String authorAvatar; //发布者头像
     private Music music;
+    private String status;
 
     public Integer getId() {
         return id;
@@ -140,6 +141,14 @@ public class Dynamics {
         this.music = music;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Dynamics{" +
@@ -157,6 +166,7 @@ public class Dynamics {
                 ", author='" + author + '\'' +
                 ", authorAvatar='" + authorAvatar + '\'' +
                 ", music=" + music +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

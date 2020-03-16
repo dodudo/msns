@@ -4,9 +4,15 @@ spring:
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 192.168.133.128:9300
+      cluster-nodes: 127.0.0.1:9300
   application:
     name: search-service
+  rabbitmq:
+    username: msns
+    password: msns
+    virtual-host: /msns
+    port: 5672
+    host: 127.0.0.1
   main:
     allow-bean-definition-overriding: true #//解决Feign远程调用服务因为业务需求出现在不同在接口上使用相同的服务名而引起报错
 eureka:

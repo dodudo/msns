@@ -10,6 +10,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,18 @@ import java.util.List;
 public class DynamicServiceImpl implements DynamicService {
     @Autowired
     private DynamicMapper dynamicMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    private void sendMsg(String dynamicId,String type) {
+        //向队列发送消息
+        try {
+            this.amqpTemplate.convertAndSend("dynamic."+type,dynamicId);
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 查询所有动态
      *
@@ -71,7 +85,10 @@ public class DynamicServiceImpl implements DynamicService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId",dynamic.getDynamicId());
         this.dynamicMapper.updateByExampleSelective(dynamic,example);
+        sendMsg(dynamic.getDynamicId(),"update");
     }
+
+
 
     /**
      * 删除动态
@@ -85,5 +102,21 @@ public class DynamicServiceImpl implements DynamicService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId",dynamic.getDynamicId());
         this.dynamicMapper.deleteByExample(example);
+        sendMsg(dynamic.getDynamicId(),"delete");
+    }
+
+    /**
+     * 根据id查找动态
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Dynamic queryById(Integer id) {
+        Example example = new Example(Dynamic.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("id",id);
+        Dynamic dynamic = this.dynamicMapper.selectOneByExample(example);
+        return dynamic;
     }
 }
