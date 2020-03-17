@@ -8,6 +8,7 @@ import com.dxg.msns.dynamic.pojo.DynamicType;
 import com.dxg.msns.dynamic.service.DynamicService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.rabbitmq.tools.json.JSONUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
@@ -28,10 +29,10 @@ public class DynamicServiceImpl implements DynamicService {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    private void sendMsg(String dynamicId,String type) {
+    private void sendMsg(Integer id,String type) {
         //向队列发送消息
         try {
-            this.amqpTemplate.convertAndSend("dynamic."+type,dynamicId);
+            this.amqpTemplate.convertAndSend("dynamic."+type, id.toString());
         } catch (AmqpException e) {
             e.printStackTrace();
         }
@@ -85,7 +86,7 @@ public class DynamicServiceImpl implements DynamicService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId",dynamic.getDynamicId());
         this.dynamicMapper.updateByExampleSelective(dynamic,example);
-        sendMsg(dynamic.getDynamicId(),"update");
+        sendMsg(dynamic.getId(),"update");
     }
 
 
@@ -102,7 +103,7 @@ public class DynamicServiceImpl implements DynamicService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId",dynamic.getDynamicId());
         this.dynamicMapper.deleteByExample(example);
-        sendMsg(dynamic.getDynamicId(),"delete");
+        sendMsg(dynamic.getId(),"delete");
     }
 
     /**

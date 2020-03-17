@@ -11,9 +11,7 @@ import com.dxg.msns.search.reponsitory.DynamicsRepository;
 import com.dxg.msns.search.service.SearchService;
 import com.dxg.msns.user.pojo.User;
 import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.Operator;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,13 +85,18 @@ public class SearchServiceImpl implements SearchService {
         //构建查询条件
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-
-        boolQueryBuilder.must(QueryBuilders.termQuery("status","1"));
+        TermQueryBuilder statusBuilder = QueryBuilders.termQuery("status", "1");
+        boolQueryBuilder.must(statusBuilder);
+        //对key进行全文检索查询
         if (StringUtils.isNotBlank(key)) {
-            boolQueryBuilder.must(QueryBuilders.matchQuery("all", key).operator(Operator.AND));
+            MatchQueryBuilder allBuilder = QueryBuilders.matchQuery("all", key).operator(Operator.AND);
+            boolQueryBuilder.must(allBuilder);
         }
-        // 对key进行全文检索查询
+
         nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
+
+        //过滤
+//        nativeSearchQueryBuilder.withFilter(QueryBuilders.termQuery("status","1"));
         //排序
         String sortBy = request.getSortBy();
         Boolean desc = request.getDesc();
@@ -107,7 +110,7 @@ public class SearchServiceImpl implements SearchService {
 
         //查询，获取结果
         Page<Dynamics> dynamicsPage = this.dynamicsRepository.search(nativeSearchQueryBuilder.build());
-
+//        System.out.println("查询结果::::::"+dynamicsPage.getContent());
         return new PageResult<>(dynamicsPage.getTotalElements(), dynamicsPage.getTotalPages(), dynamicsPage.getContent());
     }
 

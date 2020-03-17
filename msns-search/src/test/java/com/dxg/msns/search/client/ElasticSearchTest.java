@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MSNSSearchService.class)
+
 public class ElasticSearchTest {
     @Autowired
     private DynamicsRepository dynamicsRepository;

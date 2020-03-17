@@ -27,6 +27,7 @@ public class Dynamics {
     private String author; //发布者
     private String authorAvatar; //发布者头像
     private Music music;
+    @Field(type = FieldType.Keyword)
     private String status;
 
     public Integer getId() {
