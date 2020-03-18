@@ -1,6 +1,9 @@
 package com.dxg.msns.user.service.impl;
 
 import com.dxg.msns.common.pojo.PageResult;
+import com.dxg.msns.common.util.CodecUtils;
+import com.dxg.msns.common.util.NumberUtils;
+import com.dxg.msns.common.util.UUIDUtils;
 import com.dxg.msns.common.util.UnderlineHump;
 import com.dxg.msns.user.mapper.UserMapper;
 import com.dxg.msns.user.pojo.User;
@@ -9,18 +12,28 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.sql.Time;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
     /**
      * 分页查询用户
      *
@@ -150,5 +163,53 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryNameAvatarById(String uid) {
         return this.userMapper.queryNameAvatarById(uid);
+    }
+
+    @Override
+    public Boolean sendVerifyCode(String email) {
+        //生成验证码
+        String code = NumberUtils.generateCode(6);
+        try {
+            Map<String ,String> msg = new HashMap<>();
+            msg.put("email",email);
+            msg.put("code",code);
+            this.amqpTemplate.convertAndSend("msns.sms.email.exchange","sms.verify.code",msg);
+            this.redisTemplate.opsForValue().set(email,code);
+            this.redisTemplate.expire(email,5,TimeUnit.MINUTES);
+            return true;
+        } catch (AmqpException e) {
+            e.printStackTrace();
+            System.out.println("baocuole");
+            return false;
+        }
+    }
+
+    @Override
+    public Map<String,Object> register(User user, String code) {
+        String codeCache = this.redisTemplate.opsForValue().get(user.getEmail());
+        Map<String,Object> map = new HashMap<>();
+        if (!StringUtils.equals(code,codeCache)){
+           map.put("boo",false);
+           map.put("err","验证码错误！");
+           return map;
+        }
+        //生成盐
+        String salt = CodecUtils.generateSalt();
+        user.setSalt(salt);
+        //加密密码
+        user.setUpassword(CodecUtils.md5Hex(user.getUpassword(),salt));
+        user.setId(null);
+        user.setUid(UUIDUtils.getUUID());
+        user.setStatus("1");
+        boolean b = this.userMapper.insertSelective(user) == 1;
+
+        if (b){
+            //注册成功删除redis中的记录
+            this.redisTemplate.delete(user.getEmail());
+        }else {
+            map.put("err","注册失败！");
+        }
+        map.put("boo",b);
+        return map;
     }
 }

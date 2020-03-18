@@ -2,6 +2,9 @@ package com.dxg.msns.user.service;
 
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.user.pojo.User;
+import com.fasterxml.jackson.databind.util.ObjectBuffer;
+
+import java.util.Map;
 
 public interface UserService {
     /**
@@ -55,4 +58,19 @@ public interface UserService {
      * @return
      */
     User queryNameAvatarById(String uid);
+
+    /**
+     * 发送验证码
+     * @param email
+     * @return
+     */
+    Boolean sendVerifyCode(String email);
+
+    /**
+     * 注册
+     * @param user
+     * @param code
+     * @return
+     */
+    Map<String, Object> register(User user, String code);
 }

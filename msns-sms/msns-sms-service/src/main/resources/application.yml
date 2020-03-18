@@ -1,0 +1,18 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: sms-service
+  rabbitmq:
+    username: msns
+    password: msns
+    virtual-host: /msns
+  mail:
+    username: 18384354901@163.com
+    password: TUJIEQFHRJMMEPPM
+    host: smtp.163.com
+    default-encoding: UTF-8
+    properties:
+      smtp:
+        ssl:
+          enable: true #开启ssl安全连接。

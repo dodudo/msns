@@ -2,16 +2,23 @@ package com.dxg.msns.user.controller;
 
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.user.service.UserService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import com.dxg.msns.user.pojo.User;
 
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class UserController {
     @Autowired
     private UserService userService;
@@ -109,5 +116,37 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(user);
+    }
+
+    /**
+     * 发送验证码
+     * @param email
+     * @return
+     */
+    @PostMapping("code")
+    public ResponseEntity<Void> sendVerifyCode(@RequestBody String email){
+        if (StringUtils.isEmpty(email)){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        String decode = URLDecoder.decode(email);
+        email = decode.substring(0, decode.indexOf("="));
+//        System.out.println(email);
+        Boolean boo = this.userService.sendVerifyCode(email);
+        if (!boo){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("register")
+    public ResponseEntity<Void> register(@Valid @RequestBody User user, @RequestParam("code") String code){
+//        System.out.println("用户："+user);
+//        System.out.println("code:::"+code);
+        Map<String,Object> map = this.userService.register(user,code);
+        Boolean boo = (Boolean) map.get("boo");
+        if (!boo){
+            return new ResponseEntity(map.get("err"),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
