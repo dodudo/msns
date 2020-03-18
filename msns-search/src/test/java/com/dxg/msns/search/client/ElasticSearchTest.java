@@ -2,7 +2,7 @@ package com.dxg.msns.search.client;
 
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.dynamic.pojo.Dynamic;
-import com.dxg.msns.search.MSNSSearchService;
+import com.dxg.msns.search.MSNSSearchServiceApplication;
 import com.dxg.msns.search.pojo.Dynamics;
 import com.dxg.msns.search.reponsitory.DynamicsRepository;
 import com.dxg.msns.search.service.SearchService;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MSNSSearchService.class)
+@SpringBootTest(classes = MSNSSearchServiceApplication.class)
 
 public class ElasticSearchTest {
     @Autowired

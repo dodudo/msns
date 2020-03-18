@@ -9,8 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableDiscoveryClient
 @EnableFeignClients
-public class MSNSSearchService {
+public class MSNSSearchServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MSNSSearchService.class);
+        SpringApplication.run(MSNSSearchServiceApplication.class);
     }
 }

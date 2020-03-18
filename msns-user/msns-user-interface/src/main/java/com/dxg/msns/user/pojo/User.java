@@ -1,5 +1,7 @@
 package com.dxg.msns.user.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,12 +17,15 @@ public class User {
     private String uname;
     private String email;
     private String phone;
+    @JsonIgnore //json序列化时忽略,不把密码传回去
     private String upassword;
     private String sex;
     private Date birthday;
     private String avatarUrl;
     private String description;
     private String status;
+    @JsonIgnore //json序列化时忽略,不传回去
+    private String salt; //密码的盐值
 
     public Integer getId() {
         return id;
@@ -110,9 +115,17 @@ public class User {
         this.status = status;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     @Override
     public String toString() {
-        return "pojo{" +
+        return "User{" +
                 "id=" + id +
                 ", uid='" + uid + '\'' +
                 ", uname='" + uname + '\'' +
@@ -124,6 +137,7 @@ public class User {
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
+                ", salt='" + salt + '\'' +
                 '}';
     }
 }

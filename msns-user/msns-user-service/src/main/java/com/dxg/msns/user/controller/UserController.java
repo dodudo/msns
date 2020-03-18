@@ -82,6 +82,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * 查询用户名和邮箱手机是否可用
+     * @param data
+     * @param type
+     * @return
+     */
     @GetMapping("check/{data}/{type}")
     public ResponseEntity<Boolean> checkUserData(@PathVariable("data") String data,@PathVariable("type") Integer type){
         Boolean check = this.userService.checkUserData(data,type);
