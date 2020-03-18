@@ -21,6 +21,7 @@
         <module>msns-comment</module>
         <module>msns-like</module>
         <module>msns-favor</module>
+        <module>msns-sms</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
