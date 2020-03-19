@@ -17,9 +17,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String uid;
-    @Length(min = 6, max = 20, message = "用户名只能在4~20位之间")
+    @Pattern(regexp = "^[a-zA-Z]{4,10}$", message = "用户名只能在4~10位之间")
     private String uname;
-    @Pattern(regexp = "^1[35678]\\d{9}$", message = "手机号格式不正确")
+//    @Pattern(regexp = "^1[35678]\\d{9}$", message = "手机号格式不正确")
     private String email;
     @Pattern(regexp = "^\\w+@[a-z0-9]+\\.[a-z]{2,4}$", message = "手机号格式不正确")
     private String phone;

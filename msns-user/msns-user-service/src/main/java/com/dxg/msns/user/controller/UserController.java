@@ -90,7 +90,7 @@ public class UserController {
     }
 
     /**
-     * 查询用户名和邮箱手机是否可用
+     * 查询用户名和邮箱手机是否可用（type:1验证用户名，2验证手机号，3验证邮箱）
      * @param data
      * @param type
      * @return
@@ -148,5 +148,19 @@ public class UserController {
             return new ResponseEntity(map.get("err"),HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    /**
+     * 登录，根据用户名密码查询用户
+     * @return
+     */
+    @GetMapping("login")
+    public ResponseEntity<User> login(@RequestParam("uname")String uname,@RequestParam("upassword")String upassword){
+        User user = this.userService.queryUser(uname,upassword);
+        System.out.println(user);
+        if (user == null){
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(user);
     }
 }

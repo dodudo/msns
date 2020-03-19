@@ -212,4 +212,19 @@ public class UserServiceImpl implements UserService {
         map.put("boo",b);
         return map;
     }
+
+    @Override
+    public User queryUser(String uname, String upassword) {
+        User record = new User();
+        record.setUname(uname);
+        User user = this.userMapper.selectOne(record);
+        if (user == null){
+            return null;
+        }
+        if (!user.getUpassword().equals(CodecUtils.md5Hex(upassword,user.getSalt()))){
+            return null;
+        }
+        return user;
+
+    }
 }

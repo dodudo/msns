@@ -73,4 +73,12 @@ public interface UserService {
      * @return
      */
     Map<String, Object> register(User user, String code);
+
+    /**
+     * 根据用户名和密码查询用户
+     * @param uname
+     * @param upassword
+     * @return
+     */
+    User queryUser(String uname, String upassword);
 }
