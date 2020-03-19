@@ -1,0 +1,59 @@
+package com.dxg.msns.auth.controller;
+
+import com.dxg.msns.auth.entity.UserInfo;
+import com.dxg.msns.auth.properties.JwtProperties;
+import com.dxg.msns.auth.service.AuthService;
+import com.dxg.msns.auth.utils.CookieUtils;
+import com.dxg.msns.auth.utils.JwtUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@RestController
+@EnableConfigurationProperties(JwtProperties.class)
+public class AuthController {
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private JwtProperties jwtProperties;
+
+    @PostMapping("accredit")
+    public ResponseEntity<Void> authentication(@RequestParam("uname") String uname,
+                                               @RequestParam("upassword") String upassword,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response) {
+        //登录校验，生成token
+        String token = this.authService.authentication(uname,upassword);
+        if (StringUtils.isEmpty(token)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        //将token写入cookie，并指定httpOnly为true，防止js获取修改
+        CookieUtils.setCookie(request,response,this.jwtProperties.getCookieName(),token,this.jwtProperties.getCookieMaxAge(),null,true);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("verify")
+    public ResponseEntity<UserInfo> verifyUser(@CookieValue("MSNS_TOKEN")String token,HttpServletRequest request,HttpServletResponse response){
+//        System.out.println("token:::"+token);
+        try {
+            //从token‘中解析信息
+            UserInfo userInfo = JwtUtils.getInfoFromToken(token, this.jwtProperties.getPublicKey());
+            //解析成功要重新刷新token
+            token = JwtUtils.generateToken(userInfo, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpire());
+            //更新cookie中的token
+            CookieUtils.setCookie(request,response,this.jwtProperties.getCookieName(),token,this.jwtProperties.getCookieMaxAge(),null,true);
+            //解析成功返回用户信息
+            return  ResponseEntity.ok(userInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}

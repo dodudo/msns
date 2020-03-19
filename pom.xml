@@ -22,6 +22,7 @@
         <module>msns-like</module>
         <module>msns-favor</module>
         <module>msns-sms</module>
+        <module>msns-auth</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

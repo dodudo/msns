@@ -18,6 +18,26 @@ zuul:
     favor-service: /favor/**
     like-service: /like/**
     search-service: /search/**
+    auth-service: /auth/**
   ignored-patterns: /upload/**
   ignored-services:
     - upload-service
+  add-host-header: true
+  sensitive-headers:
+msns:
+  jwt:
+    pubKeyPath: D:\\tmp\\rsa\\rsa.pub # 公钥地址
+    cookieName: MSNS_TOKEN #cookie名称
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/login
+      - /api/user/check
+      - /api/user/code
+      - /api/music
+      - /api/comment
+      - /api/favor
+      - /api/like
+      - /api/dynamic

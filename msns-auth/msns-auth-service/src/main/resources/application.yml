@@ -1,0 +1,24 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: auth-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 10
+  instance:
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
+msns:
+  jwt:
+    secret: msns@Login(Auth}*^31)&Dxg%  #登录校验的密钥
+    pubKeyPath: D:\\tmp\\rsa\\rsa.pub # 公钥地址
+    priKeyPath: D:\\tmp\\rsa\\rsa.pri # 私钥地址
+    expire: 30 # 过期时间,30分钟
+    cookieName: MSNS_TOKEN
+    cookieMaxAge: 30
+logging:
+  level:
+    root: DEBUG
