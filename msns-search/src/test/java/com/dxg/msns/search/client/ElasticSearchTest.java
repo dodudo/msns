@@ -5,7 +5,7 @@ import com.dxg.msns.dynamic.pojo.Dynamic;
 import com.dxg.msns.search.MSNSSearchServiceApplication;
 import com.dxg.msns.search.pojo.Dynamics;
 import com.dxg.msns.search.reponsitory.DynamicsRepository;
-import com.dxg.msns.search.service.SearchService;
+import com.dxg.msns.search.service.DynamicSearchService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ElasticSearchTest {
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
     @Autowired
-    private SearchService searchService;
+    private DynamicSearchService dynamicSearchService;
     @Test
     public void createIndex(){
         //创建索引
@@ -43,7 +43,7 @@ public class ElasticSearchTest {
             //遍历动态转换为List<Dynamics>
             List<Dynamics> dynamicsList = dynamicPageResult.getItems().stream().map(dynamic -> {
                 try {
-                    return this.searchService.buildDynamics(dynamic);
+                    return this.dynamicSearchService.buildDynamics(dynamic);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

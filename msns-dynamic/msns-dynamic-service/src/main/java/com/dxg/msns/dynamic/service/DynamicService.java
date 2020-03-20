@@ -17,7 +17,7 @@ public interface DynamicService {
      * @param isAll
      * @return
      */
-    PageResult<Dynamic> queryDynamicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll);
+    PageResult<Dynamic> queryDynamicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll,String[] uids);
 
     /**
      * 更新动态

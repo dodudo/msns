@@ -37,7 +37,8 @@ public class DynamicTypeController {
             @RequestParam(value = "rows",defaultValue = "5")Integer rows,
             @RequestParam(value = "sortBy",required = false)String sortBy[],
             @RequestParam(value = "desc",required = false)Boolean desc[],
-            @RequestParam(value = "isAll",required = false)Boolean isAll
+            @RequestParam(value = "isAll",required = false)Boolean isAll,
+            @RequestParam(value = "uid",required = false)String[] uids
     ){
         if (page<0 ||rows<0){
             return ResponseEntity.badRequest().build();

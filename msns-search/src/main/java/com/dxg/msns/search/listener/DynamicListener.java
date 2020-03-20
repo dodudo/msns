@@ -1,7 +1,6 @@
 package com.dxg.msns.search.listener;
 
-import com.dxg.msns.search.service.SearchService;
-import org.apache.commons.lang.StringUtils;
+import com.dxg.msns.search.service.DynamicSearchService;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DynamicListener {
     @Autowired
-    private SearchService searchService;
+    private DynamicSearchService dynamicSearchService;
 
     /**处理insert和update的信息
      *
@@ -32,7 +31,7 @@ public class DynamicListener {
         if (id == null){
             return;
         }
-        this.searchService.createDynamicIndex(id);
+        this.dynamicSearchService.createDynamicIndex(id);
     }
 
     /**
@@ -53,6 +52,6 @@ public class DynamicListener {
         if (id == null){
             return;
         }
-        this.searchService.deleteDynamicIndex(id);
+        this.dynamicSearchService.deleteDynamicIndex(id);
     }
 }

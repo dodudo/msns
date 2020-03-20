@@ -24,6 +24,7 @@ public class Dynamics {
     private Integer favorCount; //收藏次数
     private Integer commentCount; //评论次数
     private String imgUrls; //图片
+    private String uid; //用户id
     private String author; //发布者
     private String authorAvatar; //发布者头像
     private Music music;
@@ -150,6 +151,14 @@ public class Dynamics {
         this.status = status;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     @Override
     public String toString() {
         return "Dynamics{" +
@@ -164,6 +173,7 @@ public class Dynamics {
                 ", favorCount=" + favorCount +
                 ", commentCount=" + commentCount +
                 ", imgUrls='" + imgUrls + '\'' +
+                ", uid='" + uid + '\'' +
                 ", author='" + author + '\'' +
                 ", authorAvatar='" + authorAvatar + '\'' +
                 ", music=" + music +

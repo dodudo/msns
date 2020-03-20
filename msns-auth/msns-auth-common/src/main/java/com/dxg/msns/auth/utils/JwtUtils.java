@@ -26,6 +26,7 @@ public class JwtUtils {
                 .claim(JwtConstans.JWT_KEY_ID, userInfo.getId())
                 .claim(JwtConstans.JWT_KEY_USER_NAME, userInfo.getUname())
                 .claim(JwtConstans.JWT_KEY_UID,userInfo.getUid())
+                .claim(JwtConstans.JWT_KEY_AVATAR_URL,userInfo.getAvatarUrl())
                 .setExpiration(DateTime.now().plusMinutes(expireMinutes).toDate())
                 .signWith(SignatureAlgorithm.RS256, privateKey)
                 .compact();
@@ -45,6 +46,7 @@ public class JwtUtils {
                 .claim(JwtConstans.JWT_KEY_ID, userInfo.getId())
                 .claim(JwtConstans.JWT_KEY_USER_NAME, userInfo.getUname())
                 .claim(JwtConstans.JWT_KEY_UID,userInfo.getUid())
+                .claim(JwtConstans.JWT_KEY_AVATAR_URL,userInfo.getAvatarUrl())
                 .setExpiration(DateTime.now().plusMinutes(expireMinutes).toDate())
                 .signWith(SignatureAlgorithm.RS256, RsaUtils.getPrivateKey(privateKey))
                 .compact();
@@ -86,10 +88,12 @@ public class JwtUtils {
     public static UserInfo getInfoFromToken(String token, PublicKey publicKey) throws Exception {
         Jws<Claims> claimsJws = parserToken(token, publicKey);
         Claims body = claimsJws.getBody();
+        System.out.println("body::::"+body);
         return new UserInfo(
                 ObjectUtils.toInt(body.get(JwtConstans.JWT_KEY_ID)),
                 ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_UID)),
-                ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME))
+                ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME)),
+                ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_AVATAR_URL))
         );
     }
 
@@ -104,10 +108,12 @@ public class JwtUtils {
     public static UserInfo getInfoFromToken(String token, byte[] publicKey) throws Exception {
         Jws<Claims> claimsJws = parserToken(token, publicKey);
         Claims body = claimsJws.getBody();
+        System.out.println("body::::"+body);
         return new UserInfo(
                 ObjectUtils.toInt(body.get(JwtConstans.JWT_KEY_ID)),
                 ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_UID)),
-                ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME))
+                ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME)),
+                ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_AVATAR_URL))
         );
     }
 }

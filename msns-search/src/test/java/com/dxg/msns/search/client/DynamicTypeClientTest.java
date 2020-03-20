@@ -4,7 +4,7 @@ import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.dynamic.pojo.Dynamic;
 import com.dxg.msns.search.MSNSSearchServiceApplication;
 import com.dxg.msns.search.pojo.Dynamics;
-import com.dxg.msns.search.service.SearchService;
+import com.dxg.msns.search.service.DynamicSearchService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class DynamicTypeClientTest {
     @Autowired
     private DynamicsClient dynamicsClient;
     @Autowired
-    private SearchService searchService;
+    private DynamicSearchService dynamicSearchService;
     @Test
     public void testSelectTypeName(){
         List<String> names = this.dynamicTypeClient.queryAllDynamiTypeNames();
@@ -33,7 +33,7 @@ class DynamicTypeClientTest {
         PageResult<Dynamic> dynamicPageResult = dynamicsClient.queryDynamicsByPage("", 1, 100, null, null, true);
         List<Dynamic> items = dynamicPageResult.getItems();
         System.out.println(items.get(0));
-        Dynamics dynamics = searchService.buildDynamics(items.get(0));
+        Dynamics dynamics = dynamicSearchService.buildDynamics(items.get(0));
         System.out.println(dynamics);
     }
 }

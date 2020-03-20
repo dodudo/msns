@@ -5,6 +5,7 @@ public class SearchRequst {
     private Integer page;
     private String sortBy;
     private Boolean desc; //是否降序
+    private String[] uids; //查询用户id
     private static final Integer DEFAULT_SIZE = 1;
     private static final Integer DEFAULT_PAGE = 1;
 
@@ -46,5 +47,13 @@ public class SearchRequst {
 
     public Integer getSize(){
         return DEFAULT_SIZE;
+    }
+
+    public String[] getUids() {
+        return uids;
+    }
+
+    public void setUids(String[] uids) {
+        this.uids = uids;
     }
 }

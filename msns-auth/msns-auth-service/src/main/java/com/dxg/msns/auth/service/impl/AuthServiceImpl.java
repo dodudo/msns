@@ -26,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
             if (user == null) {
                 return null;
             }
-            String token = JwtUtils.generateToken(new UserInfo(user.getId(), user.getUid(), user.getUname()), jwtProperties.getPrivateKey(), jwtProperties.getExpire());
+            String token = JwtUtils.generateToken(new UserInfo(user.getId(), user.getUid(), user.getUname(),user.getAvatarUrl()), jwtProperties.getPrivateKey(), jwtProperties.getExpire());
             return token;
         } catch (Exception e) {
             e.printStackTrace();

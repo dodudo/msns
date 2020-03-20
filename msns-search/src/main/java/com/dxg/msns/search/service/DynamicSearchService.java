@@ -5,7 +5,7 @@ import com.dxg.msns.dynamic.pojo.Dynamic;
 import com.dxg.msns.search.pojo.Dynamics;
 import com.dxg.msns.search.pojo.SearchRequst;
 
-public interface SearchService {
+public interface DynamicSearchService {
     public Dynamics buildDynamics(Dynamic dynamic);
 
     /**

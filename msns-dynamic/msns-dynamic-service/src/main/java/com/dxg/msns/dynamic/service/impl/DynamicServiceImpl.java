@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.provider.ExampleProvider;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -49,7 +50,7 @@ public class DynamicServiceImpl implements DynamicService {
      * @return
      */
     @Override
-    public PageResult<Dynamic> queryDynamicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll) {
+    public PageResult<Dynamic> queryDynamicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll,String[] uids) {
         Example example = new Example(Dynamic.class);
         Example.Criteria criteria = example.createCriteria();
         if (isAll){
@@ -59,6 +60,9 @@ public class DynamicServiceImpl implements DynamicService {
         }
         if (StringUtils.isNotBlank(key)){
             criteria.andLike("dynamicContent","%"+key+"%");
+        }
+        if (ArrayUtils.isNotEmpty(uids)){
+            criteria.andIn("uid", Arrays.asList(uids));
         }
         //添加分页条件
         PageHelper.startPage(page, rows);

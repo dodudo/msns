@@ -41,3 +41,6 @@ msns:
       - /api/favor
       - /api/like
       - /api/dynamic
+logging:
+  level:
+    root: DEBUG

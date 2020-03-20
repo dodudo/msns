@@ -32,7 +32,7 @@ public interface DynamicApi {
     );
     /**
      * 根据id查找
-     * @param dynamicId
+     * @param id
      * @return
      */
     @RequestMapping("/queryById/{id}")

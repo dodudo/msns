@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class DynamicController {
     @Autowired
@@ -31,12 +33,13 @@ public class DynamicController {
             @RequestParam(value = "rows",defaultValue = "5")Integer rows,
             @RequestParam(value = "sortBy",required = false)String sortBy[],
             @RequestParam(value = "desc",required = false)Boolean desc[],
-            @RequestParam(value = "isAll",required = false)Boolean isAll
+            @RequestParam(value = "isAll",required = false)Boolean isAll,
+            @RequestParam(value = "uid",required = false)String[] uids
     ){
         if (page<0 ||rows<0){
             return ResponseEntity.badRequest().build();
         }
-        PageResult<Dynamic> result = this.dynamicService.queryDynamicsByPage(key,page,rows,sortBy,desc,isAll);
+        PageResult<Dynamic> result = this.dynamicService.queryDynamicsByPage(key,page,rows,sortBy,desc,isAll,uids);
 
         return ResponseEntity.ok(result);
     }
@@ -77,4 +80,5 @@ public class DynamicController {
         }
         return ResponseEntity.ok(dynamic);
     }
+
 }

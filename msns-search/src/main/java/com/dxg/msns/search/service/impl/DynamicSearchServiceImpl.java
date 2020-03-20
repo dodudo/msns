@@ -2,14 +2,14 @@ package com.dxg.msns.search.service.impl;
 
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.dynamic.pojo.Dynamic;
-import com.dxg.msns.favor.pojo.DynamicFavor;
 import com.dxg.msns.music.pojo.Music;
 import com.dxg.msns.search.client.*;
 import com.dxg.msns.search.pojo.Dynamics;
 import com.dxg.msns.search.pojo.SearchRequst;
 import com.dxg.msns.search.reponsitory.DynamicsRepository;
-import com.dxg.msns.search.service.SearchService;
+import com.dxg.msns.search.service.DynamicSearchService;
 import com.dxg.msns.user.pojo.User;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -21,7 +21,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.stereotype.Service;
 
 @Service
-public class SearchServiceImpl implements SearchService {
+public class DynamicSearchServiceImpl implements DynamicSearchService {
 
     @Autowired
     private DynamicsClient dynamicsClient;
@@ -64,6 +64,7 @@ public class SearchServiceImpl implements SearchService {
         dynamics.setFavorCount(dynamicFavorClient.queryByDynamicId(dynamic.getDynamicId()));
         dynamics.setCommentCount(commentClient.queryCountsByDynamicId(dynamic.getDynamicId()));
         dynamics.setImgUrls(dynamic.getImgUrls());
+        dynamics.setUid(dynamic.getUid());
         dynamics.setAuthor(user.getUname());
         dynamics.setAuthorAvatar(user.getAvatarUrl());
         dynamics.setStatus(dynamic.getStatus());
@@ -92,7 +93,9 @@ public class SearchServiceImpl implements SearchService {
             MatchQueryBuilder allBuilder = QueryBuilders.matchQuery("all", key).operator(Operator.AND);
             boolQueryBuilder.must(allBuilder);
         }
-
+        if (ArrayUtils.isNotEmpty(request.getUids())){
+            boolQueryBuilder.must(QueryBuilders.termsQuery("uid",request.getUids()));
+        }
         nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
 
         //过滤

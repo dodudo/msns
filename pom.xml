@@ -16,7 +16,6 @@
         <module>msns-upload</module>
         <module>msns-user</module>
         <module>msns-admin</module>
-        <module>msns-sms-service</module>
         <module>msns-search</module>
         <module>msns-comment</module>
         <module>msns-like</module>

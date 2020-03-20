@@ -4,6 +4,7 @@ public class UserInfo {
     private Integer id;
     private String uid;
     private String uname;
+    private String avatarUrl;
 
     public UserInfo() {
     }
@@ -17,6 +18,13 @@ public class UserInfo {
         this.id = id;
         this.uid = uid;
         this.uname = uname;
+    }
+
+    public UserInfo(Integer id, String uid, String uname, String avatarUrl) {
+        this.id = id;
+        this.uid = uid;
+        this.uname = uname;
+        this.avatarUrl = avatarUrl;
     }
 
     public Integer getId() {
@@ -41,5 +49,13 @@ public class UserInfo {
 
     public void setUname(String uname) {
         this.uname = uname;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
