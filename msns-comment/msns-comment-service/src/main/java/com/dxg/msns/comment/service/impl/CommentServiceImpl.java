@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> queryByDynamicId(String dynamicId) {
         Example example = new Example(Comment.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("dynamic_id",dynamicId);
+        criteria.andEqualTo("dynamicId",dynamicId);
         List<Comment> comments = commentMapper.selectByExample(example);
         return comments;
     }
@@ -54,5 +54,14 @@ public class CommentServiceImpl implements CommentService{
     public Date queryRecentCreateDateByDynamicId(String dynamicId) {
         Date date = commentMapper.queryRecentCreateDateByDynamicId(dynamicId);
         return date;
+    }
+
+    @Override
+    public List<Comment> queryByUid(String uid) {
+        Example example = new Example(Comment.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("replyId",uid);
+        List<Comment> comments = commentMapper.selectByExample(example);
+        return comments;
     }
 }

@@ -26,4 +26,13 @@ public class DynamicFavorServiceImpl implements DynamicFavorService {
         Integer counts = dynamicFavorMapper.selectCountByExample(example);
         return counts;
     }
+
+    @Override
+    public Integer queryByUid(String uid) {
+        Example example = new Example(DynamicFavor.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("collectorId",uid);
+        Integer counts = dynamicFavorMapper.selectCountByExample(example);
+        return counts;
+    }
 }

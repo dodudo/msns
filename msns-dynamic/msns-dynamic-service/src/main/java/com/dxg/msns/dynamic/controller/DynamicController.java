@@ -81,4 +81,18 @@ public class DynamicController {
         return ResponseEntity.ok(dynamic);
     }
 
+    /**
+     * 根据用户id统计该用户发的动态数量
+     * @param uid
+     * @return
+     */
+    @RequestMapping("/countByUid/{uid}")
+    public ResponseEntity<Integer> queryCountByUid(@PathVariable("uid") String uid){
+        Integer dynamicCount = this.dynamicService.queryCountByUid(uid);
+        if (dynamicCount == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(dynamicCount);
+    }
+
 }

@@ -13,4 +13,11 @@ public interface DynamicFavorApi {
      */
     @GetMapping("queryByDynamicId/{id}")
     public Integer queryByDynamicId(@PathVariable("id") String dynamicId);
+
+    /**
+     * 查询用户收藏动态的收藏数
+     *
+     */
+    @GetMapping("queryByUid/{uid}")
+    public Integer queryByUid(@PathVariable("uid") String uid);
 }

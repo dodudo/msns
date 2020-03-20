@@ -37,4 +37,12 @@ public interface DynamicApi {
      */
     @RequestMapping("/queryById/{id}")
     public Dynamic queryById(@PathVariable("id") Integer id);
+
+    /**
+     * 根据用户id统计该用户发的动态数量
+     * @param uid
+     * @return
+     */
+    @RequestMapping("/countByUid/{uid}")
+    public Integer queryCountByUid(@PathVariable("uid") String uid);
 }

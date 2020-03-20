@@ -37,4 +37,16 @@ public class DynamicFavorController {
         return ResponseEntity.ok(counts);
     }
 
+    /**
+     * 查询用户收藏动态的收藏数
+     *
+     */
+    @GetMapping("queryByUid/{uid}")
+    public ResponseEntity<Integer> queryByUid(@PathVariable("uid") String uid) {
+        Integer counts = this.dynamicFavorService.queryByUid(uid);
+        if (counts == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(counts);
+    }
 }

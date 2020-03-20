@@ -6,6 +6,7 @@ import com.dxg.msns.common.util.NumberUtils;
 import com.dxg.msns.common.util.UUIDUtils;
 import com.dxg.msns.common.util.UnderlineHump;
 import com.dxg.msns.user.mapper.UserMapper;
+import com.dxg.msns.user.pojo.Follow;
 import com.dxg.msns.user.pojo.User;
 import com.dxg.msns.user.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -227,4 +228,6 @@ public class UserServiceImpl implements UserService {
         return user;
 
     }
+
+
 }

@@ -26,4 +26,11 @@ public interface CommentService {
      * @return
      */
     Date queryRecentCreateDateByDynamicId(String dynamicId);
+
+    /**
+     * 根据用户id查询评论
+     * @param uid
+     * @return
+     */
+    List<Comment> queryByUid(String uid);
 }

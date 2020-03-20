@@ -124,4 +124,13 @@ public class DynamicServiceImpl implements DynamicService {
         Dynamic dynamic = this.dynamicMapper.selectOneByExample(example);
         return dynamic;
     }
+
+    @Override
+    public Integer queryCountByUid(String uid) {
+        Example example = new Example(Dynamic.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("uid",uid);
+        Integer counts = dynamicMapper.selectCountByExample(example);
+        return counts;
+    }
 }

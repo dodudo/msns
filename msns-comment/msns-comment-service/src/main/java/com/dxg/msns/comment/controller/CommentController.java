@@ -35,6 +35,12 @@ public class CommentController {
         }
         return ResponseEntity.ok(counts);
     }
+
+    /**
+     * 根据动态id查询最新评论时间
+     * @param dynamicId
+     * @return
+     */
     @RequestMapping("recent/{id}")
     public ResponseEntity<Date> queryRecentCreateDateByDynamicId(@PathVariable("id")String dynamicId){
         Date date = commentService.queryRecentCreateDateByDynamicId(dynamicId);
@@ -44,4 +50,12 @@ public class CommentController {
         return ResponseEntity.ok(date);
     }
 
+    @RequestMapping("queryByUid/{uid}")
+    public ResponseEntity<List<Comment>> queryByUid(@PathVariable("uid")String uid){
+        List<Comment> comments = commentService.queryByUid(uid);
+        if (comments.size() == 0 || comments == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(comments);
+    }
 }

@@ -9,4 +9,11 @@ public interface DynamicFavorService {
      * @return
      */
     Integer queryByDynamicId(String dynamicId);
+
+    /**
+     * 查询用户收藏动态的数量
+     * @param uid
+     * @return
+     */
+    Integer queryByUid(String uid);
 }

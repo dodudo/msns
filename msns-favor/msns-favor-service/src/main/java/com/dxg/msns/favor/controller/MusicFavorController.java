@@ -24,7 +24,7 @@ public class MusicFavorController {
 
 
     /**
-     * 查询动态的收藏数
+     * 查询用户音乐的收藏数
      *
      */
     @GetMapping("queryCountByUid/{id}")

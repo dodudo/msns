@@ -37,4 +37,11 @@ public interface DynamicService {
      * @return
      */
     Dynamic queryById(Integer id);
+
+    /**
+     * 根据用户id查询条数
+     * @param uid
+     * @return
+     */
+    Integer queryCountByUid(String uid);
 }
