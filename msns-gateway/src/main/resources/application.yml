@@ -33,14 +33,13 @@ msns:
       - /api/auth
       - /api/search
       - /api/user/register
-      - /api/user/login
-      - /api/user/check
-      - /api/user/code
+      - /api/user
       - /api/music
       - /api/comment
       - /api/favor
       - /api/like
       - /api/dynamic
+      - /api/admin
 logging:
   level:
     root: DEBUG

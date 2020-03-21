@@ -25,7 +25,7 @@ public class DynamicFavor implements Serializable {
     /**
     * 动态id
     */
-    private String dynamicId;
+    private Integer dynamicId;
     /**
     * 收藏者id
     */
@@ -48,11 +48,11 @@ public class DynamicFavor implements Serializable {
         this.id = id;
     }
 
-    public String getDynamicId() {
+    public Integer getDynamicId() {
         return dynamicId;
     }
 
-    public void setDynamicId(String dynamicId) {
+    public void setDynamicId(Integer dynamicId) {
         this.dynamicId = dynamicId;
     }
 

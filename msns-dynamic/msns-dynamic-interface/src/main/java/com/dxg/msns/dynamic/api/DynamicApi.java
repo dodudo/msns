@@ -28,7 +28,9 @@ public interface DynamicApi {
             @RequestParam(value = "rows",defaultValue = "5")Integer rows,
             @RequestParam(value = "sortBy",required = false)String sortBy[],
             @RequestParam(value = "desc",required = false)Boolean desc[],
-            @RequestParam(value = "isAll",required = false)Boolean isAll
+            @RequestParam(value = "isAll",required = false)Boolean isAll,
+             @RequestParam(value = "uids",required = false)String[] uids,
+            @RequestParam(value = "ids",required = false)Integer[] ids
     );
     /**
      * 根据id查找

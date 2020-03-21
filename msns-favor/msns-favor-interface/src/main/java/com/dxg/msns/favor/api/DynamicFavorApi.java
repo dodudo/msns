@@ -12,7 +12,7 @@ public interface DynamicFavorApi {
      *
      */
     @GetMapping("queryByDynamicId/{id}")
-    public Integer queryByDynamicId(@PathVariable("id") String dynamicId);
+    public Integer queryByDynamicId(@PathVariable("id") Integer dynamicId);
 
     /**
      * 查询用户收藏动态的收藏数

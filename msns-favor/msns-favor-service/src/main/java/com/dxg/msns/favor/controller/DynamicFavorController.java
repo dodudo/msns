@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (DynamicFavor)表控制层
@@ -29,7 +30,7 @@ public class DynamicFavorController {
      *
      */
     @GetMapping("queryByDynamicId/{id}")
-    public ResponseEntity<Integer> queryByDynamicId(@PathVariable("id") String dynamicId) {
+    public ResponseEntity<Integer> queryByDynamicId(@PathVariable("id") Integer dynamicId) {
         Integer counts = this.dynamicFavorService.queryByDynamicId(dynamicId);
         if (counts == null){
             return ResponseEntity.notFound().build();
@@ -48,5 +49,18 @@ public class DynamicFavorController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(counts);
+    }
+
+    /**
+     * 查询用户收藏动态的收藏数
+     *
+     */
+    @GetMapping("queryFavorByUid/{uid}")
+    public ResponseEntity<Integer[]> queryFavorByUid(@PathVariable("uid") String uid) {
+        Integer[] ids = this.dynamicFavorService.queryFavorByUid(uid);
+        if (ids == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ids);
     }
 }

@@ -5,6 +5,7 @@ import com.dxg.msns.auth.properties.JwtProperties;
 import com.dxg.msns.auth.service.AuthService;
 import com.dxg.msns.auth.utils.CookieUtils;
 import com.dxg.msns.auth.utils.JwtUtils;
+import com.dxg.msns.user.pojo.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -39,6 +40,18 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * 删除cookie
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("deleteCookie")
+    public ResponseEntity<Void> deleteCookie(HttpServletRequest request,HttpServletResponse response) {
+        CookieUtils.setCookie(request,response,this.jwtProperties.getCookieName(),null,0,null,true);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("verify")
     public ResponseEntity<UserInfo> verifyUser(@CookieValue("MSNS_TOKEN")String token,HttpServletRequest request,HttpServletResponse response){
 //        System.out.println("token:::"+token);
@@ -56,4 +69,24 @@ public class AuthController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
+    @GetMapping("getUser")
+    public ResponseEntity<User> getUser(@CookieValue("MSNS_TOKEN")String token, HttpServletRequest request, HttpServletResponse response){
+//        System.out.println("token:::"+token);
+        try {
+            //从token‘中解析信息
+            UserInfo userInfo = JwtUtils.getInfoFromToken(token, this.jwtProperties.getPublicKey());
+            User user = authService.getUser(userInfo);
+            //解析成功要重新刷新token
+            token = JwtUtils.generateToken(userInfo, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpire());
+            //更新cookie中的token
+            CookieUtils.setCookie(request,response,this.jwtProperties.getCookieName(),token,this.jwtProperties.getCookieMaxAge(),null,true);
+            //解析成功返回用户信息
+            return  ResponseEntity.ok(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 }
+

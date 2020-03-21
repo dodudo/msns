@@ -21,4 +21,12 @@ public interface UserApi {
      */
     @GetMapping("login")
     public User login(@RequestParam("uname")String uname, @RequestParam("upassword")String upassword);
+
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    @RequestMapping("queryById/{id}")
+    public User queryById(@PathVariable("id")Integer id);
 }

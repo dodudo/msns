@@ -39,7 +39,7 @@ public class ElasticSearchTest {
         //循环查询dynamic，将dynamic变成dynamics，写入索引库
         do {
             //分页查询所有动态
-            PageResult<Dynamic> dynamicPageResult = this.dynamicsClient.queryDynamicsByPage(null, page, rows, null, null, true);
+            PageResult<Dynamic> dynamicPageResult = this.dynamicsClient.queryDynamicsByPage(null, page, rows, null, null, true,null,null);
             //遍历动态转换为List<Dynamics>
             List<Dynamics> dynamicsList = dynamicPageResult.getItems().stream().map(dynamic -> {
                 try {

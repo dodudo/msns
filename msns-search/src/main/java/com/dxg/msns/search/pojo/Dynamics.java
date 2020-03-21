@@ -8,24 +8,28 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "dynamics",type = "docs",shards = 1,replicas = 0)
+@Document(indexName = "dynamics", type = "docs", shards = 1, replicas = 0)
 public class Dynamics {
     @Id
     private Integer id;  //动态id
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String all;  //所有的查询条件
     private Integer typeId; //分类id
     private Date publishDate; //发布时间
     private Date recentCommentDate; //最新评论时间
-    @Field(type = FieldType.Text,analyzer = "ik_max_word",index = false)
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", index = false)
     private String dynamicContent;
     private Long viewCount; //浏览次数
     private Integer likeCount; //点赞次数
     private Integer favorCount; //收藏次数
     private Integer commentCount; //评论次数
+    @Field(type = FieldType.Keyword)
     private String imgUrls; //图片
+    @Field(type = FieldType.Keyword)
     private String uid; //用户id
+    @Field(type = FieldType.Keyword)
     private String author; //发布者
+    @Field(type = FieldType.Keyword)
     private String authorAvatar; //发布者头像
     private Music music;
     @Field(type = FieldType.Keyword)

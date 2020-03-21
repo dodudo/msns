@@ -17,7 +17,7 @@ public interface UserService {
      * @param isAll
      * @return
      */
-    PageResult<User> queryUsersByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll);
+    PageResult<User> queryUsersByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll,String[] uids);
 
     /**
      * 根据用户名查询用户
@@ -83,4 +83,10 @@ public interface UserService {
     User queryUser(String uname, String upassword);
 
 
+    /**
+     * 根据id查找用户
+     * @param id
+     * @return
+     */
+    User queryById(Integer id);
 }

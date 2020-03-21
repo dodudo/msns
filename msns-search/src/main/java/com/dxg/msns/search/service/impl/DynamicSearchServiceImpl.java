@@ -61,7 +61,7 @@ public class DynamicSearchServiceImpl implements DynamicSearchService {
         dynamics.setDynamicContent(dynamic.getDynamicContent());
         dynamics.setViewCount(dynamic.getViewCount());
         dynamics.setLikeCount(likeClient.queryCountsByDynamicId(dynamic.getDynamicId()));
-        dynamics.setFavorCount(dynamicFavorClient.queryByDynamicId(dynamic.getDynamicId()));
+        dynamics.setFavorCount(dynamicFavorClient.queryByDynamicId(dynamic.getId()));
         dynamics.setCommentCount(commentClient.queryCountsByDynamicId(dynamic.getDynamicId()));
         dynamics.setImgUrls(dynamic.getImgUrls());
         dynamics.setUid(dynamic.getUid());
@@ -93,11 +93,19 @@ public class DynamicSearchServiceImpl implements DynamicSearchService {
             MatchQueryBuilder allBuilder = QueryBuilders.matchQuery("all", key).operator(Operator.AND);
             boolQueryBuilder.must(allBuilder);
         }
-        if (ArrayUtils.isNotEmpty(request.getUids())){
-            boolQueryBuilder.must(QueryBuilders.termsQuery("uid",request.getUids()));
+//        System.out.println(request);
+        if (ArrayUtils.isNotEmpty(request.getUids())) {
+            for (int i = 0; i < request.getUids().length; i++) {
+                boolQueryBuilder.must(QueryBuilders.termQuery("uid", request.getUids()[i]));
+            }
+        }
+        if (ArrayUtils.isNotEmpty(request.getIds())) {
+
+            for (int i = 0; i < request.getIds().length; i++) {
+                boolQueryBuilder.must(QueryBuilders.termQuery("id", request.getIds()[i]));
+            }
         }
         nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
-
         //过滤
 //        nativeSearchQueryBuilder.withFilter(QueryBuilders.termQuery("status","1"));
         //排序

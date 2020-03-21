@@ -33,4 +33,16 @@ public class AuthServiceImpl implements AuthService {
             return null;
         }
     }
+
+    /**
+     * 根据token中的用户信息获取用户详细信息
+     *
+     * @param userInfo
+     * @return
+     */
+    @Override
+    public User getUser(UserInfo userInfo) {
+        User user = userClient.queryById(userInfo.getId());
+        return user;
+    }
 }

@@ -50,7 +50,7 @@ public class DynamicServiceImpl implements DynamicService {
      * @return
      */
     @Override
-    public PageResult<Dynamic> queryDynamicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll,String[] uids) {
+    public PageResult<Dynamic> queryDynamicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll,String[] uids,Integer[] ids) {
         Example example = new Example(Dynamic.class);
         Example.Criteria criteria = example.createCriteria();
         if (isAll){
@@ -63,6 +63,9 @@ public class DynamicServiceImpl implements DynamicService {
         }
         if (ArrayUtils.isNotEmpty(uids)){
             criteria.andIn("uid", Arrays.asList(uids));
+        }
+        if (ArrayUtils.isNotEmpty(ids)){
+            criteria.andIn("id", Arrays.asList(ids));
         }
         //添加分页条件
         PageHelper.startPage(page, rows);

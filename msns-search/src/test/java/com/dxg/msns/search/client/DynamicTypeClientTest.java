@@ -30,7 +30,7 @@ class DynamicTypeClientTest {
     }
     @Test
     public void testBuildDynamics(){
-        PageResult<Dynamic> dynamicPageResult = dynamicsClient.queryDynamicsByPage("", 1, 100, null, null, true);
+        PageResult<Dynamic> dynamicPageResult = dynamicsClient.queryDynamicsByPage("", 1, 100, null, null, true,null,null);
         List<Dynamic> items = dynamicPageResult.getItems();
         System.out.println(items.get(0));
         Dynamics dynamics = dynamicSearchService.buildDynamics(items.get(0));

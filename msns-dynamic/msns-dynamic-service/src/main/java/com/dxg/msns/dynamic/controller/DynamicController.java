@@ -18,7 +18,7 @@ public class DynamicController {
     private DynamicService dynamicService;
 
     /**
-     * 查询所有分类
+     * 条件查询所有分类
      * @param key
      * @param page
      * @param rows
@@ -34,12 +34,13 @@ public class DynamicController {
             @RequestParam(value = "sortBy",required = false)String sortBy[],
             @RequestParam(value = "desc",required = false)Boolean desc[],
             @RequestParam(value = "isAll",required = false)Boolean isAll,
-            @RequestParam(value = "uid",required = false)String[] uids
+            @RequestParam(value = "uids",required = false)String[] uids,
+            @RequestParam(value = "ids",required = false)Integer[] ids
     ){
         if (page<0 ||rows<0){
             return ResponseEntity.badRequest().build();
         }
-        PageResult<Dynamic> result = this.dynamicService.queryDynamicsByPage(key,page,rows,sortBy,desc,isAll,uids);
+        PageResult<Dynamic> result = this.dynamicService.queryDynamicsByPage(key,page,rows,sortBy,desc,isAll,uids,ids);
 
         return ResponseEntity.ok(result);
     }

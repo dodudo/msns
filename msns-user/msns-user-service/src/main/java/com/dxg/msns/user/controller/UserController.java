@@ -40,12 +40,13 @@ public class UserController {
             @RequestParam(value = "rows",defaultValue = "5")Integer rows,
             @RequestParam(value = "sortBy",required = false)String sortBy[],
             @RequestParam(value = "desc",required = false)Boolean desc[],
-            @RequestParam(value = "isAll",required = false)Boolean isAll
+            @RequestParam(value = "isAll",required = false)Boolean isAll,
+            @RequestParam(value = "uids",required = false)String[] uids
     ){
         if (page<0 ||rows<0){
             return ResponseEntity.badRequest().build();
         }
-        PageResult<User> result = this.userService.queryUsersByPage(key,page,rows,sortBy,desc,isAll);
+        PageResult<User> result = this.userService.queryUsersByPage(key,page,rows,sortBy,desc,isAll,uids);
 
         return ResponseEntity.ok(result);
     }
@@ -164,5 +165,19 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    @RequestMapping("queryById/{id}")
+    public ResponseEntity<User> queryById(@PathVariable("id")Integer id){
+        User user = this.userService.queryById(id);
+        System.out.println(user);
+        if (user == null){
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(user);
+    }
 
 }

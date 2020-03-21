@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public PageResult<User> queryUsersByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll) {
+    public PageResult<User> queryUsersByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll,String[] uids) {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         if (isAll) {
@@ -58,6 +58,9 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotBlank(key)) {
             criteria.andLike("uname", "%" + key + "%");
         }
+        if (ArrayUtils.isNotEmpty(uids)){
+            criteria.andIn("uid", Arrays.asList(uids));
+        }
         //添加分页条件
         PageHelper.startPage(page, rows);
 
@@ -66,6 +69,16 @@ public class UserServiceImpl implements UserService {
             example.setOrderByClause(UnderlineHump.HumpToUnderline(sortBy[0]) + " " + (desc[0] ? "desc" : "asc"));
         }
         List<User> users = this.userMapper.selectByExample(example);
+        if (ArrayUtils.isNotEmpty(uids)){
+            for (User user : users) {
+                user.setEmail(null);
+                user.setBirthday(null);
+                user.setPhone(null);
+                user.setUpassword(null);
+                user.setSalt(null);
+            }
+        }
+        System.out.println(users);
         PageInfo<User> userPageInfo = new PageInfo<>(users);
 
         return new PageResult<>(userPageInfo.getTotal(), userPageInfo.getList());
@@ -227,6 +240,23 @@ public class UserServiceImpl implements UserService {
         }
         return user;
 
+    }
+
+    /**
+     * 根据id查找用户
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public User queryById(Integer id) {
+        User record = new User();
+        record.setId(id);
+        User user = this.userMapper.selectOne(record);
+        if (user == null){
+            return null;
+        }
+        return user;
     }
 
 

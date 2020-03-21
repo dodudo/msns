@@ -1,11 +1,14 @@
 package com.dxg.msns.search.pojo;
 
+import java.util.Arrays;
+
 public class SearchRequst {
     private String key;
     private Integer page;
     private String sortBy;
     private Boolean desc; //是否降序
     private String[] uids; //查询用户id
+    private Integer[] ids;
     private static final Integer DEFAULT_SIZE = 1;
     private static final Integer DEFAULT_PAGE = 1;
 
@@ -55,5 +58,25 @@ public class SearchRequst {
 
     public void setUids(String[] uids) {
         this.uids = uids;
+    }
+
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchRequst{" +
+                "key='" + key + '\'' +
+                ", page=" + page +
+                ", sortBy='" + sortBy + '\'' +
+                ", desc=" + desc +
+                ", uids=" + Arrays.toString(uids) +
+                ", ids=" + Arrays.toString(ids) +
+                '}';
     }
 }
