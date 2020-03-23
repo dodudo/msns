@@ -1,6 +1,7 @@
 package com.dxg.msns.user.controller;
 
 import com.dxg.msns.common.pojo.PageResult;
+import com.dxg.msns.common.util.CodecUtils;
 import com.dxg.msns.user.service.UserService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.apache.tomcat.util.json.JSONParser;
@@ -178,6 +179,22 @@ public class UserController {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(user);
+    }
+
+    /**
+     * 根据id修改密码
+     * @param id
+     * @return
+     */
+    @GetMapping("changePwdById")
+    public ResponseEntity<Void> changePwdById(@RequestParam("id")Integer id,@RequestParam("upassword") String upassword,@RequestParam("newPassword") String newPassword){
+        User user = this.userService.queryById(id);
+        if (user.getUpassword().equals(CodecUtils.md5Hex(upassword,user.getSalt()))){
+            this.userService.changePwdById(id,newPassword);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

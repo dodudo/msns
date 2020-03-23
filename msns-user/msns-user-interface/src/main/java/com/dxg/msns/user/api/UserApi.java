@@ -29,4 +29,14 @@ public interface UserApi {
      */
     @RequestMapping("queryById/{id}")
     public User queryById(@PathVariable("id")Integer id);
+
+    /**
+     * 根据id修改密码
+     * @param id
+     * @return
+     */
+    @GetMapping("changePwdById")
+    public Void changePwdById(@RequestParam("id")Integer id,
+                                              @RequestParam("upassword") String upassword,
+                                              @RequestParam("newPassword") String newPassword);
 }

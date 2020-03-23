@@ -259,5 +259,24 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * 修改密码
+     *
+     * @param id
+     * @param newPwd
+     */
+    @Override
+    public void changePwdById(Integer id,String newPwd) {
+        try {
+            //生成盐
+            String salt = CodecUtils.generateSalt();
+            //根据生成的盐进行加密
+            newPwd = CodecUtils.md5Hex(newPwd,salt);
+            userMapper.changePwdById(id,newPwd,salt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

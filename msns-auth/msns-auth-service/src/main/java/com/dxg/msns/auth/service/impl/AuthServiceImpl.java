@@ -45,4 +45,16 @@ public class AuthServiceImpl implements AuthService {
         User user = userClient.queryById(userInfo.getId());
         return user;
     }
+
+    /**
+     * 修改密码
+     *
+     * @param upassword
+     * @param newPassword
+     * @param id
+     */
+    @Override
+    public void changePwd(String upassword, String newPassword, Integer id) {
+        this.userClient.changePwdById(id,upassword,newPassword);
+    }
 }

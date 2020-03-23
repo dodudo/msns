@@ -3,6 +3,7 @@ package com.dxg.msns.user.service;
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.user.pojo.User;
 import com.fasterxml.jackson.databind.util.ObjectBuffer;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -89,4 +90,11 @@ public interface UserService {
      * @return
      */
     User queryById(Integer id);
+
+    /**
+     * 修改密码
+     * @param id
+     * @param newPwd
+     */
+    void changePwdById(Integer id, String newPwd);
 }

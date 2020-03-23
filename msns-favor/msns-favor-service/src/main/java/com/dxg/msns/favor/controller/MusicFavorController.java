@@ -35,5 +35,4 @@ public class MusicFavorController {
         }
         return ResponseEntity.ok(counts);
     }
-
 }

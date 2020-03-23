@@ -18,4 +18,12 @@ public interface AuthService {
      * @return
      */
     User getUser(UserInfo userInfo);
+
+    /**
+     * 修改密码
+     * @param upassword
+     * @param newPassword
+     * @param id
+     */
+    void changePwd(String upassword, String newPassword, Integer id);
 }

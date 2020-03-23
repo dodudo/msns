@@ -52,7 +52,7 @@ public class DynamicFavorController {
     }
 
     /**
-     * 查询用户收藏动态的收藏数
+     * 查询用户收藏动态的收藏
      *
      */
     @GetMapping("queryFavorByUid/{uid}")

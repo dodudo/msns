@@ -58,6 +58,11 @@ public class AuthController {
         try {
             //从token‘中解析信息
             UserInfo userInfo = JwtUtils.getInfoFromToken(token, this.jwtProperties.getPublicKey());
+            User user = authService.getUser(userInfo);
+            userInfo.setAvatarUrl(user.getAvatarUrl());
+            userInfo.setId(user.getId());
+            userInfo.setUid(user.getUid());
+            userInfo.setUname(user.getUname());
             //解析成功要重新刷新token
             token = JwtUtils.generateToken(userInfo, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpire());
             //更新cookie中的token
@@ -83,6 +88,29 @@ public class AuthController {
             CookieUtils.setCookie(request,response,this.jwtProperties.getCookieName(),token,this.jwtProperties.getCookieMaxAge(),null,true);
             //解析成功返回用户信息
             return  ResponseEntity.ok(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @GetMapping("changePwd")
+    public ResponseEntity<Void> changeUserPwd(@CookieValue("MSNS_TOKEN")String token,
+                                              @RequestParam("upassword") String upassword,
+                                              @RequestParam("newPassword") String newPassword,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response){
+//        System.out.println("token:::"+token);
+        try {
+            //从token‘中解析信息
+            UserInfo userInfo = JwtUtils.getInfoFromToken(token, this.jwtProperties.getPublicKey());
+            authService.changePwd(upassword,newPassword,userInfo.getId());
+            //解析成功要重新刷新token
+            token = JwtUtils.generateToken(userInfo, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpire());
+            //更新cookie中的token
+            CookieUtils.setCookie(request,response,this.jwtProperties.getCookieName(),token,this.jwtProperties.getCookieMaxAge(),null,true);
+            //解析成功返回用户信息
+            return  new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
         }
