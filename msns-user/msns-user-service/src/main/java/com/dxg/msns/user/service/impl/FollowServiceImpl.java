@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -76,5 +78,56 @@ public class FollowServiceImpl implements FollowService {
         }
         String[] followsIdsArr = followsIds.toArray(new String[follows.size()]);
         return followsIdsArr;
+    }
+
+    /**
+     * 根据用户id查询该用户和粉丝是否互相关注
+     *
+     * @param uids
+     * @return
+     */
+    @Override
+    public String[] queryIsMutual(String[] uids,String currentUid) {
+        List<String> mutualUidsList = new ArrayList<>();
+        Follow follow = new Follow();
+        //查询是否被当前用户关注
+        for (int i=0;i<uids.length;i++){
+            follow.setFollowersId(currentUid);
+            follow.setBefollowersId(uids[i]);
+            int count = this.followMapper.selectCount(follow);
+            if (count >= 1){
+                mutualUidsList.add(uids[i]);
+            }
+        }
+        System.out.println("mutualUidsList:::"+mutualUidsList);
+        String[] mutualUids = mutualUidsList.toArray(new String[mutualUidsList.size()]);
+        return mutualUids;
+    }
+
+    /**
+     * 删除关注信息
+     *
+     * @param followerId
+     * @param beFollowerId
+     * @return
+     */
+    @Override
+    public void deleteFollow(String followerId, String beFollowerId) {
+        Example example = new Example(Follow.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("followersId",followerId).andEqualTo("befollowersId",beFollowerId);
+        this.followMapper.deleteByExample(example);
+    }
+
+    /**
+     * 新增关注
+     *
+     * @param follow
+     */
+    @Override
+    public void addFollow(Follow follow) {
+        Date date = new Date();
+        follow.setFollowerDate(date);
+        this.followMapper.insertSelective(follow);
     }
 }

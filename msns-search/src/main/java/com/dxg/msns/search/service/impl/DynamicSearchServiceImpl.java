@@ -95,15 +95,13 @@ public class DynamicSearchServiceImpl implements DynamicSearchService {
         }
 //        System.out.println(request);
         if (ArrayUtils.isNotEmpty(request.getUids())) {
-            for (int i = 0; i < request.getUids().length; i++) {
-                boolQueryBuilder.must(QueryBuilders.termQuery("uid", request.getUids()[i]));
-            }
+
+                boolQueryBuilder.must(QueryBuilders.termsQuery("uid", request.getUids()));
+
         }
         if (ArrayUtils.isNotEmpty(request.getIds())) {
 
-            for (int i = 0; i < request.getIds().length; i++) {
-                boolQueryBuilder.must(QueryBuilders.termQuery("id", request.getIds()[i]));
-            }
+                boolQueryBuilder.must(QueryBuilders.termsQuery("id", request.getIds()));
         }
         nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
         //过滤

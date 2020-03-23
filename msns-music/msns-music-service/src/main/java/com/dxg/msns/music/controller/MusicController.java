@@ -59,7 +59,6 @@ public class MusicController {
             this.musicService.saveMusic(music);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
-
     }
 
     /**
@@ -83,7 +82,7 @@ public class MusicController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     /**
-     * 修改音乐信息
+     * 删除音乐信息
      * @param music
      * @return
      */
