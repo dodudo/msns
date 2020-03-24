@@ -19,7 +19,6 @@ zuul:
     like-service: /like/**
     search-service: /search/**
     auth-service: /auth/**
-  ignored-patterns: /upload/**
   ignored-services:
     - upload-service
   add-host-header: true

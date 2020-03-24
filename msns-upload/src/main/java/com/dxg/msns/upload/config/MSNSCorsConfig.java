@@ -14,6 +14,7 @@ public class MSNSCorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         //添加允许的域，不要写“*”，否则cookie无法使用
         config.addAllowedOrigin("http://localhost:8080");
+        config.addAllowedOrigin("http://127.0.0.1:8080");
         //是否发送cookie信息
         config.setAllowCredentials(true);
         //添加允许的请求方式

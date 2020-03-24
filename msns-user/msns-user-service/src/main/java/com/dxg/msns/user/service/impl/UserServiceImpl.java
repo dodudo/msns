@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -110,6 +111,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
+    @Transient
     public void saveUser(User user) {
         user.setUid(UUID.randomUUID().toString().replace("-", "").toLowerCase());
         user.setStatus("1");
@@ -122,6 +124,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
+    @Transient
     public void updateUser(User user) {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
@@ -135,6 +138,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
+    @Transient
     public void deleteUser(User user) {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
@@ -199,6 +203,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transient
     public Map<String,Object> register(User user, String code) {
         String codeCache = this.redisTemplate.opsForValue().get(user.getEmail());
         Map<String,Object> map = new HashMap<>();
@@ -266,6 +271,7 @@ public class UserServiceImpl implements UserService {
      * @param newPwd
      */
     @Override
+    @Transient
     public void changePwdById(Integer id,String newPwd) {
         try {
             //生成盐
@@ -276,6 +282,18 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 修改头像
+     *
+     * @param id
+     * @param avatarUrl
+     */
+    @Override
+    @Transient
+    public void changeAvatar(Integer id, String avatarUrl) {
+        userMapper.changeAvatar(id,avatarUrl);
     }
 
 

@@ -44,4 +44,5 @@ public interface DynamicService {
      * @return
      */
     Integer queryCountByUid(String uid);
+
 }

@@ -5,6 +5,7 @@ import com.dxg.msns.dynamic.pojo.Dynamic;
 import com.dxg.msns.dynamic.pojo.DynamicType;
 import com.dxg.msns.dynamic.service.DynamicService;
 import com.dxg.msns.dynamic.service.DynamicTypeService;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,5 +96,6 @@ public class DynamicController {
         }
         return ResponseEntity.ok(dynamicCount);
     }
+
 
 }

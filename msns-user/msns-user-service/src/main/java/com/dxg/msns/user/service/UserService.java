@@ -97,4 +97,11 @@ public interface UserService {
      * @param newPwd
      */
     void changePwdById(Integer id, String newPwd);
+
+    /**
+     * 修改头像
+     * @param id
+     * @param avatarUrl
+     */
+    void changeAvatar(Integer id, String avatarUrl);
 }

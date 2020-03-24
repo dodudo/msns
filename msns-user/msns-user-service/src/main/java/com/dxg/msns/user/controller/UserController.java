@@ -117,6 +117,7 @@ public class UserController {
         if (user == null){
             return ResponseEntity.notFound().build();
         }
+        System.out.println("user:::"+user);
         return ResponseEntity.ok(user);
     }
 
@@ -197,4 +198,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    /**
+     * 根据id修改头像
+     * @param id
+     * @return
+     */
+    @GetMapping("changeAvatar")
+    public ResponseEntity<Void> changeAvatar(@RequestParam("id")Integer id,@RequestParam("avatarUrl") String avatarUrl){
+        this.userService.changeAvatar(id,avatarUrl);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }
