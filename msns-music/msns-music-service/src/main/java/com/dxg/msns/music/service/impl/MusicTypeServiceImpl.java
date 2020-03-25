@@ -16,4 +16,16 @@ public class MusicTypeServiceImpl implements MusicTypeService {
     public List<MusicType> queryAllTypes() {
         return musicTypeMapper.selectAll();
     }
+
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public MusicType queryById(Integer id) {
+        MusicType musicType = this.musicTypeMapper.selectByPrimaryKey(id);
+        return musicType;
+    }
 }

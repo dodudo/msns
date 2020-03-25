@@ -35,6 +35,14 @@ public class Musics {
     @Field(type = FieldType.Keyword)
     private String status;
 
+    public String getAll() {
+        return all;
+    }
+
+    public void setAll(String all) {
+        this.all = all;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -131,16 +139,18 @@ public class Musics {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
-        return "Music{" +
+        return "Musics{" +
                 "id=" + id +
                 ", musicId='" + musicId + '\'' +
+                ", all='" + all + '\'' +
                 ", musicCoverUrl='" + musicCoverUrl + '\'' +
                 ", musicName='" + musicName + '\'' +
                 ", musicAuthor='" + musicAuthor + '\'' +
                 ", musicAlbum='" + musicAlbum + '\'' +
-                ", musicPublisDate=" + musicPublisDate +
+                ", musicPublisDate='" + musicPublisDate + '\'' +
                 ", musicPushDate=" + musicPushDate +
                 ", musicLength='" + musicLength + '\'' +
                 ", musicTypeId=" + musicTypeId +

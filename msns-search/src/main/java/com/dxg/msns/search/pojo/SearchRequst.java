@@ -9,6 +9,7 @@ public class SearchRequst {
     private Boolean desc; //是否降序
     private String[] uids; //查询用户id
     private Integer[] ids;
+    private Integer typeId;
     private static final Integer DEFAULT_SIZE = 1;
     private static final Integer DEFAULT_PAGE = 1;
 
@@ -18,6 +19,14 @@ public class SearchRequst {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public Integer getPage() {
@@ -77,6 +86,7 @@ public class SearchRequst {
                 ", desc=" + desc +
                 ", uids=" + Arrays.toString(uids) +
                 ", ids=" + Arrays.toString(ids) +
+                ", typeId=" + typeId +
                 '}';
     }
 }

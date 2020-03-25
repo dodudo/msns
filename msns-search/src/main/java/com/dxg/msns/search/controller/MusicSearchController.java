@@ -3,6 +3,7 @@ package com.dxg.msns.search.controller;
 import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.music.pojo.Music;
 import com.dxg.msns.search.pojo.Dynamics;
+import com.dxg.msns.search.pojo.Musics;
 import com.dxg.msns.search.pojo.SearchRequst;
 import com.dxg.msns.search.service.DynamicSearchService;
 import com.dxg.msns.search.service.MusicSearchService;
@@ -21,8 +22,8 @@ public class MusicSearchController {
     private MusicSearchService musicSearchService;
 
     @PostMapping("Page")
-    public ResponseEntity<PageResult<Music>> searchMusic(@RequestBody SearchRequst request){
-        PageResult<Music> result = this.musicSearchService.searchMusic(request);
+    public ResponseEntity<PageResult<Musics>> searchMusic(@RequestBody SearchRequst request){
+        PageResult<Musics> result = this.musicSearchService.searchMusic(request);
         if (result == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

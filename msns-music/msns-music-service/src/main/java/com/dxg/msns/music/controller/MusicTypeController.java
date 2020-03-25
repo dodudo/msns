@@ -4,6 +4,7 @@ import com.dxg.msns.music.pojo.MusicType;
 import com.dxg.msns.music.service.MusicTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +21,10 @@ public class MusicTypeController {
     public ResponseEntity<List<MusicType>> queryAllTypes(){
         List<MusicType> musicTypes = musicTypeService.queryAllTypes();
         return ResponseEntity.ok(musicTypes);
+    }
+    @RequestMapping("queryById/{id}")
+    public ResponseEntity<MusicType> queryById(@PathVariable("id")Integer id){
+        MusicType musicType = musicTypeService.queryById(id);
+        return ResponseEntity.ok(musicType);
     }
 }
