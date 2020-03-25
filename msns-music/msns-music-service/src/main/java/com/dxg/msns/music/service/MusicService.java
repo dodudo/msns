@@ -53,8 +53,15 @@ public interface MusicService {
 
     /**
      * 根据id查找音乐
+     * @param id
+     * @return
+     */
+    Music queryMusicById(Integer id);
+
+    /**
+     * 根据音乐id查找音乐
      * @param musicId
      * @return
      */
-    Music queryMusicById(String musicId);
+    Music queryMusicByMusicId(String musicId);
 }

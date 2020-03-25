@@ -10,6 +10,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,16 @@ import java.util.UUID;
 public class MusicServiceImpl implements MusicService {
     @Autowired
     private MusicMapper musicMapper;
-
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+    private void sendMsg(Integer id,String type) {
+        //向队列发送消息
+        try {
+            this.amqpTemplate.convertAndSend("music."+type, id.toString());
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public PageResult<Music> queryMusicsByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll) {
         Example example = new Example(Music.class);
@@ -72,6 +83,8 @@ public class MusicServiceImpl implements MusicService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("id", music.getId());
         this.musicMapper.updateByExampleSelective(music, example);
+        sendMsg(music.getId(),"update");
+
     }
 
     /**
@@ -87,6 +100,7 @@ public class MusicServiceImpl implements MusicService {
         music.setMusicPushDate(date);
 
         this.musicMapper.insertSelective(music);
+        sendMsg(music.getId(),"insert");
     }
 
     /**
@@ -121,16 +135,28 @@ public class MusicServiceImpl implements MusicService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("id",music.getId());
         this.musicMapper.deleteByExample(example);
+        sendMsg(music.getId(),"delete");
     }
 
     /**
      * 根据id查找音乐
      *
+     * @param id
+     * @return
+     */
+    @Override
+    public Music queryMusicById(Integer id) {
+        return  this.musicMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 根据音乐id查找音乐
+     *
      * @param musicId
      * @return
      */
     @Override
-    public Music queryMusicById(String musicId) {
+    public Music queryMusicByMusicId(String musicId) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("musicId",musicId);

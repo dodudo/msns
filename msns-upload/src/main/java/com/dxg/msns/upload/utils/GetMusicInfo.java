@@ -68,7 +68,15 @@ public class GetMusicInfo {
         int trackLength = audioFile.getAudioHeader().getTrackLength();
         int min = trackLength / 60;
         int second = trackLength % 60;
-        music.setMusicLength(min + ":" + second);
+        String minStr = ""+min;
+        String secondStr = ""+second;
+        if (min<10){
+            minStr = "0"+min;
+        }
+        if (second<10){
+            secondStr = "0"+second;
+        }
+        music.setMusicLength(minStr + ":" + secondStr);
         //获取发行年限
         music.setMusicPublisDate(tag.getFirst(FieldKey.YEAR));
         //获取图片

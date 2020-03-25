@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface MusicApi {
     /**
      * 根据id查找音乐
-     * @param musicId
+     * @param id
      * @return
      */
     @RequestMapping("queryById/{id}")
-    public Music queryMusicById(@PathVariable("id") String musicId);
+    public Music queryMusicById(@PathVariable("id") Integer id);
+
+    /**
+     * 根据音乐id查找音乐
+     * @param musicId
+     * @return
+     */
+    @RequestMapping("queryByMusicId/{id}")
+    public Music queryMusicByMusicId(@PathVariable("id") String musicId);
 
     /**
      * 查询所有音乐结果，分页

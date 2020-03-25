@@ -94,12 +94,22 @@ public class MusicController {
 
     /**
      * 根据id查找音乐
-     * @param musicId
+     * @param id
      * @return
      */
     @RequestMapping("queryById/{id}")
-    public ResponseEntity<Music> queryMusicById(@PathVariable("id") String musicId){
-        Music music=this.musicService.queryMusicById(musicId);
+    public ResponseEntity<Music> queryMusicById(@PathVariable("id") Integer id){
+        Music music=this.musicService.queryMusicById(id);
+        return ResponseEntity.ok(music);
+    }
+    /**
+     * 根据音乐id查找音乐
+     * @param musicId
+     * @return
+     */
+    @RequestMapping("queryByMusicId/{id}")
+    public ResponseEntity<Music> queryMusicByMusicId(@PathVariable("id") String musicId){
+        Music music=this.musicService.queryMusicByMusicId(musicId);
         return ResponseEntity.ok(music);
     }
 }

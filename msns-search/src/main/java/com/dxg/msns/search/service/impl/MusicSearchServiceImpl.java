@@ -1,8 +1,10 @@
 package com.dxg.msns.search.service.impl;
 
 import com.dxg.msns.common.pojo.PageResult;
+import com.dxg.msns.dynamic.pojo.Dynamic;
 import com.dxg.msns.music.pojo.Music;
 import com.dxg.msns.search.client.MusicClient;
+import com.dxg.msns.search.client.MusicFavorClient;
 import com.dxg.msns.search.client.MusicTypeClient;
 import com.dxg.msns.search.pojo.Dynamics;
 import com.dxg.msns.search.pojo.Musics;
@@ -31,6 +33,9 @@ public class MusicSearchServiceImpl implements MusicSearchService {
 
     @Autowired
     private MusicRepository musicRepository;
+
+    @Autowired
+    private MusicFavorClient musicFavorClient;
 
     /**
      * 构建Musics
@@ -91,17 +96,15 @@ public class MusicSearchServiceImpl implements MusicSearchService {
             boolQueryBuilder.must(allBuilder);
         }
 //        System.out.println(request);
-        if (ArrayUtils.isNotEmpty(request.getUids())) {
-
-            boolQueryBuilder.must(QueryBuilders.termsQuery("uid", request.getUids()));
-
+        if (ArrayUtils.isNotEmpty(request.getUids())&&request.getUids()[0] != null) {
+            //根据用户id查询用户收藏音乐id后添加入requst中
+            request.setIds(musicFavorClient.queryByUid(request.getUids()[0]));
         }
         if (ArrayUtils.isNotEmpty(request.getIds())) {
-
             boolQueryBuilder.must(QueryBuilders.termsQuery("id", request.getIds()));
         }
         if (request.getTypeId() != null){
-            boolQueryBuilder.must(QueryBuilders.termQuery("typeId", request.getTypeId()));
+            boolQueryBuilder.must(QueryBuilders.termQuery("musicTypeId", request.getTypeId()));
         }
         nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
         //排序
@@ -110,6 +113,7 @@ public class MusicSearchServiceImpl implements MusicSearchService {
         if (StringUtils.isNotBlank(sortBy)) {
             nativeSearchQueryBuilder.withSort(SortBuilders.fieldSort(sortBy).order(desc ? SortOrder.DESC : SortOrder.ASC));
         }
+        System.out.println("ids::::"+request.getIds());
         //分页
         int page = request.getPage();
         int size = request.getSize();
@@ -128,7 +132,11 @@ public class MusicSearchServiceImpl implements MusicSearchService {
      */
     @Override
     public void createMusicIndex(Integer id) {
+        Music music = this.musicClient.queryMusicById(id);
+        Musics musics = this.buildMusic(music);
 
+        //保存到索引库
+        this.musicRepository.save(musics);
     }
 
     /**
@@ -138,6 +146,6 @@ public class MusicSearchServiceImpl implements MusicSearchService {
      */
     @Override
     public void deleteMusicIndex(Integer id) {
-
+        this.musicRepository.deleteById(id);
     }
 }

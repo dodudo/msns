@@ -69,7 +69,7 @@ public class DynamicSearchServiceImpl implements DynamicSearchService {
         dynamics.setAuthorAvatar(user.getAvatarUrl());
         dynamics.setStatus(dynamic.getStatus());
         if (dynamic.getMusicId() != null) {
-            Music music = musicClient.queryMusicById(dynamic.getMusicId());
+            Music music = musicClient.queryMusicByMusicId(dynamic.getMusicId());
             dynamics.setMusic(music);
         }
         return dynamics;

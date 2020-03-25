@@ -13,4 +13,11 @@ public interface MusicFavorApi {
      */
     @GetMapping("queryCountByUid/{id}")
     public Integer queryCountByUid(@PathVariable("id") String uid);
+
+    /**
+     * 根据用户id查询该用户收藏音乐的id
+     */
+    @GetMapping("queryByUid/{id}")
+    public Integer[] queryByUid(@PathVariable("id") String uid);
+
 }

@@ -10,7 +10,8 @@ public class SearchRequst {
     private String[] uids; //查询用户id
     private Integer[] ids;
     private Integer typeId;
-    private static final Integer DEFAULT_SIZE = 1;
+    private Integer size;
+    private static final Integer DEFAULT_SIZE = 5;
     private static final Integer DEFAULT_PAGE = 1;
 
     public String getKey() {
@@ -57,8 +58,15 @@ public class SearchRequst {
         this.desc = desc;
     }
 
-    public Integer getSize(){
-        return DEFAULT_SIZE;
+    public Integer getSize() {
+        if (this.size == null || this.size<=0){
+            return DEFAULT_SIZE;
+        }
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public String[] getUids() {

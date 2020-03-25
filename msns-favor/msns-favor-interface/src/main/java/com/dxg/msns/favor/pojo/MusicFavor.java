@@ -25,7 +25,7 @@ public class MusicFavor implements Serializable {
     /**
     * 音乐id
     */
-    private String musicId;
+    private Integer musicId;
     /**
     * 收藏者id
     */
@@ -44,11 +44,11 @@ public class MusicFavor implements Serializable {
         this.id = id;
     }
 
-    public String getMusicId() {
+    public Integer getMusicId() {
         return musicId;
     }
 
-    public void setMusicId(String musicId) {
+    public void setMusicId(Integer musicId) {
         this.musicId = musicId;
     }
 
