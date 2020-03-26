@@ -45,4 +45,9 @@ public interface DynamicService {
      */
     Integer queryCountByUid(String uid);
 
+    /**
+     * 新增动态
+     * @param dynamic
+     */
+    void addDynamic(Dynamic dynamic);
 }

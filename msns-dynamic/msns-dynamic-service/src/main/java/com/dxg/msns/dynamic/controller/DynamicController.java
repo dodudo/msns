@@ -96,6 +96,16 @@ public class DynamicController {
         }
         return ResponseEntity.ok(dynamicCount);
     }
-
+    /**
+     * 新增动态
+     * @param dynamic
+     * @return
+     */
+    @PostMapping
+    public ResponseEntity<Void> addDynamic(@RequestBody Dynamic dynamic){
+       System.out.println("controller::::::"+dynamic);
+        this.dynamicService.addDynamic(dynamic);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
 }

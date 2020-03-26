@@ -25,7 +25,7 @@ public class UploadController {
     private UploadService uploadService;
 
     @PostMapping("image")
-    public ResponseEntity<String> uploadImage( @RequestParam("file") MultipartFile file, HttpServletRequest request,HttpServletResponse response){
+    public ResponseEntity<String> uploadImage( @RequestParam("file") MultipartFile[] file, HttpServletRequest request,HttpServletResponse response){
         String url = this.uploadService.upload(file);
         if (StringUtils.isBlank(url)) {
             return ResponseEntity.badRequest().build();

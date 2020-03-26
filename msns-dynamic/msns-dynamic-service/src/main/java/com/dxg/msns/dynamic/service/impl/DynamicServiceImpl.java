@@ -1,6 +1,7 @@
 package com.dxg.msns.dynamic.service.impl;
 
 import com.dxg.msns.common.pojo.PageResult;
+import com.dxg.msns.common.util.UUIDUtils;
 import com.dxg.msns.common.util.UnderlineHump;
 import com.dxg.msns.dynamic.mapper.DynamicMapper;
 import com.dxg.msns.dynamic.pojo.Dynamic;
@@ -20,6 +21,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.provider.ExampleProvider;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -135,5 +137,21 @@ public class DynamicServiceImpl implements DynamicService {
         criteria.andEqualTo("uid",uid);
         Integer counts = dynamicMapper.selectCountByExample(example);
         return counts;
+    }
+
+    /**
+     * 新增动态
+     *
+     * @param dynamic
+     */
+    @Override
+    @Transactional
+    public void addDynamic(Dynamic dynamic) {
+        dynamic.setDynamicId(UUIDUtils.getUUID());
+        dynamic.setPublishDate(new Date());
+        dynamic.setStatus("1");
+        dynamicMapper.insertSelective(dynamic);
+        sendMsg(dynamic.getId(),"insert");
+
     }
 }

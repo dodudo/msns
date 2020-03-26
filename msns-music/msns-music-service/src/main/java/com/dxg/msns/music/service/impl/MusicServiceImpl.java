@@ -157,9 +157,8 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public Music queryMusicByMusicId(String musicId) {
-        Example example = new Example(Music.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("musicId",musicId);
-        return  this.musicMapper.selectByExample(example).get(0);
+        Music music = new Music();
+        music.setMusicId(musicId);
+        return  this.musicMapper.selectOne(music);
     }
 }

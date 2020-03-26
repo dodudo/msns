@@ -1,5 +1,6 @@
 package com.dxg.msns.upload.service.impl;
 
+import com.dxg.msns.common.util.UUIDUtils;
 import com.dxg.msns.music.pojo.Music;
 import com.dxg.msns.upload.service.UploadService;
 import com.dxg.msns.upload.utils.GetMusicInfo;
@@ -45,34 +46,45 @@ public class UploadServiceImpl implements UploadService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadService.class);
 
     @Override
-    public String upload(MultipartFile file) {
-        //校验文件类型
-        String originalFilename = file.getOriginalFilename();
-        String contentType = file.getContentType();
-        if (!IMAGE_TYPES.contains(contentType)) {
-            LOGGER.info("文件类型不合法：{}", originalFilename);
-            return null;
-        }
-        //校验文件内容
-        try {
-            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-            if (bufferedImage == null) {
+    public String upload(MultipartFile[] file) {
+        StringBuilder stringBuilder =  new StringBuilder();
+        for (int i = 0;i<file.length;i++){
+            //校验文件类型
+            String originalFilename = file[i].getOriginalFilename();
+            String contentType = file[i].getContentType();
+            String prefix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            if (!IMAGE_TYPES.contains(contentType)) {
                 LOGGER.info("文件类型不合法：{}", originalFilename);
                 return null;
             }
-            String fileName = "D:\\msns\\images\\";
-            File localDir = new File(fileName);
-            if (!localDir.exists()) {
-                localDir.mkdirs();
+            //校验文件内容
+            try {
+                BufferedImage bufferedImage = ImageIO.read(file[i].getInputStream());
+                if (bufferedImage == null) {
+                    LOGGER.info("文件类型不合法：{}", originalFilename);
+                    return null;
+                }
+                String fileName = "D:\\msns\\images\\";
+                File localDir = new File(fileName);
+                if (!localDir.exists()) {
+                    localDir.mkdirs();
+                }
+                String newFileName = UUIDUtils.getUUID()+prefix;
+                //保存到服务器
+                file[i].transferTo(new File("D:\\msns\\images\\" + newFileName));
+                //保存服务器路径
+                if (file.length == 1 || i==file.length-1){
+                    stringBuilder.append( "http://localhost:10000/file/images/" + newFileName);
+                }else {
+                    stringBuilder.append( "http://localhost:10000/file/images/" + newFileName+",");
+                }
+            } catch (IOException e) {
+                LOGGER.info("服务器内部错误：{}", originalFilename);
+                e.printStackTrace();
             }
-            //保存到服务器
-            file.transferTo(new File("D:\\msns\\images\\" + originalFilename));
-            return "http://localhost:10000/file/images/" + originalFilename;
-        } catch (IOException e) {
-            LOGGER.info("服务器内部错误：{}", originalFilename);
-            e.printStackTrace();
         }
-        return null;
+
+        return stringBuilder.toString();
     }
 
     @Override

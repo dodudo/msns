@@ -74,7 +74,7 @@ public class DynamicTypeController {
         }
         return ResponseEntity.ok(names);
     }
-    @RequestMapping
+
     /**
      * 新增分类
      * @param dynamicType
