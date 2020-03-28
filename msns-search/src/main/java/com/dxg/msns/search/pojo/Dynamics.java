@@ -12,6 +12,8 @@ import java.util.Date;
 public class Dynamics {
     @Id
     private Integer id;  //动态id
+    @Field(type = FieldType.Keyword)
+    private String dynamicId;
     @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String all;  //所有的查询条件
     private Integer typeId; //分类id
@@ -42,6 +44,15 @@ public class Dynamics {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getDynamicId() {
+        return dynamicId;
+    }
+
+    public void setDynamicId(String dynamicId) {
+        this.dynamicId = dynamicId;
+    }
+
 
     public String getAll() {
         return all;
@@ -167,6 +178,7 @@ public class Dynamics {
     public String toString() {
         return "Dynamics{" +
                 "id=" + id +
+                ", dynamicId='" + dynamicId + '\'' +
                 ", all='" + all + '\'' +
                 ", typeId=" + typeId +
                 ", publishDate=" + publishDate +

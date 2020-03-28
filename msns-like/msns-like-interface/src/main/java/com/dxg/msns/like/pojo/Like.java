@@ -29,7 +29,7 @@ public class Like implements Serializable {
     /**
     * 动态id
     */
-    private String dynamicId;
+    private Integer dynamicId;
     /**
     * 文章发布者id
     */
@@ -56,11 +56,11 @@ public class Like implements Serializable {
         this.likerId = likerId;
     }
 
-    public String getDynamicId() {
+    public Integer getDynamicId() {
         return dynamicId;
     }
 
-    public void setDynamicId(String dynamicId) {
+    public void setDynamicId(Integer dynamicId) {
         this.dynamicId = dynamicId;
     }
 

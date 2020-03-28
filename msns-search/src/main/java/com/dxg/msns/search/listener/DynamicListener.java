@@ -54,4 +54,5 @@ public class DynamicListener {
         }
         this.dynamicSearchService.deleteDynamicIndex(id);
     }
+
 }

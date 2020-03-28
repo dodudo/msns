@@ -10,5 +10,5 @@ public interface LikeApi {
      *
      */
     @GetMapping("queryCountsByDynamicId/{id}")
-    public Integer queryCountsByDynamicId(@PathVariable("id") String dynamicId);
+    public Integer queryCountsByDynamicId(@PathVariable("id") Integer dynamicId);
 }

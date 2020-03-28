@@ -103,7 +103,7 @@ public class DynamicController {
      */
     @PostMapping
     public ResponseEntity<Void> addDynamic(@RequestBody Dynamic dynamic){
-       System.out.println("controller::::::"+dynamic);
+//       System.out.println("controller::::::"+dynamic);
         this.dynamicService.addDynamic(dynamic);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
