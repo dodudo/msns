@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -54,9 +55,9 @@ public class LikeServiceImpl implements LikeService {
      */
     @Override
     public void addLike(Like like) {
-
+        like.setLikeDate(new Date());
         likeMapper.insertSelective(like);
-        System.out.println(like.getDynamicId());
+//        System.out.println(like.getDynamicId());
         this.sendUpdateDynamicMsg(like.getDynamicId(),"update");
     }
 

@@ -1,5 +1,6 @@
 package com.dxg.msns.favor.service;
 
+import com.dxg.msns.favor.pojo.DynamicFavor;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -25,4 +26,24 @@ public interface DynamicFavorService {
      * @return
      */
     Integer[] queryFavorByUid(String uid);
+
+    /**
+     * 查询是否收藏
+     * @param dynamicIds
+     * @param uid
+     * @return
+     */
+    List queryIsFavor(Integer[] dynamicIds, String uid);
+
+    /**
+     * 删除收藏
+     * @param dynamicFavor
+     */
+    void deleteFavor(DynamicFavor dynamicFavor);
+
+    /**
+     * 新增收藏
+     * @param dynamicFavor
+     */
+    void addFavor(DynamicFavor dynamicFavor);
 }
