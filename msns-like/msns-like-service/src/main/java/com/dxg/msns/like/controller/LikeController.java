@@ -58,7 +58,7 @@ public class LikeController {
      * @return
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteLike(Like like) {
+    public ResponseEntity<Void> deleteLike(@RequestBody Like like) {
 
         this.likeService.deleteLike(like);
         return ResponseEntity.status(HttpStatus.CREATED).build();

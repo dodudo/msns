@@ -58,12 +58,12 @@ public class DynamicSearchServiceImpl implements DynamicSearchService {
         dynamics.setAll(type + dynamic.getDynamicContent() + user.getUname());
         dynamics.setTypeId(dynamic.getDynamicTypeId());
         dynamics.setPublishDate(dynamic.getPublishDate());
-        dynamics.setRecentCommentDate(commentClient.queryRecentCreateDateByDynamicId(dynamic.getDynamicId()));
+        dynamics.setRecentCommentDate(commentClient.queryRecentCreateDateByDynamicId(dynamic.getId()));
         dynamics.setDynamicContent(dynamic.getDynamicContent());
         dynamics.setViewCount(dynamic.getViewCount());
         dynamics.setLikeCount(likeClient.queryCountsByDynamicId(dynamic.getId()));
         dynamics.setFavorCount(dynamicFavorClient.queryByDynamicId(dynamic.getId()));
-        dynamics.setCommentCount(commentClient.queryCountsByDynamicId(dynamic.getDynamicId()));
+        dynamics.setCommentCount(commentClient.queryCountsByDynamicId(dynamic.getId()));
         dynamics.setImgUrls(dynamic.getImgUrls());
         dynamics.setUid(dynamic.getUid());
         dynamics.setAuthor(user.getUname());

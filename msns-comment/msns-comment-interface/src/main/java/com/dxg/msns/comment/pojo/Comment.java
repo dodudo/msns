@@ -17,42 +17,39 @@ import java.io.Serializable;
 public class Comment implements Serializable {
     private static final long serialVersionUID = -15178278581914246L;
     /**
-    * 评论id
-    */
+     * 评论id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
-    * 父id
-    */
-    private Long fid;
+     * 父id
+     */
+    private Long pid;
     /**
-    * 动态id
-    */
-    private String dynamicId;
+     * 动态id
+     */
+    private Integer dynamicId;
+
     /**
-    * 动态发布者
-    */
-    private String name;
-    /**
-    * 回复者id
-    */
+     * 回复者id
+     */
     private String replyId;
     /**
-    * 被评论者id
-    */
+     * 被评论者id
+     */
     private String respondentId;
     /**
-    * 评论日期
-    */
+     * 评论日期
+     */
     private Date commentDate;
     /**
-    * 评论内容
-    */
+     * 评论内容
+     */
     private String commentContent;
     /**
-    * 状态
-    */
+     * 状态
+     */
     private String status;
 
 
@@ -64,28 +61,20 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public Long getFid() {
-        return fid;
+    public Long getPid() {
+        return pid;
     }
 
-    public void setFid(Long fid) {
-        this.fid = fid;
+    public void setPid(Long pid) {
+        this.pid = pid;
     }
 
-    public String getDynamicId() {
+    public Integer getDynamicId() {
         return dynamicId;
     }
 
-    public void setDynamicId(String dynamicId) {
+    public void setDynamicId(Integer dynamicId) {
         this.dynamicId = dynamicId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getReplyId() {
@@ -132,9 +121,8 @@ public class Comment implements Serializable {
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", fid=" + fid +
-                ", dynamicId='" + dynamicId + '\'' +
-                ", name='" + name + '\'' +
+                ", pid=" + pid +
+                ", dynamicId=" + dynamicId +
                 ", replyId='" + replyId + '\'' +
                 ", respondentId='" + respondentId + '\'' +
                 ", commentDate=" + commentDate +

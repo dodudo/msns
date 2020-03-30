@@ -8,7 +8,7 @@ import java.util.Date;
 
 public interface CommentApi {
     @RequestMapping("counts/{id}")
-    public Integer queryCountsByDynamicId(@PathVariable("id")String dynamicId);
+    public Integer queryCountsByDynamicId(@PathVariable("id")Integer dynamicId);
     @RequestMapping("recent/{id}")
-    public Date queryRecentCreateDateByDynamicId(@PathVariable("id")String dynamicId);
+    public Date queryRecentCreateDateByDynamicId(@PathVariable("id")Integer dynamicId);
 }

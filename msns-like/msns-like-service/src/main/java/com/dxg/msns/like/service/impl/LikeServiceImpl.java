@@ -84,7 +84,9 @@ public class LikeServiceImpl implements LikeService {
      */
     @Override
     public void deleteLike(Like like) {
+
         this.likeMapper.delete(like);
+//        System.out.println(like.getDynamicId());
         this.sendUpdateDynamicMsg(like.getDynamicId(),"update");
     }
 }
