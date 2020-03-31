@@ -101,8 +101,14 @@ public class CommentServiceImpl implements CommentService {
         if (comment.getDynamicId() != null) {
             criteria.andEqualTo("dynamicId", comment.getDynamicId());
         }
-        //根据父id查询
-        criteria.andEqualTo("id", comment.getPid());
+
+        if (comment.getPid() != null){
+            //根据父id查询
+            criteria.andEqualTo("pid", comment.getPid());
+        }else {
+            criteria.andIsNull("pid");
+        }
+
 
         //根据评论者id
         if (comment.getReplyId() != null) {
