@@ -11,6 +11,13 @@ spring:
     hikari:
       max-lifetime: 28830000 # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
       maximum-pool-size: 9 # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+  rabbitmq:
+    username: msns
+    password: msns
+    virtual-host: /msns
+    template:
+      exchange: msns.dynamic.exchange
+    publisher-confirms: true #生产者确认机制，确保消息会正确发送，如果发送失败会有错误回执，从而触发重
 eureka:
   client:
     service-url:

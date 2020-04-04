@@ -9,6 +9,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -21,6 +23,18 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    private void sendMsg(Integer id,String type) {
+        //向队列发送消息
+        try {
+            this.amqpTemplate.convertAndSend("dynamic."+type, id.toString());
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 根据动态id查询评论
@@ -129,5 +143,19 @@ public class CommentServiceImpl implements CommentService {
         PageInfo<Comment> commentPageInfo = new PageInfo<>(comments);
 
         return new PageResult<>(commentPageInfo.getTotal(), commentPageInfo.getList());
+    }
+
+    /**
+     * 添加评论
+     *
+     * @param comment
+     */
+    @Override
+    public Comment add(Comment comment) {
+        comment.setCommentDate(new Date());
+        comment.setStatus("1");
+        this.commentMapper.insertSelective(comment);
+        sendMsg(comment.getDynamicId(),"update");
+        return comment;
     }
 }

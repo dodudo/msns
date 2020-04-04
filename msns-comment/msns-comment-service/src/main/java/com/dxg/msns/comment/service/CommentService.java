@@ -47,4 +47,10 @@ public interface CommentService {
      * @return
      */
     PageResult<Comment> queryByPage(String key, Integer page, Integer rows, String[] sortBy, Boolean[] desc, Boolean isAll, Comment comment);
+
+    /**
+     * 添加评论
+     * @param comment
+     */
+    Comment add(Comment comment);
 }

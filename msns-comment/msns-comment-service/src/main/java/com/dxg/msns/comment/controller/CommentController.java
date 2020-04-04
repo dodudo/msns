@@ -85,4 +85,11 @@ public class CommentController {
         }
         return ResponseEntity.ok(comments);
     }
+    @PostMapping("add")
+    public ResponseEntity<Comment> add(@RequestBody Comment comment){
+//        System.out.println(comment);
+        Comment comment1 = commentService.add(comment);
+        return ResponseEntity.ok(comment1);
+    }
+
 }
