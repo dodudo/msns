@@ -1,8 +1,14 @@
 package com.dxg.msns.like.service.impl;
 
+import com.dxg.msns.common.pojo.PageResult;
+import com.dxg.msns.common.util.UnderlineHump;
 import com.dxg.msns.like.mapper.LikeMapper;
 import com.dxg.msns.like.pojo.Like;
 import com.dxg.msns.like.service.LikeService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +23,16 @@ import java.util.List;
 public class LikeServiceImpl implements LikeService {
 
 
-
     @Autowired
     private LikeMapper likeMapper;
 
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    private void sendUpdateDynamicMsg(Integer id,String type){
+    private void sendUpdateDynamicMsg(Integer id, String type) {
         //向队列发送消息
         try {
-            this.amqpTemplate.convertAndSend("dynamic."+type, id.toString());
+            this.amqpTemplate.convertAndSend("dynamic." + type, id.toString());
         } catch (AmqpException e) {
             e.printStackTrace();
         }
@@ -43,7 +48,7 @@ public class LikeServiceImpl implements LikeService {
     public Integer queryCountsByDynamicId(Integer dynamicId) {
         Example example = new Example(Like.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("dynamicId",dynamicId);
+        criteria.andEqualTo("dynamicId", dynamicId);
         Integer counts = likeMapper.selectCountByExample(example);
         return counts;
     }
@@ -58,7 +63,7 @@ public class LikeServiceImpl implements LikeService {
         like.setLikeDate(new Date());
         likeMapper.insertSelective(like);
 //        System.out.println(like.getDynamicId());
-        this.sendUpdateDynamicMsg(like.getDynamicId(),"update");
+        this.sendUpdateDynamicMsg(like.getDynamicId(), "update");
     }
 
     /**
@@ -72,7 +77,7 @@ public class LikeServiceImpl implements LikeService {
     public List queryIsLike(Integer[] dynamicIds, String likerId) {
         Example example = new Example(Like.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("likerId",likerId).andIn("dynamicId", Arrays.asList(dynamicIds));
+        criteria.andEqualTo("likerId", likerId).andIn("dynamicId", Arrays.asList(dynamicIds));
         List<Like> likeList = likeMapper.selectByExample(example);
         return likeList;
     }
@@ -87,6 +92,37 @@ public class LikeServiceImpl implements LikeService {
 
         this.likeMapper.delete(like);
 //        System.out.println(like.getDynamicId());
-        this.sendUpdateDynamicMsg(like.getDynamicId(),"update");
+        this.sendUpdateDynamicMsg(like.getDynamicId(), "update");
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param desc
+     * @param like
+     * @return
+     */
+    @Override
+    public PageResult<Like> queryByPage(Integer page, Integer rows, String[] sortBy, Boolean[] desc, Like like) {
+        Example example = new Example(Like.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        //根据评论者id
+        criteria.andEqualTo("dynamicAuthorid", like.getDynamicAuthorid());
+
+        //添加分页条件
+        PageHelper.startPage(page, rows);
+
+        //添加排序条件
+        if (ArrayUtils.isNotEmpty(sortBy)) {
+            example.setOrderByClause(UnderlineHump.HumpToUnderline(sortBy[0]) + " " + (desc[0] ? "desc" : "asc"));
+        }
+        List<Like> likes = this.likeMapper.selectByExample(example);
+        PageInfo<Like> likePageInfo = new PageInfo<>(likes);
+
+        return new PageResult<>(likePageInfo.getTotal(), likePageInfo.getList());
     }
 }

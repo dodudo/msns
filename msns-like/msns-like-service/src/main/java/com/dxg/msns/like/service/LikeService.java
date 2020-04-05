@@ -1,5 +1,6 @@
 package com.dxg.msns.like.service;
 
+import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.like.pojo.Like;
 
 import java.util.List;
@@ -31,4 +32,15 @@ public interface LikeService {
      * @param like
      */
     void deleteLike(Like like);
+
+    /**
+     * 分页查询
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param desc
+     * @param like
+     * @return
+     */
+    PageResult<Like> queryByPage( Integer page, Integer rows, String[] sortBy, Boolean[] desc, Like like);
 }

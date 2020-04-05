@@ -13,6 +13,7 @@ import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Arrays;
@@ -27,10 +28,10 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    private void sendMsg(Integer id,String type) {
+    private void sendMsg(Integer id, String type) {
         //向队列发送消息
         try {
-            this.amqpTemplate.convertAndSend("dynamic."+type, id.toString());
+            this.amqpTemplate.convertAndSend("dynamic." + type, id.toString());
         } catch (AmqpException e) {
             e.printStackTrace();
         }
@@ -62,6 +63,7 @@ public class CommentServiceImpl implements CommentService {
         Example example = new Example(Comment.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId", dynamicId);
+        criteria.andEqualTo("status", "1");
         Integer counts = commentMapper.selectCountByExample(example);
         return counts;
     }
@@ -116,11 +118,16 @@ public class CommentServiceImpl implements CommentService {
             criteria.andEqualTo("dynamicId", comment.getDynamicId());
         }
 
-        if (comment.getPid() != null){
+        if (comment.getPid() != null) {
             //根据父id查询
             criteria.andEqualTo("pid", comment.getPid());
-        }else {
-            criteria.andIsNull("pid");
+        } else {
+            System.out.println(comment.getReplyId() == null && comment.getRespondentId() == null);
+            if (comment.getReplyId() == null && comment.getRespondentId() == null) {
+
+                criteria.andIsNull("pid");
+            }
+
         }
 
 
@@ -151,11 +158,35 @@ public class CommentServiceImpl implements CommentService {
      * @param comment
      */
     @Override
+    @Transactional
     public Comment add(Comment comment) {
         comment.setCommentDate(new Date());
         comment.setStatus("1");
         this.commentMapper.insertSelective(comment);
-        sendMsg(comment.getDynamicId(),"update");
+        sendMsg(comment.getDynamicId(), "update");
         return comment;
+    }
+
+    /**
+     * 根据id查询评论
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Comment queryById(Integer id) {
+        Comment comment = this.commentMapper.selectByPrimaryKey(id);
+        return comment;
+    }
+
+    /**
+     * 根据id修改状态
+     *
+     * @param id
+     */
+    @Override
+    public void updateStateById(Long id,Integer dynamicId) {
+        this.commentMapper.updateStateById(id);
+        sendMsg(dynamicId, "update");
     }
 }

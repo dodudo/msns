@@ -26,6 +26,11 @@ public class Comment implements Serializable {
      * 父id
      */
     private Long pid;
+
+    /**
+     * 被评论者评论id
+     */
+    private Long lid;
     /**
      * 动态id
      */
@@ -67,6 +72,14 @@ public class Comment implements Serializable {
 
     public void setPid(Long pid) {
         this.pid = pid;
+    }
+
+    public Long getLid() {
+        return lid;
+    }
+
+    public void setLid(Long lid) {
+        this.lid = lid;
     }
 
     public Integer getDynamicId() {
@@ -122,6 +135,7 @@ public class Comment implements Serializable {
         return "Comment{" +
                 "id=" + id +
                 ", pid=" + pid +
+                ", lid=" + lid +
                 ", dynamicId=" + dynamicId +
                 ", replyId='" + replyId + '\'' +
                 ", respondentId='" + respondentId + '\'' +

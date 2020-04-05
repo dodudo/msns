@@ -1,5 +1,6 @@
 package com.dxg.msns.like.controller;
 
+import com.dxg.msns.common.pojo.PageResult;
 import com.dxg.msns.like.pojo.Like;
 import com.dxg.msns.like.service.LikeService;
 import org.springframework.http.HttpStatus;
@@ -25,12 +26,11 @@ public class LikeController {
 
     /**
      * 查询动态的点赞数
-     *
      */
     @GetMapping("queryCountsByDynamicId/{id}")
     public ResponseEntity<Integer> queryCountsByDynamicId(@PathVariable("id") Integer dynamicId) {
         Integer counts = this.likeService.queryCountsByDynamicId(dynamicId);
-        if (counts == null){
+        if (counts == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(counts);
@@ -48,10 +48,11 @@ public class LikeController {
     }
 
     @RequestMapping("queryIsLike")
-    public ResponseEntity<List<Like>> queryIsLike(@RequestParam("dynamicIds")Integer[] dynamicIds,@RequestParam("likerId")String likerId){
-        List likeList = likeService.queryIsLike(dynamicIds,likerId);
+    public ResponseEntity<List<Like>> queryIsLike(@RequestParam("dynamicIds") Integer[] dynamicIds, @RequestParam("likerId") String likerId) {
+        List likeList = likeService.queryIsLike(dynamicIds, likerId);
         return ResponseEntity.ok(likeList);
     }
+
     /**
      * 删除点赞信息
      *
@@ -62,6 +63,24 @@ public class LikeController {
 
         this.likeService.deleteLike(like);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping("page")
+    public ResponseEntity<PageResult<Like>> queryByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy[],
+            @RequestParam(value = "desc", required = false) Boolean desc[],
+            @RequestBody Like like
+    ) {
+        if (like.getDynamicAuthorid() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        PageResult<Like> commentPageResult = this.likeService.queryByPage(page, rows, sortBy, desc, like);
+        if (commentPageResult == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(commentPageResult);
     }
 
 }

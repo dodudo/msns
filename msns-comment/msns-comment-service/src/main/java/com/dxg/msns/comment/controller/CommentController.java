@@ -20,6 +20,17 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * 分页查询评论
+     * @param key
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param desc
+     * @param isAll
+     * @param comment
+     * @return
+     */
     @RequestMapping("page")
     public ResponseEntity<PageResult<Comment>> queryByPage(
             @RequestParam(value = "key",required = false)String key,
@@ -35,6 +46,20 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(commentPageResult);
+    }
+
+    /**
+     * 根据id查询评论
+     * @param id
+     * @return
+     */
+    @RequestMapping("id/{id}")
+    public ResponseEntity<Comment> queryById(@PathVariable("id")Integer id){
+        Comment comment = commentService.queryById(id);
+        if (comment == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(comment);
     }
 
     /**
@@ -77,6 +102,11 @@ public class CommentController {
         return ResponseEntity.ok(date);
     }
 
+    /**
+     * 根据用户id查询
+     * @param uid
+     * @return
+     */
     @PostMapping("queryByUid/{uid}")
     public ResponseEntity<List<Comment>> queryByUid(@PathVariable("uid")String uid){
         List<Comment> comments = commentService.queryByUid(uid);
@@ -85,11 +115,26 @@ public class CommentController {
         }
         return ResponseEntity.ok(comments);
     }
+
+    /**
+     * 添加评论
+     * @param comment
+     * @return
+     */
     @PostMapping("add")
     public ResponseEntity<Comment> add(@RequestBody Comment comment){
 //        System.out.println(comment);
         Comment comment1 = commentService.add(comment);
         return ResponseEntity.ok(comment1);
     }
+    /**
+     * 根据id修改状态
+     */
+    @GetMapping("updateStateById/{id}")
+    public ResponseEntity<Void> updateStateById(@PathVariable("id")Long id,@RequestParam("dynamicId")Integer dynamicId){
+        commentService.updateStateById(id,dynamicId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 
 }

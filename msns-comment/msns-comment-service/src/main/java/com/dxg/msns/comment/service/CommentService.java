@@ -53,4 +53,18 @@ public interface CommentService {
      * @param comment
      */
     Comment add(Comment comment);
+
+    /**
+     * 根据id查询评论
+     * @param id
+     * @return
+     */
+    Comment queryById(Integer id);
+
+
+    /**
+     * 根据id修改状态
+     * @param id
+     */
+    void updateStateById(Long id,Integer dynamicId);
 }
