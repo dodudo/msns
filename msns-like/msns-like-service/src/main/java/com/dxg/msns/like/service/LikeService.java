@@ -43,4 +43,18 @@ public interface LikeService {
      * @return
      */
     PageResult<Like> queryByPage( Integer page, Integer rows, String[] sortBy, Boolean[] desc, Like like);
+
+    /**
+     * 根据id修改状态
+     * @param ids
+     * @param status
+     */
+    void updateStateByIds(Integer[] ids, String status);
+
+    /**
+     * 查询未读消息次数
+     * @param dynamicAuthorid
+     * @return
+     */
+    Integer queryCountsByDynamicAuthorid(String dynamicAuthorid);
 }

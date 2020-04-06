@@ -38,6 +38,15 @@ public class LikeServiceImpl implements LikeService {
         }
     }
 
+    private void sendSmsMsg(String id, String type) {
+        //向某用户发送消息
+        try {
+            this.amqpTemplate.convertAndSend("msns.sms.exchange","sms." + type, id.toString());
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 查询动态点赞数
      *
@@ -64,6 +73,7 @@ public class LikeServiceImpl implements LikeService {
         likeMapper.insertSelective(like);
 //        System.out.println(like.getDynamicId());
         this.sendUpdateDynamicMsg(like.getDynamicId(), "update");
+        this.sendSmsMsg(like.getDynamicAuthorid(),like.getDynamicAuthorid());
     }
 
     /**
@@ -124,5 +134,32 @@ public class LikeServiceImpl implements LikeService {
         PageInfo<Like> likePageInfo = new PageInfo<>(likes);
 
         return new PageResult<>(likePageInfo.getTotal(), likePageInfo.getList());
+    }
+
+    /**
+     * 根据id修改状态
+     *
+     * @param ids
+     * @param status
+     */
+    @Override
+    public void updateStateByIds(Integer[] ids, String status) {
+        this.likeMapper.updateStateByIds(ids,status);
+    }
+
+    /**
+     * 查询未读消息次数
+     *
+     * @param dynamicAuthorid
+     * @return
+     */
+    @Override
+    public Integer queryCountsByDynamicAuthorid(String dynamicAuthorid) {
+        Example example = new Example(Like.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("dynamicAuthorid", dynamicAuthorid);
+        criteria.andEqualTo("status", "1");
+        Integer counts = likeMapper.selectCountByExample(example);
+        return counts;
     }
 }

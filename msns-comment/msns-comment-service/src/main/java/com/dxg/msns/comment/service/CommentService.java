@@ -66,5 +66,18 @@ public interface CommentService {
      * 根据id修改状态
      * @param id
      */
-    void updateStateById(Long id,Integer dynamicId);
+    void updateDeleteStateById(Long id,Integer dynamicId);
+
+    /**
+     * 根据id批量修改状态，已读
+     * @param ids
+     */
+    void updateStateByIds(Long[] ids,String status);
+
+    /**
+     * 根据回复者id查询目前用户未读消息次数
+     * @param respondentId
+     * @return
+     */
+    Integer queryCountsByRespondentId(String respondentId);
 }

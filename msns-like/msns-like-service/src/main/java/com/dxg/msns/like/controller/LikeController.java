@@ -82,5 +82,26 @@ public class LikeController {
         }
         return ResponseEntity.ok(commentPageResult);
     }
+    /**
+     * 根据ids修改状态为2（已读）
+     */
+    @GetMapping("updateStateById")
+    public ResponseEntity<Void> updateStateById(@RequestParam("ids")Integer[] ids,@RequestParam("status") String status){
+        likeService.updateStateByIds(ids,status);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
+    /**
+     * 根据id查询未读次数
+     * @param dynamicAuthorid
+     * @return
+     */
+    @GetMapping("countsByDynamicAuthorid/{dynamicAuthorid}")
+    public ResponseEntity<Integer> queryCountsByDynamicAuthorid(@PathVariable("dynamicAuthorid")String dynamicAuthorid){
+        Integer counts = likeService.queryCountsByDynamicAuthorid(dynamicAuthorid);
+        if (counts == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(counts);
+    }
 }

@@ -128,13 +128,34 @@ public class CommentController {
         return ResponseEntity.ok(comment1);
     }
     /**
-     * 根据id修改状态
+     * 根据id修改状态为-1（删除状态）
      */
-    @GetMapping("updateStateById/{id}")
-    public ResponseEntity<Void> updateStateById(@PathVariable("id")Long id,@RequestParam("dynamicId")Integer dynamicId){
-        commentService.updateStateById(id,dynamicId);
+    @GetMapping("updateStateDeleteById/{id}")
+    public ResponseEntity<Void> updateStateDeleteById(@PathVariable("id")Long id,@RequestParam("dynamicId")Integer dynamicId){
+        commentService.updateDeleteStateById(id,dynamicId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    /**
+     * 根据ids修改状态为2（已读）
+     */
+    @GetMapping("updateStateById")
+    public ResponseEntity<Void> updateStateById(@RequestParam("ids")Long[] ids,@RequestParam("status") String status){
+        commentService.updateStateByIds(ids,status);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * 根据id查询未读次数
+     * @param respondentId
+     * @return
+     */
+    @GetMapping("countsByRespondentId/{respondentId}")
+    public ResponseEntity<Integer> queryCountsByRespondentId(@PathVariable("respondentId")String respondentId){
+        Integer counts = commentService.queryCountsByRespondentId(respondentId);
+        if (counts == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(counts);
+    }
 
 }

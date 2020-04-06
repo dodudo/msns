@@ -39,6 +39,10 @@ public class Like implements Serializable {
     */
     private Date likeDate;
 
+    /**
+     * 状态
+     */
+    private String status;
 
     public Integer getId() {
         return id;
@@ -80,14 +84,23 @@ public class Like implements Serializable {
         this.likeDate = likeDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Like{" +
                 "id=" + id +
                 ", likerId='" + likerId + '\'' +
-                ", dynamicId='" + dynamicId + '\'' +
+                ", dynamicId=" + dynamicId +
                 ", dynamicAuthorid='" + dynamicAuthorid + '\'' +
                 ", likeDate=" + likeDate +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

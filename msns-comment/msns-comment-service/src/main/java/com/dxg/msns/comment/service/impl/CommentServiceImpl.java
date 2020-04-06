@@ -36,6 +36,14 @@ public class CommentServiceImpl implements CommentService {
             e.printStackTrace();
         }
     }
+    private void sendSmsMsg(String id, String type) {
+        //向某用户发送消息
+        try {
+            this.amqpTemplate.convertAndSend("msns.sms.exchange","sms." + type, id.toString());
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 根据动态id查询评论
@@ -164,6 +172,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setStatus("1");
         this.commentMapper.insertSelective(comment);
         sendMsg(comment.getDynamicId(), "update");
+        sendSmsMsg(comment.getRespondentId(),comment.getRespondentId());
         return comment;
     }
 
@@ -185,8 +194,34 @@ public class CommentServiceImpl implements CommentService {
      * @param id
      */
     @Override
-    public void updateStateById(Long id,Integer dynamicId) {
-        this.commentMapper.updateStateById(id);
+    public void updateDeleteStateById(Long id,Integer dynamicId) {
+        this.commentMapper.updateDeleteStateById(id);
         sendMsg(dynamicId, "update");
+    }
+
+    /**
+     * 根据id批量修改状态，已读
+     *
+     * @param ids
+     */
+    @Override
+    public void updateStateByIds(Long[] ids,String status) {
+        this.commentMapper.updateStateByIds(ids,status);
+    }
+
+    /**
+     * 根据回复者id查询目前用户未读消息次数
+     *
+     * @param respondentId
+     * @return
+     */
+    @Override
+    public Integer queryCountsByRespondentId(String respondentId) {
+        Example example = new Example(Comment.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("respondentId", respondentId);
+        criteria.andEqualTo("status", "1");
+        Integer counts = commentMapper.selectCountByExample(example);
+        return counts;
     }
 }
