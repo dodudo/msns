@@ -64,6 +64,7 @@ public class DynamicSearchServiceImpl implements DynamicSearchService {
         dynamics.setLikeCount(likeClient.queryCountsByDynamicId(dynamic.getId()));
         dynamics.setFavorCount(dynamicFavorClient.queryByDynamicId(dynamic.getId()));
         dynamics.setCommentCount(commentClient.queryCountsByDynamicId(dynamic.getId()));
+//        System.out.println(dynamics.getCommentCount());
         dynamics.setImgUrls(dynamic.getImgUrls());
         dynamics.setUid(dynamic.getUid());
         dynamics.setAuthor(user.getUname());

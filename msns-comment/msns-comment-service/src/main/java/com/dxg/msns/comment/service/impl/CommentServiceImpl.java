@@ -56,6 +56,8 @@ public class CommentServiceImpl implements CommentService {
         Example example = new Example(Comment.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId", dynamicId);
+        criteria.andNotEqualTo("status","-1");
+        criteria.andNotEqualTo("status", "0");
         List<Comment> comments = commentMapper.selectByExample(example);
         return comments;
     }
@@ -71,7 +73,8 @@ public class CommentServiceImpl implements CommentService {
         Example example = new Example(Comment.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("dynamicId", dynamicId);
-        criteria.andEqualTo("status", "1");
+        criteria.andNotEqualTo("status", "-1");
+        criteria.andNotEqualTo("status", "0");
         Integer counts = commentMapper.selectCountByExample(example);
         return counts;
     }
@@ -93,6 +96,8 @@ public class CommentServiceImpl implements CommentService {
         Example example = new Example(Comment.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("replyId", uid);
+        criteria.andNotEqualTo("status", "-1");
+        criteria.andNotEqualTo("status", "0");
         List<Comment> comments = commentMapper.selectByExample(example);
         return comments;
     }
