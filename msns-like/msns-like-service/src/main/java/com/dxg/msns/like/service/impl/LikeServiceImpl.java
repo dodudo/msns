@@ -69,6 +69,7 @@ public class LikeServiceImpl implements LikeService {
      */
     @Override
     public void addLike(Like like) {
+        like.setStatus("1");
         like.setLikeDate(new Date());
         likeMapper.insertSelective(like);
 //        System.out.println(like.getDynamicId());
@@ -103,6 +104,7 @@ public class LikeServiceImpl implements LikeService {
         this.likeMapper.delete(like);
 //        System.out.println(like.getDynamicId());
         this.sendUpdateDynamicMsg(like.getDynamicId(), "update");
+        this.sendSmsMsg(like.getDynamicAuthorid(),like.getDynamicAuthorid());
     }
 
     /**
@@ -143,8 +145,8 @@ public class LikeServiceImpl implements LikeService {
      * @param status
      */
     @Override
-    public void updateStateByIds(Integer[] ids, String status) {
-        this.likeMapper.updateStateByIds(ids,status);
+    public void updateStateByIds(Integer[] ids, String status,String dynamicAuthorid) {
+        this.likeMapper.updateStateByIds(ids,status,dynamicAuthorid);
     }
 
     /**

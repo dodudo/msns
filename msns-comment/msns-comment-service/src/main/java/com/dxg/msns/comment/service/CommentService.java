@@ -72,7 +72,7 @@ public interface CommentService {
      * 根据id批量修改状态，已读
      * @param ids
      */
-    void updateStateByIds(Long[] ids,String status);
+    void updateStateByIds(Long[] ids,String status,String respondentId);
 
     /**
      * 根据回复者id查询目前用户未读消息次数

@@ -30,18 +30,19 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param status
      */
     @UpdateProvider(type = Provider.class, method = "batchUpdate")
-    void updateStateByIds(Long[] ids, String status);
+    void updateStateByIds(Long[] ids, String status,String respondentId);
 
     class Provider {
         //批量修改
         public String batchUpdate(Map map) {
             Long[] ids = (Long[]) map.get("param1");
             String status = (String) map.get("param2");
+            String respondentId = (String) map.get("param3");
             StringBuilder sb = new StringBuilder();
             if (ArrayUtils.isEmpty(ids)) {
-                sb.append("update comment set status = '" + status + "' where status != '-1' and status != '0'");
+                sb.append("update comment set status = '" + status + "' where respondent_id = '"+respondentId+"' and status != '-1' and status != '0'");
             } else {
-                sb.append("update comment set status = '" + status + "' where status != '-1' and status != '0' and id in (");
+                sb.append("update comment set status = '" + status + "' where respondent_id = '"+respondentId+"' and status != '-1' and status != '0' and id in (");
                 for (int i = 0; i < ids.length; i++) {
                     sb.append(ids[i]);
                     if (i < ids.length - 1) {

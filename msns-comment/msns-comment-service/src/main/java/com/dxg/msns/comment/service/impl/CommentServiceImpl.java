@@ -205,8 +205,8 @@ public class CommentServiceImpl implements CommentService {
      * @param ids
      */
     @Override
-    public void updateStateByIds(Long[] ids,String status) {
-        this.commentMapper.updateStateByIds(ids,status);
+    public void updateStateByIds(Long[] ids,String status,String respondentId) {
+        this.commentMapper.updateStateByIds(ids,status,respondentId);
     }
 
     /**

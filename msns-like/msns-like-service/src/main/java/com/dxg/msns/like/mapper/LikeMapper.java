@@ -15,18 +15,19 @@ public interface LikeMapper extends Mapper<Like> {
      * @param status
      */
     @UpdateProvider(type = Provider.class, method = "batchUpdate")
-    void updateStateByIds(Integer[] ids, String status);
+    void updateStateByIds(Integer[] ids, String status,String dynamicAuthorid);
 
     class Provider {
         //批量修改
         public String batchUpdate(Map map) {
             Integer[] ids = (Integer []) map.get("param1");
             String status = (String) map.get("param2");
+            String dynamicAuthorid = (String) map.get("param3");
             StringBuilder sb = new StringBuilder();
             if (ArrayUtils.isEmpty(ids)) {  //全选
-                sb.append("update like set status = '" + status + "' where status != '-1' and status != '0'");
+                sb.append("update dynamic_like set status = '" + status + "' where dynamic_authorId = '"+dynamicAuthorid+"' and status != '-1' and status != '0'");
             } else {
-                sb.append("update like set status = '" + status + "' where status != '-1' and status != '0' and id in (");
+                sb.append("update dynamic_like set status = '" + status + "' where dynamic_authorId = '"+dynamicAuthorid+"' and status != '-1' and status != '0' and id in (");
                 for (int i = 0; i < ids.length; i++) {
                     sb.append(ids[i]);
                     if (i < ids.length - 1) {

@@ -49,7 +49,7 @@ public interface LikeService {
      * @param ids
      * @param status
      */
-    void updateStateByIds(Integer[] ids, String status);
+    void updateStateByIds(Integer[] ids, String status,String dynamicAuthorid);
 
     /**
      * 查询未读消息次数

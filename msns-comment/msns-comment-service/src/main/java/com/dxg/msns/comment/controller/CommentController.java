@@ -139,8 +139,8 @@ public class CommentController {
      * 根据ids修改状态为2（已读）
      */
     @GetMapping("updateStateById")
-    public ResponseEntity<Void> updateStateById(@RequestParam("ids")Long[] ids,@RequestParam("status") String status){
-        commentService.updateStateByIds(ids,status);
+    public ResponseEntity<Void> updateStateById(@RequestParam("ids")Long[] ids,@RequestParam("status") String status,@RequestParam("respondentId") String respondentId){
+        commentService.updateStateByIds(ids,status,respondentId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
