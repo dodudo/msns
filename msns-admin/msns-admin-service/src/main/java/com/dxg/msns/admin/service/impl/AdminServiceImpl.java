@@ -2,8 +2,12 @@ package com.dxg.msns.admin.service.impl;
 
 import com.dxg.msns.admin.pojo.Admin;
 import com.dxg.msns.admin.mapper.AdminMapper;
+import com.dxg.msns.admin.properties.AdminJwtProperties;
 import com.dxg.msns.admin.service.AdminService;
+import com.dxg.msns.auth.entity.UserInfo;
+import com.dxg.msns.auth.utils.JwtUtils;
 import com.dxg.msns.common.pojo.PageResult;
+import com.dxg.msns.common.util.CodecUtils;
 import com.dxg.msns.common.util.UnderlineHump;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,7 +31,8 @@ import java.util.UUID;
 public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
-
+    @Autowired
+    private AdminJwtProperties adminJwtProperties;
 
     /**
      * 分页查询数据
@@ -120,5 +125,50 @@ public class AdminServiceImpl implements AdminService {
     public void saveAdmin(Admin admin) {
         admin.setAdminid(UUID.randomUUID().toString().replace("-", "").toLowerCase());
         this.adminMapper.insertSelective(admin);
+    }
+
+    /**
+     * 验证用户名和密码
+     *
+     * @param aname
+     * @param apassword
+     * @return
+     */
+    @Override
+    public String authentication(String aname, String apassword) {
+        //如果有查询结果
+        try {
+            Admin record = new Admin();
+            record.setAname(aname);
+            record.setStatus("1");
+            Admin admin = this.adminMapper.selectOne(record);
+            if (admin == null){
+                return null;
+            }
+            if (!admin.getApassword().equals(apassword)){
+                return null;
+            }
+//            System.out.println("admin::::::::::"+record);
+            String token = JwtUtils.generateToken(new UserInfo(admin.getId(), admin.getAdminid(), admin.getAname()), adminJwtProperties.getPrivateKey(), adminJwtProperties.getExpire());
+            return token;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 根据用户信息查询管理员是否存在
+     *
+     * @param userInfo
+     * @return
+     */
+    @Override
+    public Admin getAdmin(UserInfo userInfo) {
+        Admin record = new Admin();
+        record.setId(userInfo.getId());
+        record.setStatus("1");
+        Admin admin = this.adminMapper.selectOne(record);
+        return admin;
     }
 }

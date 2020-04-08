@@ -15,5 +15,5 @@ public interface ReportMapper {
             @Result(column = "dynamic_id",property = "dynamicId"),
             @Result(column = "reason",property = "reason")
     })
-    List<Report> findById(@Param("dynamicId") Integer dynamicId);
+    List<Report> findById(@Param("dynamicId") String dynamicId);
 }

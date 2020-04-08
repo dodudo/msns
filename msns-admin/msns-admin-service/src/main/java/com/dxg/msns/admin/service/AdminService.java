@@ -1,6 +1,7 @@
 package com.dxg.msns.admin.service;
 
 import com.dxg.msns.admin.pojo.Admin;
+import com.dxg.msns.auth.entity.UserInfo;
 import com.dxg.msns.common.pojo.PageResult;
 
 import java.util.List;
@@ -49,4 +50,19 @@ public interface AdminService {
      * @param admin
      */
     void saveAdmin(Admin admin);
+
+    /**
+     * 验证用户名和密码
+     * @param aname
+     * @param apassword
+     * @return
+     */
+    String authentication(String aname, String apassword);
+
+    /**
+     * 根据用户信息查询管理员是否存在
+     * @param userInfo
+     * @return
+     */
+    Admin getAdmin(UserInfo userInfo);
 }

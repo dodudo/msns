@@ -21,3 +21,12 @@ eureka:
 logging:
   level:
     root: DEBUG
+msns:
+  admin:
+    jwt:
+     secret: msns@Login(Auth}*^31)&Dxg%  #登录校验的密钥
+     pubKeyPath: D:\\tmp\\rsa\\rsa.pub # 公钥地址
+     priKeyPath: D:\\tmp\\rsa\\rsa.pri # 私钥地址
+     expire: 1440 # 过期时间,1天
+     cookieName: MSNS_ADMIN_TOKEN
+     cookieMaxAge: 86400 #cookie生存时间1天
