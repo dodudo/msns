@@ -1,4 +1,4 @@
-项目介绍
+## 项目介绍
 
 音乐社交网站，一个基于微服务架构的前后端分离社交网站，算是最初版本，有很多东西不是特别完善。前台使用`Vue`+`Vuetify`，后端使用`Spring Boot`+`Spring Cloud`+`Mybatis`开发，使用`Jwt`做登录验证，使用`ElasticSearch`作为动态和音乐的检索服务，使用`RabbitMQ`作为服务间消息传递服务，使用`RabbitMQ`+`Stomp.js`实现后端和前端通信。
 
