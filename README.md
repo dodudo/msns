@@ -38,7 +38,7 @@
 
 #### 系统架构
 
-![image-20200411214423289](C:\Users\do\Desktop\msns.assets\image-20200411214423289.png)
+![image-20200411214423289](https://s1.ax1x.com/2020/04/11/GqkAvn.png)
 
 #### 后端技术
 
