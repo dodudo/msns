@@ -66,6 +66,165 @@
 | Axios      | 前端异步请求框架  |
 | Stomp.js   | STOMP协议消息框架 |
 
+## 数据库
+
+表4.1 管理员表
+
+| 字段名    | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
+| --------- | ------------ | ------- | -------- | ---------- |
+| id        | int(11)      | NO      | 主键     | 主键id自增 |
+| adminId   | varchar(255) | YES     |          | 管理员id   |
+| aname     | varchar(255) | YES     |          | 管理员昵称 |
+| sex       | varchar(255) | YES     |          | 管理员性别 |
+| birthday  | date         | YES     |          | 管理员生日 |
+| phone     | varchar(255) | YES     |          | 管理员手机 |
+| email     | varchar(255) | YES     |          | 管理员邮箱 |
+| apassword | varchar(255) | YES     |          | 管理员密码 |
+| status    | varchar(255) | YES     |          | 状态       |
+
+
+ 表4.2 评论表
+
+| 字段名          | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
+| --------------- | ------------ | ------- | -------- | ---------- |
+| id              | bigint(200)  | NO      | 主键     | 评论id     |
+| pid             | bigint(200)  | YES     |          | 父id       |
+| lid             | bigint(200)  | YES     |          | 回复评论id |
+| dynamic_id      | int(255)     | YES     |          | 动态id     |
+| reply_id        | varchar(255) | YES     |          | 回复者id   |
+| respondent_id   | varchar(255) | YES     |          | 被评论者id |
+| comment_date    | datetime     | YES     |          | 评论日期   |
+| comment_content | text         | YES     |          | 评论内容   |
+| status          | varchar(255) | YES     |          | 状态       |
+
+
+ 表4.3 动态表
+
+| 字段名            | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
+| ----------------- | ------------ | ------- | -------- | ------------ |
+| id                | int(11)      | NO      | PRI      | 主键自增     |
+| dynamic_id        | varchar(255) | YES     |          | 动态id       |
+| uid               | varchar(255) | YES     |          | 发布者id     |
+| uname             | varchar(255) | YES     |          | 发布者昵称   |
+| avatar_url        | varchar(255) | YES     |          | 用户头像     |
+| dynamic_content   | longtext     | YES     |          | 动态内容     |
+| img_urls          | longtext     | YES     |          | 图片路径     |
+| dynamic_type_id   | int(11)      | YES     |          | 动态类型id   |
+| publish_date      | datetime     | YES     |          | 发布日期     |
+| music_id          | varchar(255) | YES     |          | 音乐id       |
+| view_count        | bigint(255)  | YES     |          | 浏览次数     |
+| report_count      | varchar(255) | YES     |          | 举报次数     |
+| status            | varchar(255) | YES     |          | 状态         |
+| recentCommentDate | datetime     | YES     |          | 最新评论时间 |
+
+
+ 表4.4 动态关注表
+
+| 字段名       | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
+| ------------ | ------------ | ------- | -------- | ---------- |
+| id           | int(11)      | NO      | PRI      | 自增主键id |
+| dynamic_id   | int(255)     | YES     |          | 动态id     |
+| collector_id | varchar(255) | YES     |          | 收藏者id   |
+| favor_date   | datetime     | YES     |          | 收藏时间   |
+| status       | varchar(255) | YES     |          | 状态       |
+
+
+ 表4.5 动态点赞表
+
+| 字段名           | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
+| ---------------- | ------------ | ------- | -------- | ------------ |
+| id               | int(11)      | NO      | PRI      | 主键id自增   |
+| liker_id         | varchar(255) | YES     |          | 点赞者id     |
+| dynamic_id       | varchar(255) | YES     |          | 动态id       |
+| dynamic_authorId | varchar(255) | YES     |          | 文章发布者id |
+| like_date        | datetime     | YES     |          | 点赞时间     |
+| status           | varchar(255) | YES     |          | 状态         |
+
+
+ 表4.6 动态类型表
+
+| 字段名      | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
+| ----------- | ------------ | ------- | -------- | ---------- |
+| id          | int(11)      | NO      | PRI      | 动态分类id |
+| type_name   | varchar(255) | YES     |          | 分类名     |
+| type_status | varchar(255) | YES     |          | 分类状态   |
+
+
+ 表4.7 用户关注表
+
+| 字段名         | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
+| -------------- | ------------ | ------- | -------- | ---------- |
+| id             | int(11)      | NO      | PRI      | 主键id自增 |
+| Followers_id   | varchar(255) | YES     |          | 关注者id   |
+| beFollowers_id | varchar(255) | YES     |          | 被关注者id |
+| follower_date  | datetime     | YES     |          | 关注时间   |
+
+
+ 表4.8 音乐表
+
+| 字段名            | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
+| ----------------- | ------------ | ------- | -------- | ------------ |
+| id                | int(11)      | NO      | PRI      | 主键id自增   |
+| music_id          | varchar(255) | YES     |          | 音乐id       |
+| music_cover_url   | varchar(255) | YES     |          | 音乐封面     |
+| music_name        | varchar(255) | YES     |          | 音乐名       |
+| music_author      | varchar(255) | YES     |          | 音乐作者     |
+| music_album       | varchar(255) | YES     |          | 专辑名称     |
+| music_publis_date | varchar(255) | YES     |          | 音乐发布日期 |
+| music_push_date   | datetime     | YES     |          | 音乐上传日期 |
+| music_length      | varchar(255) | YES     |          | 音乐时长     |
+| music_type_id     | int(11)      | YES     |          | 音乐类型     |
+| music_url         | varchar(255) | YES     |          | 音乐文件路径 |
+| status            | varchar(255) | YES     |          | 状态         |
+
+
+ 表4.9 音乐收藏表
+
+| 字段名       | 数据类型     | 空/非空 | 约束条件 | 字段说明 |
+| ------------ | ------------ | ------- | -------- | -------- |
+| id           | int(11)      | NO      | PRI      | 主键自增 |
+| music_id     | int(255)     | YES     |          | 音乐id   |
+| collector_id | varchar(255) | YES     |          | 收藏者id |
+| favor_date   | datetime     | YES     |          | 收藏时间 |
+
+
+ 表4.10 音乐类型表
+
+| 字段名      | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
+| ----------- | ------------ | ------- | -------- | ---------- |
+| id          | int(11)      | NO      | PRI      | 音乐分类id |
+| type_name   | varchar(255) | YES     |          | 分类名     |
+| type_status | varchar(255) | YES     |          | 分类状态   |
+
+
+ 表4.11 动态举报表
+
+| 字段名     | 数据类型     | 空/非空 | 约束条件 | 字段说明 |
+| ---------- | ------------ | ------- | -------- | -------- |
+| id         | int(11)      | NO      | PRI      | 主键自增 |
+| dynamic_id | varchar(255) | YES     |          | 动态id   |
+| reason     | varchar(255) | YES     |          | 举报原因 |
+
+
+ 表4.12 用户表
+
+| 字段名      | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
+| ----------- | ------------ | ------- | -------- | ------------ |
+| id          | int(11)      | NO      | PRI      | 主键id，自增 |
+| uid         | varchar(255) | YES     |          | 用户id       |
+| uname       | varchar(255) | YES     |          | 用户昵称     |
+| email       | varchar(255) | YES     |          | 用户邮箱     |
+| phone       | varchar(255) | YES     |          | 手机         |
+| upassword   | varchar(255) | YES     |          | 加密后的密码 |
+| sex         | varchar(255) | YES     |          | 性别         |
+| birthday    | date         | YES     |          | 生日         |
+| avatar_url  | varchar(255) | YES     |          | 头像         |
+| description | varchar(255) | YES     |          | 描述         |
+| status      | varchar(255) | YES     |          | 状态         |
+| salt        | varchar(255) | YES     |          | 密码的salt值 |
+
+
+
 ## 相关截图
 
 ![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_J9pKmlsvPh.png)
