@@ -146,7 +146,7 @@ public class CommentServiceImpl implements CommentService {
 
         //根据评论者id
         if (comment.getReplyId() != null) {
-            criteria.andEqualTo("replyId", comment.getPid());
+            criteria.andEqualTo("replyId", comment.getReplyId());
         }
         //根据回复者id
         if (comment.getRespondentId() != null) {
