@@ -1,4 +1,4 @@
-## 项目介绍
+项目介绍
 
 音乐社交网站，一个基于微服务架构的前后端分离社交网站，算是最初版本，有很多东西不是特别完善。前台使用`Vue`+`Vuetify`，后端使用`Spring Boot`+`Spring Cloud`+`Mybatis`开发，使用`Jwt`做登录验证，使用`ElasticSearch`作为动态和音乐的检索服务，使用`RabbitMQ`作为服务间消息传递服务，使用`RabbitMQ`+`Stomp.js`实现后端和前端通信。
 
@@ -38,7 +38,7 @@
 
 #### 系统架构
 
-![image-20200411214423289](https://s1.ax1x.com/2020/04/11/GqkAvn.png)
+![image-20200411214423289](https://github.com/dodudo/msns/blob/master/msns-image/image-20200411214423289.png)
 
 #### 后端技术
 
@@ -66,202 +66,138 @@
 | Axios      | 前端异步请求框架  |
 | Stomp.js   | STOMP协议消息框架 |
 
-## 数据库
-
-表4.1 管理员表
-
-| 字段名    | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
-| --------- | ------------ | ------- | -------- | ---------- |
-| id        | int(11)      | NO      | 主键     | 主键id自增 |
-| adminId   | varchar(255) | YES     |          | 管理员id   |
-| aname     | varchar(255) | YES     |          | 管理员昵称 |
-| sex       | varchar(255) | YES     |          | 管理员性别 |
-| birthday  | date         | YES     |          | 管理员生日 |
-| phone     | varchar(255) | YES     |          | 管理员手机 |
-| email     | varchar(255) | YES     |          | 管理员邮箱 |
-| apassword | varchar(255) | YES     |          | 管理员密码 |
-| status    | varchar(255) | YES     |          | 状态       |
-
-
- 表4.2 评论表
-
-| 字段名          | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
-| --------------- | ------------ | ------- | -------- | ---------- |
-| id              | bigint(200)  | NO      | 主键     | 评论id     |
-| pid             | bigint(200)  | YES     |          | 父id       |
-| lid             | bigint(200)  | YES     |          | 回复评论id |
-| dynamic_id      | int(255)     | YES     |          | 动态id     |
-| reply_id        | varchar(255) | YES     |          | 回复者id   |
-| respondent_id   | varchar(255) | YES     |          | 被评论者id |
-| comment_date    | datetime     | YES     |          | 评论日期   |
-| comment_content | text         | YES     |          | 评论内容   |
-| status          | varchar(255) | YES     |          | 状态       |
-
-
- 表4.3 动态表
-
-| 字段名            | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
-| ----------------- | ------------ | ------- | -------- | ------------ |
-| id                | int(11)      | NO      | PRI      | 主键自增     |
-| dynamic_id        | varchar(255) | YES     |          | 动态id       |
-| uid               | varchar(255) | YES     |          | 发布者id     |
-| uname             | varchar(255) | YES     |          | 发布者昵称   |
-| avatar_url        | varchar(255) | YES     |          | 用户头像     |
-| dynamic_content   | longtext     | YES     |          | 动态内容     |
-| img_urls          | longtext     | YES     |          | 图片路径     |
-| dynamic_type_id   | int(11)      | YES     |          | 动态类型id   |
-| publish_date      | datetime     | YES     |          | 发布日期     |
-| music_id          | varchar(255) | YES     |          | 音乐id       |
-| view_count        | bigint(255)  | YES     |          | 浏览次数     |
-| report_count      | varchar(255) | YES     |          | 举报次数     |
-| status            | varchar(255) | YES     |          | 状态         |
-| recentCommentDate | datetime     | YES     |          | 最新评论时间 |
-
-
- 表4.4 动态关注表
-
-| 字段名       | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
-| ------------ | ------------ | ------- | -------- | ---------- |
-| id           | int(11)      | NO      | PRI      | 自增主键id |
-| dynamic_id   | int(255)     | YES     |          | 动态id     |
-| collector_id | varchar(255) | YES     |          | 收藏者id   |
-| favor_date   | datetime     | YES     |          | 收藏时间   |
-| status       | varchar(255) | YES     |          | 状态       |
-
-
- 表4.5 动态点赞表
-
-| 字段名           | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
-| ---------------- | ------------ | ------- | -------- | ------------ |
-| id               | int(11)      | NO      | PRI      | 主键id自增   |
-| liker_id         | varchar(255) | YES     |          | 点赞者id     |
-| dynamic_id       | varchar(255) | YES     |          | 动态id       |
-| dynamic_authorId | varchar(255) | YES     |          | 文章发布者id |
-| like_date        | datetime     | YES     |          | 点赞时间     |
-| status           | varchar(255) | YES     |          | 状态         |
-
-
- 表4.6 动态类型表
-
-| 字段名      | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
-| ----------- | ------------ | ------- | -------- | ---------- |
-| id          | int(11)      | NO      | PRI      | 动态分类id |
-| type_name   | varchar(255) | YES     |          | 分类名     |
-| type_status | varchar(255) | YES     |          | 分类状态   |
-
-
- 表4.7 用户关注表
-
-| 字段名         | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
-| -------------- | ------------ | ------- | -------- | ---------- |
-| id             | int(11)      | NO      | PRI      | 主键id自增 |
-| Followers_id   | varchar(255) | YES     |          | 关注者id   |
-| beFollowers_id | varchar(255) | YES     |          | 被关注者id |
-| follower_date  | datetime     | YES     |          | 关注时间   |
-
-
- 表4.8 音乐表
-
-| 字段名            | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
-| ----------------- | ------------ | ------- | -------- | ------------ |
-| id                | int(11)      | NO      | PRI      | 主键id自增   |
-| music_id          | varchar(255) | YES     |          | 音乐id       |
-| music_cover_url   | varchar(255) | YES     |          | 音乐封面     |
-| music_name        | varchar(255) | YES     |          | 音乐名       |
-| music_author      | varchar(255) | YES     |          | 音乐作者     |
-| music_album       | varchar(255) | YES     |          | 专辑名称     |
-| music_publis_date | varchar(255) | YES     |          | 音乐发布日期 |
-| music_push_date   | datetime     | YES     |          | 音乐上传日期 |
-| music_length      | varchar(255) | YES     |          | 音乐时长     |
-| music_type_id     | int(11)      | YES     |          | 音乐类型     |
-| music_url         | varchar(255) | YES     |          | 音乐文件路径 |
-| status            | varchar(255) | YES     |          | 状态         |
-
-
- 表4.9 音乐收藏表
-
-| 字段名       | 数据类型     | 空/非空 | 约束条件 | 字段说明 |
-| ------------ | ------------ | ------- | -------- | -------- |
-| id           | int(11)      | NO      | PRI      | 主键自增 |
-| music_id     | int(255)     | YES     |          | 音乐id   |
-| collector_id | varchar(255) | YES     |          | 收藏者id |
-| favor_date   | datetime     | YES     |          | 收藏时间 |
-
-
- 表4.10 音乐类型表
-
-| 字段名      | 数据类型     | 空/非空 | 约束条件 | 字段说明   |
-| ----------- | ------------ | ------- | -------- | ---------- |
-| id          | int(11)      | NO      | PRI      | 音乐分类id |
-| type_name   | varchar(255) | YES     |          | 分类名     |
-| type_status | varchar(255) | YES     |          | 分类状态   |
-
-
- 表4.11 动态举报表
-
-| 字段名     | 数据类型     | 空/非空 | 约束条件 | 字段说明 |
-| ---------- | ------------ | ------- | -------- | -------- |
-| id         | int(11)      | NO      | PRI      | 主键自增 |
-| dynamic_id | varchar(255) | YES     |          | 动态id   |
-| reason     | varchar(255) | YES     |          | 举报原因 |
-
-
- 表4.12 用户表
-
-| 字段名      | 数据类型     | 空/非空 | 约束条件 | 字段说明     |
-| ----------- | ------------ | ------- | -------- | ------------ |
-| id          | int(11)      | NO      | PRI      | 主键id，自增 |
-| uid         | varchar(255) | YES     |          | 用户id       |
-| uname       | varchar(255) | YES     |          | 用户昵称     |
-| email       | varchar(255) | YES     |          | 用户邮箱     |
-| phone       | varchar(255) | YES     |          | 手机         |
-| upassword   | varchar(255) | YES     |          | 加密后的密码 |
-| sex         | varchar(255) | YES     |          | 性别         |
-| birthday    | date         | YES     |          | 生日         |
-| avatar_url  | varchar(255) | YES     |          | 头像         |
-| description | varchar(255) | YES     |          | 描述         |
-| status      | varchar(255) | YES     |          | 状态         |
-| salt        | varchar(255) | YES     |          | 密码的salt值 |
-
 ## 相关截图
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_1WSw206yrG.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_CLiRZ0JqkC.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_IxpWnBDBLJ.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_J9pKmlsvPh.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_JtLaP6jnLK.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_PVLKf7oCVM.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_QpStgFNqiy.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_R1tNXhiibQ.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_RicAjdoFMl.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_VqofCF669T.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_caYXro8hjJ.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_d96g6JZdJF.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_djMgErbBrO.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_ei4QDpQ0xg.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_fy62yWXCZf.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_iAEOGcyYxA.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_j6dccM0YfU.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_jhh1Y5Nb5y.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_jrSkPLMAyN.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_skUaHk08YN.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_tpfL3XOSCA.png)
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_yyDHaDMGRS.jpg)
 
+##### 前台
 
+- 登陆页面
 
+  ![image-20200412090346912](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412090346912.png)
 
+* 管理员登录
 
+  ![image-20200412091302795](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412091302795.png)
 
+* 注册
 
+  邮箱验证码
 
+  ![image-20200412092845719](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412092845719.png)
 
+  ![image-20200412092922922](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412092922922.png)
 
+* 主页面
 
+  ![image-20200412094815633](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412094815633.png)
 
+* 更改头像
 
+  ![image-20200412094932437](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412094932437.png)
 
+* 修改个人信息
 
+  ![image-20200412095021861](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412095021861.png)
 
+* 修改密码
 
+  ![image-20200412095058713](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412095058713.png)
 
+* 发布动态
 
+  选择音乐（系统所有音乐都可选择）
+
+  ![image-20200412095431929](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412095431929.png)
+
+  ![image-20200412095904105](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412095904105.png)
+
+  发布后样式（当文字超过5行显示展开按钮）
+
+  ![image-20200412095929359](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412095929359.png)
+
+  播放音乐（顺序播放）
+
+  ![image-20200412100040462](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412100040462.png)
+
+* 评论
+
+  发评论
+
+  ![image-20200412100150061](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412100150061.png)
+
+   子评论（新增子评论，子评论多于三条显示更多按钮）
+
+  ![image-20200412100228769](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412100228769.png)
+
+* 消息中心（有新消息时角标变化，未读头像旁有红点表示，可标记已读）
+
+  ![image-20200412100315683](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412100315683.png)
+
+* 收到赞（未读头像旁有红点表示，可标记已读）
+
+  ![image-20200412100402177](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412100402177.png)
+
+* 我的评论（用户的所有评论）
+
+  ![image-20200412100947905](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412100947905.png)
+
+* 我的动态（所用用户动态）
+
+  ![image-20200412101139438](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101139438.png)
+
+* 查看收藏（收藏的动态）
+
+  ![image-20200412101108681](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101108681.png)
+
+* 音乐收藏
+
+  ![image-20200412101125828](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101125828.png)
+
+* 查看关注（所有关注的用户都显示在这里，粉丝同）
+
+  ![image-20200412101202512](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101202512.png)
+
+* 查看关注用户动态（所有被关注的用户的动态都在动态页这里显示）
+
+  ![image-20200412101342999](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101342999.png)
+
+* 音乐页（收藏、查询音乐）
+
+  ![image-20200412101302412](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101302412.png)
+
+##### 后台
+
+* 管理员登录
+
+  ![image-20200412101537509](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101537509.png)
+
+* 动态管理
+
+  ![image-20200412101603971](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101603971.png)
+
+* 分类管理
+
+  ![image-20200412101635931](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101635931.png)
+
+* 音乐统计
+
+  ![image-20200412101703368](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101703368.png)
+
+* 音乐管理（新增、修改、删除音乐）
+
+  ![image-20200412101726016](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101726016.png)
+
+* 音乐新增（根据上传音乐文件信息自动填充音乐信息）
+
+  ![image-20200412101806656](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101806656.png)
+
+* 用户管理（删除、修改、查询用户）
+
+  ![image-20200412101839411](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101839411.png)
+
+* 管理员管理（新增、‘假删除’、修改、查询管理员）
+
+  ![image-20200412101920506](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412101920506.png)
+
+* 管理员、真删除、恢复
+
+  ![image-20200412102056128](https://github.com/dodudo/msns/blob/master/msns-image/image-20200412102056128.png)
