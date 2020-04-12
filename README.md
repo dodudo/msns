@@ -1,4 +1,4 @@
-项目介绍
+## 项目介绍
 
 音乐社交网站，一个基于微服务架构的前后端分离社交网站，算是最初版本，有很多东西不是特别完善。前台使用`Vue`+`Vuetify`，后端使用`Spring Boot`+`Spring Cloud`+`Mybatis`开发，使用`Jwt`做登录验证，使用`ElasticSearch`作为动态和音乐的检索服务，使用`RabbitMQ`作为服务间消息传递服务，使用`RabbitMQ`+`Stomp.js`实现后端和前端通信。
 
@@ -223,53 +223,30 @@
 | status      | varchar(255) | YES     |          | 状态         |
 | salt        | varchar(255) | YES     |          | 密码的salt值 |
 
-
-
 ## 相关截图
-
-![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_J9pKmlsvPh.png)
-
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_1WSw206yrG.png)
 ![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_CLiRZ0JqkC.png)
-
 ![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_IxpWnBDBLJ.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_J9pKmlsvPh.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_JtLaP6jnLK.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_PVLKf7oCVM.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_QpStgFNqiy.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_R1tNXhiibQ.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_RicAjdoFMl.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_VqofCF669T.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_caYXro8hjJ.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_d96g6JZdJF.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_djMgErbBrO.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_ei4QDpQ0xg.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_fy62yWXCZf.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_iAEOGcyYxA.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_j6dccM0YfU.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_jhh1Y5Nb5y.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_jrSkPLMAyN.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_skUaHk08YN.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_tpfL3XOSCA.png)
+![](https://github.com/dodudo/msns/blob/master/msns-image/chrome_yyDHaDMGRS.jpg)
 
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_J9pKmlsvPh.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_JtLaP6jnLK.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_PVLKf7oCVM.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_QpStgFNqiy.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_R1tNXhiibQ.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_RicAjdoFMl.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_VqofCF669T.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_caYXro8hjJ.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_d96g6JZdJF.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_djMgErbBrO.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_ei4QDpQ0xg.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_fy62yWXCZf.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_iAEOGcyYxA.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_j6dccM0YfU.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_jhh1Y5Nb5y.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_jrSkPLMAyN.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_skUaHk08YN.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_tpfL3XOSCA.png)
-
-![](https://github.com/dodudo/msns/tree/master/msns-image/chrome_yyDHaDMGRS.jpg)
 
 
 
