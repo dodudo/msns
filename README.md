@@ -38,7 +38,7 @@
 
 #### 系统架构
 
-![image-20200411214423289](https://github.com/dodudo/msns/blob/master/msns-image/image-20200411214423289.png)
+![image-20200412205516763](D:\workspace\IdeaProjects\msns\README.assets\image-20200412205516763.png)
 
 #### 后端技术
 
